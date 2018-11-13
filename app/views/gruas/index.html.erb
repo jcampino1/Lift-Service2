@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Gruas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th> Numero </th>
+      <th> Tipo </th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @gruas.each do |grua| %>
+      <tr>
+        <td><%= grua.numero_serie %></td>
+        <td><%= grua.tipo %></td>
+        <td><%= link_to 'Mostrar', grua %></td>
+        <td><%= link_to 'Editar', edit_grua_path(grua) %></td>
+        <td><%= link_to 'Borrar', grua, method: :delete, data: { confirm: 'Seguro que desea eliminar la grua?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Respuestos", repuestos_path %>
+
+<%= link_to "Nuevo Proveedor", new_supplier_path %>
+
+<br>
+
+<%= link_to 'Nueva Grua', new_grua_path %>

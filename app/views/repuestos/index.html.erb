@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Repuestos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Codigo</th>
+      <th>Articulo</th>
+      <th>Panol</th>
+      <th>Movil1</th>
+      <th>Movil2</th>
+      <th>Stock</th>
+      <th>Stock minimo</th>
+      <th>Valor</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @repuestos.each do |repuesto| %>
+      <tr>
+        <td><%= repuesto.codigo %></td>
+        <td><%= repuesto.articulo %></td>
+        <td><%= repuesto.panol %></td>
+        <td><%= repuesto.movil1 %></td>
+        <td><%= repuesto.movil2 %></td>
+        <td><%= repuesto.stock %></td>
+        <td><%= repuesto.stock_minimo %></td>
+        <td><%= repuesto.valor %></td>
+        <td><%= link_to 'Show', repuesto %></td>
+        <td><%= link_to 'Edit', edit_repuesto_path(repuesto) %></td>
+        <td><%= link_to 'Destroy', repuesto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Repuesto', new_repuesto_path %>

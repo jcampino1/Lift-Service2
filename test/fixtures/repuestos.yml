@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  codigo: 1
+  articulo: MyString
+  panol: 1.5
+  movil1: 1.5
+  movil2: 1.5
+  stock: 1.5
+  stock_minimo: 1.5
+  valor: 1.5
+
+two:
+  codigo: 1
+  articulo: MyString
+  panol: 1.5
+  movil1: 1.5
+  movil2: 1.5
+  stock: 1.5
+  stock_minimo: 1.5
+  valor: 1.5

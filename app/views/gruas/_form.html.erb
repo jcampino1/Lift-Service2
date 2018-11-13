@@ -1,0 +1,69 @@
+<%= form_with(model: grua, local: true) do |form| %>
+  <% if grua.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(grua.errors.count, "error") %> no dejo que se agregara esta grua:</h2>
+
+      <ul>
+      <% grua.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+      <%= form.label :tipo %>
+    <%= form.select(:tipo, ['', 'Gas', 'Eléctrica', 'Apilador Eléctrico'], {}, { :class => 'my_style_class' })%>
+    </div>
+
+    <div class="field">
+      <%= form.label :numero_serie %>
+      <%= form.number_field :numero_serie, id: :grua_numero_serie %>
+    </div>
+
+    <div class="field">
+      <%= form.label :horometro %>
+      <%= form.number_field :horometro, id: :grua_horometro %>
+    </div>
+
+    <% posibles_lugares = ['', 'Central', 'Taller externo'] %>
+    <% Cliente.all.each do |p| %>
+      <% posibles_lugares.append(p.nombre) %>
+    <%end%>
+
+    <div class="field">
+      <%= form.label :lugar_actual %>
+    <%= form.select(:tipo, posibles_lugares, {}, { :class => 'my_style_class' })%>
+    </div>
+
+    <div class="field">
+      <%= form.label :cliente %>
+      <%= form.text_field :cliente, id: :grua_cliente %>
+    </div>
+
+    <div class="field">
+      <%= form.label :contrato %>
+    <%= form.select(:tipo, ['', 'Fijo', 'Permanente'], {}, { :class => 'my_style_class' })%>
+    </div>
+
+    <div class="field">
+      <%= form.label :propietario %>
+    <%= form.select(:tipo, ['', 'Leasing', 'LiftService'], {}, { :class => 'my_style_class' })%>
+    </div>
+
+    <div class="field">
+      <%= form.label :asegurada %>
+      <%= form.check_box :asegurada, id: :grua_asegurada %>
+    </div>
+
+    <div class="field">
+      <%= form.label :estado %>
+    <%= form.select(:tipo, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
+    </div>
+
+
+
+  <div class="actions">
+    <%= form.submit :Crear %>
+  </div>
+<% end %>

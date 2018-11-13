@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Grua numero: <%=@grua.numero_serie%></h1>
+
+<%= link_to "Ordenes de Trabajo", grua_orders_path(grua_id: @grua) %>
+
+
+<%= link_to 'Editar', edit_grua_path(@grua) %> |
+<%= link_to 'Volver', gruas_path %>

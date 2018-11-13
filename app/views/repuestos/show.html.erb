@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Codigo:</strong>
+  <%= @repuesto.codigo %>
+</p>
+
+<p>
+  <strong>Articulo:</strong>
+  <%= @repuesto.articulo %>
+</p>
+
+<p>
+  <strong>Panol:</strong>
+  <%= @repuesto.panol %>
+</p>
+
+<p>
+  <strong>Movil1:</strong>
+  <%= @repuesto.movil1 %>
+</p>
+
+<p>
+  <strong>Movil2:</strong>
+  <%= @repuesto.movil2 %>
+</p>
+
+<p>
+  <strong>Stock:</strong>
+  <%= @repuesto.stock %>
+</p>
+
+<p>
+  <strong>Stock minimo:</strong>
+  <%= @repuesto.stock_minimo %>
+</p>
+
+<p>
+  <strong>Valor:</strong>
+  <%= @repuesto.valor %>
+</p>
+
+<%= link_to 'Edit', edit_repuesto_path(@repuesto) %> |
+<%= link_to 'Back', repuestos_path %>

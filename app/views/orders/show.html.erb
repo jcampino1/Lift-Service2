@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Grua:</strong>
+  <%= @order.grua_id %>
+</p>
+
+<p>
+  <strong>Numero:</strong>
+  <%= @order.numero %>
+</p>
+
+<p>
+  <strong>Cliente:</strong>
+  <%= @order.cliente %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @order.fecha %>
+</p>
+
+<p>
+  <strong>Hora entrada:</strong>
+  <%= @order.hora_entrada %>
+</p>
+
+<p>
+  <strong>Hora salida:</strong>
+  <%= @order.hora_salida %>
+</p>
+
+<p>
+  <strong>Horometro:</strong>
+  <%= @order.horometro %>
+</p>
+
+<p>
+  <strong>Preventiva:</strong>
+  <%= @order.preventiva %>
+</p>
+
+<p>
+  <strong>Estado maquina:</strong>
+  <%= @order.estado_maquina %>
+</p>
+
+<p>
+  <strong>Trabajos realizados:</strong>
+  <%= @order.trabajos_realizados %>
+</p>
+
+<p>
+  <strong>Repuestos usados:</strong>
+  <%= @order.repuestos_usados %>
+</p>
+
+<p>
+  <strong>Equipo:</strong>
+  <%= @order.equipo %>
+</p>
+
+<%= link_to 'Editar', edit_grua_order_path(id: @order, grua_id: @grua) %> |
+<%= link_to 'Volver', grua_orders_path(grua_id: @grua) %>

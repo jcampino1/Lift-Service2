@@ -1,0 +1,57 @@
+<%= form_with(model: repuesto, local: true) do |form| %>
+  <% if repuesto.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(repuesto.errors.count, "error") %> prohibited this repuesto from being saved:</h2>
+
+      <ul>
+      <% repuesto.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :codigo %>
+    <%= form.number_field :codigo, id: :repuesto_codigo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :articulo %>
+    <%= form.text_field :articulo, id: :repuesto_articulo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :panol %>
+    <%= form.text_field :panol, id: :repuesto_panol %>
+  </div>
+
+  <div class="field">
+    <%= form.label :movil1 %>
+    <%= form.text_field :movil1, id: :repuesto_movil1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :movil2 %>
+    <%= form.text_field :movil2, id: :repuesto_movil2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stock %>
+    <%= form.text_field :stock, id: :repuesto_stock %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stock_minimo %>
+    <%= form.text_field :stock_minimo, id: :repuesto_stock_minimo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :valor %>
+    <%= form.text_field :valor, id: :repuesto_valor %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

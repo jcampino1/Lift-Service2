@@ -1,0 +1,37 @@
+<%= form_with(model: ingreso, local: true) do |form| %>
+  <% if ingreso.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ingreso.errors.count, "error") %> prohibited this ingreso from being saved:</h2>
+
+      <ul>
+      <% ingreso.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% proveedores = [''] %>
+  <% Supplier.all.each do |p| %>
+    <% proveedores.append(p.nombre) %>
+  <%end%>
+
+  <div class="field">
+    <%= form.label :proveedor %>
+    <%= form.select(:proveedor, proveedores, {}, { :class => 'my_style_class' })%>
+  </div>
+
+  <div class="field">
+    <%= form.label :repuestos %>
+    <%= form.text_field :repuestos, id: :ingreso_repuestos %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total %>
+    <%= form.text_field :total, id: :ingreso_total %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

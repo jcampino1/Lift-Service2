@@ -1,0 +1,52 @@
+<%= form_with(model: supplier, local: true) do |form| %>
+  <% if supplier.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(supplier.errors.count, "error") %> prohibited this supplier from being saved:</h2>
+
+      <ul>
+      <% supplier.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nombre %>
+    <%= form.text_field :nombre, id: :supplier_nombre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :codigo %>
+    <%= form.number_field :codigo, id: :supplier_codigo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :categoria %>
+    <%= form.text_field :categoria, id: :supplier_categoria %>
+  </div>
+
+  <div class="field">
+    <%= form.label :correo %>
+    <%= form.text_field :correo, id: :supplier_correo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :telefono %>
+    <%= form.number_field :telefono, id: :supplier_telefono %>
+  </div>
+
+  <div class="field">
+    <%= form.label :direccion %>
+    <%= form.text_field :direccion, id: :supplier_direccion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :credito %>
+    <%= form.check_box :credito, id: :supplier_credito %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,72 @@
+<%= form_for([@grua, order]) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% clientes = [''] %>
+  <% Cliente.all.each do |p| %>
+    <% clientes.append(p.nombre) %>
+  <%end%>
+
+  <div class="field">
+    <%= form.label :cliente %>
+    <%= form.select(:cliente, clientes, {}, { :class => 'my_style_class' })%>
+  </div>
+
+  <div class="field">
+    <%= form.label :fecha %>
+    <%= form.date_select :fecha, id: :order_fecha %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hora_entrada %>
+    <%= form.time_select :hora_entrada, id: :order_hora_entrada %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hora_salida %>
+    <%= form.time_select :hora_salida, id: :order_hora_salida %>
+  </div>
+
+  <div class="field">
+    <%= form.label :horometro %>
+    <%= form.text_field :horometro, id: :order_horometro %>
+  </div>
+
+  <div class="field">
+    <%= form.label :preventiva %>
+    <%= form.check_box :preventiva, id: :order_preventiva %>
+  </div>
+
+  <div class="field">
+    <%= form.label :estado_maquina %>
+    <%= form.select(:estado_maquina, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
+  </div>
+
+  <div class="field">
+    <%= form.label :trabajos_realizados %>
+    <%= form.text_area :trabajos_realizados, id: :order_trabajos_realizados %>
+  </div>
+
+  <div class="field">
+    <%= form.label :repuestos_usados %>
+    <%= form.text_field :repuestos_usados, id: :order_repuestos_usados %>
+  </div>
+
+  <div class="field">
+    <%= form.label :equipo %>
+    <%= form.select(:equipo, ['', 'Taller1', 'Taller2', 'Central'], {}, { :class => 'my_style_class' })%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

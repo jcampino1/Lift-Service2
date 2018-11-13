@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Ingresos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Proveedor</th>
+      <th>Repuestos</th>
+      <th>Total</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ingresos.each do |ingreso| %>
+      <tr>
+        <td><%= ingreso.proveedor %></td>
+        <td><%= ingreso.repuestos %></td>
+        <td><%= ingreso.total %></td>
+        <td><%= link_to 'Show', ingreso %></td>
+        <td><%= link_to 'Edit', edit_ingreso_path(ingreso) %></td>
+        <td><%= link_to 'Destroy', ingreso, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ingreso', new_ingreso_path %>

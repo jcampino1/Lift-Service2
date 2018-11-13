@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  proveedor: MyString
+  repuestos: MyString
+  total: 1.5
+
+two:
+  proveedor: MyString
+  repuestos: MyString
+  total: 1.5

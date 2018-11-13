@@ -1,0 +1,6 @@
+<h1>Editing Order</h1>
+
+<%= render 'form', order: @order %>
+
+<%= link_to 'Mostrar', grua_order_path(grua_id: @grua, id: @order) %> |
+<%= link_to 'Volver', grua_orders_path(grua_id: @grua) %>

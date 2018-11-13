@@ -1,0 +1,2 @@
+class Ingreso < ApplicationRecord
+end

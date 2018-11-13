@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Proveedor:</strong>
+  <%= @ingreso.proveedor %>
+</p>
+
+<p>
+  <strong>Repuestos:</strong>
+  <%= @ingreso.repuestos %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @ingreso.total %>
+</p>
+
+<%= link_to 'Edit', edit_ingreso_path(@ingreso) %> |
+<%= link_to 'Back', ingresos_path %>

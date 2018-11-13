@@ -1,0 +1,2 @@
+class Repuesto < ApplicationRecord
+end

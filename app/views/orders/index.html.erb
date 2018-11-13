@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Ordenes de Trabajo de la Grua <%= @grua.numero_serie %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Cliente</th>
+      <th>Preventiva</th>
+      <th>Estado maquina</th>
+      <th>Equipo</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.fecha %></td>
+        <td><%= order.cliente %></td>
+        <td><%= order.preventiva %></td>
+        <td><%= order.estado_maquina %></td>
+        <td><%= order.equipo %></td>
+        <td><%= link_to 'Mostrar', grua_order_path(grua_id: @grua, id: order) %></td>
+        <td><%= link_to 'Editar', edit_grua_order_path(id: order, grua_id: @grua) %></td>
+        <td><%= link_to 'Eliminar', grua_order_path(grua_id: @grua, id: order), method: :delete, data: { confirm: '¿Estás seguro que quieres eliminar la OT?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nueva Orden', new_grua_order_path(grua_id: @grua) %>
