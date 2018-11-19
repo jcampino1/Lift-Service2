@@ -24,7 +24,11 @@ class IngresosController < ApplicationController
   # POST /ingresos
   # POST /ingresos.json
   def create
+    lista_repuestos = Ingreso.format(params[:repuestos])
+    #lista_repuestos = params[:repuestos]["repuestos"]
     @ingreso = Ingreso.new(ingreso_params)
+    #@ingreso.repuestos = lista_repuestos
+    @ingreso.repuestos = lista_repuestos
 
     respond_to do |format|
       if @ingreso.save
@@ -68,7 +72,19 @@ class IngresosController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    #def ingreso_params
+    #  params.require(:ingreso).permit(:proveedor, :total, {
+    #    repuestos: [
+    #      repuesto: [
+    #        :codigo,
+    #        :cantidad,
+    #        :precio
+    #      ]
+    #    ]
+    #  })
+    #end
+
     def ingreso_params
-      params.require(:ingreso).permit(:proveedor, :repuestos, :total)
+      params.require(:ingreso).permit(:proveedor, :total)
     end
 end
