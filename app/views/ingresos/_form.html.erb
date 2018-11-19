@@ -21,15 +21,40 @@
     <%= form.select(:proveedor, proveedores, {}, { :class => 'my_style_class' })%>
   </div>
 
-  <div class="field">
-    <%= form.label :repuestos %>
-    <%= form.text_field :repuestos, id: :ingreso_repuestos %>
-  </div>
 
   <div class="field">
     <%= form.label :total %>
     <%= form.text_field :total, id: :ingreso_total %>
   </div>
+
+  <table>
+  <thead>
+    <tr>
+      <th>Codigo repuesto</th>
+      <th>Cantidad</th>
+      <th>Precio por unidad</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><%= number_field_tag "repuestos[repuestos][]repuesto[codigo]" %></td>
+      <td><%= number_field_tag "repuestos[repuestos][]repuesto[cantidad]" %></td>
+      <td><%= number_field_tag "repuestos[repuestos][]repuesto[precio]" %></td>
+    </tr>
+
+    <% contador = 10 %>
+    <% while contador > 0 %>
+      <tr>
+        <td><input type="number" name="repuestos[repuestos][]repuesto[codigo]"></td>
+        <td><input type="number" name="repuestos[repuestos][]repuesto[cantidad]"></td>
+        <td><input type="number" name="repuestos[repuestos][]repuesto[precio]"></td>
+      </tr>
+      <% contador -= 1 %>
+    <%end%>
+  </tbody>
+</table>
 
   <div class="actions">
     <%= form.submit %>
