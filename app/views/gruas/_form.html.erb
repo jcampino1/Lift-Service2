@@ -1,4 +1,4 @@
-<%= form_with(model: grua, local: true) do |form| %>
+<%= form_with(model: grua, local: true), :html => {:class => "form-horizontal center"} do |form| %>
   <% if grua.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(grua.errors.count, "error") %> no dejo que se agregara esta grua:</h2>
@@ -11,9 +11,9 @@
     </div>
   <% end %>
 
-  <div class="field">
+    <div class="field">
       <%= form.label :tipo %>
-    <%= form.select(:tipo, ['', 'Gas', 'Eléctrica', 'Apilador Eléctrico'], {}, { :class => 'my_style_class' })%>
+      <%= form.select(:tipo, ['', 'Gas', 'Eléctrica', 'Apilador Eléctrico'], {}, { :class => 'my_style_class' })%>
     </div>
 
     <div class="field">
