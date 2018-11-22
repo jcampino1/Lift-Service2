@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Example</title>
+    <title>Lift Service</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <%= link_to "Inicio", root_url, class: 'btn btn-lg', id: "logo" %>
+          <%= link_to "Repuestos", repuestos_path, class: 'btn btn-lg' %>
+          <%= link_to "Ingresos", ingresos_path, class: 'btn btn-lg' %>
+          <%= link_to "Proveedores", suppliers_path, class: 'btn btn-lg' %>
+          <%= link_to "Clientes", clientes_path, class: 'btn btn-lg' %>
+        </div> 
+      </nav>
+    </header>
+    <div class="container">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
   </body>
 </html>

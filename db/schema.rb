@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20181113152125) do
     t.string "proveedor"
     t.string "repuestos", default: [], array: true
     t.float "total"
+    t.date "fecha"
+    t.integer "numero_factura"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -55,15 +57,15 @@ ActiveRecord::Schema.define(version: 20181113152125) do
     t.float "horometro"
     t.boolean "preventiva"
     t.string "estado_maquina"
-    t.text "trabajos_realizados"
+    t.text "trabajos_realizados", default: [], array: true
     t.string "repuestos_usados", default: [], array: true
     t.string "equipo"
+    t.float "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "repuestos", force: :cascade do |t|
-    t.integer "codigo"
+  create_table "repuestos", primary_key: "codigo", id: :integer, default: nil, force: :cascade do |t|
     t.string "articulo"
     t.float "panol"
     t.float "movil1"

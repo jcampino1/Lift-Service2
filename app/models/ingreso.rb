@@ -1,7 +1,11 @@
 class Ingreso < ApplicationRecord
 
+	validates :proveedor, :presence => true
+
 	def self.format(dicc)
+		correcto = true
 		lista_a_devolver = []
+		lista_errores = []
 		lista_atributos = dicc["repuestos"]
 		lista_atributos.each do |diccionario|
 			lista = []
@@ -12,13 +16,20 @@ class Ingreso < ApplicationRecord
 					lista.append(diccionario["repuesto"]["cantidad"])
 					lista.append(diccionario["repuesto"]["precio"])
 					lista_a_devolver.append(lista)
+				else
+					correcto = false 
+					lista_errores.append(a)
 				end
 			end
 		end
-  		return lista_a_devolver
+		if correcto
+			return correcto, lista_a_devolver
+		else
+			return correcto, lista_errores
+		end
 	end
 
 	def self.chequear_codigo(numero)
-		return Repuesto.where(codigo: numero).take
+		return Repuesto.exists?(numero)
 	end
 end

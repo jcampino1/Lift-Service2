@@ -2,7 +2,7 @@
 
 <h1>Repuestos</h1>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Codigo</th>
@@ -13,6 +13,7 @@
       <th>Stock</th>
       <th>Stock minimo</th>
       <th>Valor</th>
+      <th>Situacion</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -28,6 +29,11 @@
         <td><%= repuesto.stock %></td>
         <td><%= repuesto.stock_minimo %></td>
         <td><%= repuesto.valor %></td>
+        <% if repuesto.stock >= repuesto.stock_minimo %>
+          <td><p class="text-success"> Bien</p></td>
+        <% else %>
+          <td><p class="text-danger"> Necesita repuesto</p></td>
+        <%end%>
         <td><%= link_to 'Show', repuesto %></td>
         <td><%= link_to 'Edit', edit_repuesto_path(repuesto) %></td>
         <td><%= link_to 'Destroy', repuesto, method: :delete, data: { confirm: 'Are you sure?' } %></td>

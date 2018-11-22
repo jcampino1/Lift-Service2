@@ -2,11 +2,13 @@
 
 <h1>Ingresos</h1>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Proveedor</th>
-      <th>Repuestos</th>
+      <th>Numero de factura</th>
+      <th> Fecha </th>
+      <th>Cantidad repuestos</th>
       <th>Total</th>
       <th colspan="3"></th>
     </tr>
@@ -16,7 +18,9 @@
     <% @ingresos.each do |ingreso| %>
       <tr>
         <td><%= ingreso.proveedor %></td>
-        <td><%= ingreso.repuestos %></td>
+        <td><%= ingreso.numero_factura %></td>
+        <td><%= ingreso.fecha %></td>
+        <td><%= ingreso.repuestos.length %></td>
         <td><%= ingreso.total %></td>
         <td><%= link_to 'Show', ingreso %></td>
         <td><%= link_to 'Edit', edit_ingreso_path(ingreso) %></td>

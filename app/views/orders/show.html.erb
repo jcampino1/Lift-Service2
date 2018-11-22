@@ -47,17 +47,41 @@
 
 <p>
   <strong>Trabajos realizados:</strong>
-  <%= @order.trabajos_realizados %>
+  <% @order.trabajos_realizados.each do |trabajo| %>
+    <p>- <%= trabajo %><p>
+  <%end%> 
 </p>
 
 <p>
   <strong>Repuestos usados:</strong>
-  <%= @order.repuestos_usados %>
+  <table>
+    <thead>
+      <tr>
+        <th>Repuesto</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @order.repuestos_usados.each do |tupla| %>
+        <% nombre = Repuesto.find(tupla[0].to_i).articulo %>
+        <tr>
+          <td><%= nombre %></td>
+          <td><%= tupla[1].to_f %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </p>
 
 <p>
   <strong>Equipo:</strong>
   <%= @order.equipo %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @order.total %>
 </p>
 
 <%= link_to 'Editar', edit_grua_order_path(id: @order, grua_id: @grua) %> |

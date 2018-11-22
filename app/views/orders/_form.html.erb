@@ -11,6 +11,12 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :numero %>
+    <%= form.number_field :numero, id: :order_numero %>
+  </div>
+
+
   <% clientes = [''] %>
   <% Cliente.all.each do |p| %>
     <% clientes.append(p.nombre) %>
@@ -19,6 +25,11 @@
   <div class="field">
     <%= form.label :cliente %>
     <%= form.select(:cliente, clientes, {}, { :class => 'my_style_class' })%>
+  </div>
+
+  <div class="field">
+    <%= form.label :equipo %>
+    <%= form.select(:equipo, ['', 'Taller1', 'Taller2', 'Central'], {}, { :class => 'my_style_class' })%>
   </div>
 
   <div class="field">
@@ -38,7 +49,7 @@
 
   <div class="field">
     <%= form.label :horometro %>
-    <%= form.text_field :horometro, id: :order_horometro %>
+    <%= form.number_field :horometro, id: :order_horometro %>
   </div>
 
   <div class="field">
@@ -51,20 +62,50 @@
     <%= form.select(:estado_maquina, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
   </div>
 
-  <div class="field">
-    <%= form.label :trabajos_realizados %>
-    <%= form.text_area :trabajos_realizados, id: :order_trabajos_realizados %>
+  <h3> Trabajos realizados:</h3>
+  <div>
+    <%= text_field_tag "trabajos[]" %>
   </div>
+  <% contador = 8 %>
+  <% while contador > 0 %>
+    <div>
+      <%= text_field_tag "trabajos[]" %>
+    </div>
+    <%contador -= 1 %>
+  <%end%>
+
+  <h3> Repuestos utilizados:</h3>
+
+  <table>
+  <thead>
+    <tr>
+      <th>Codigo repuesto</th>
+      <th>Cantidad</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><%= number_field_tag "repuestos[repuestos][]repuesto[codigo]" %></td>
+      <td><%= number_field_tag "repuestos[repuestos][]repuesto[cantidad]" %></td>
+    </tr>
+
+    <% contador = 10 %>
+    <% while contador > 0 %>
+      <tr>
+        <td><input type="number" name="repuestos[repuestos][]repuesto[codigo]"></td>
+        <td><input type="number" name="repuestos[repuestos][]repuesto[cantidad]"></td>
+      </tr>
+      <% contador -= 1 %>
+    <%end%>
+  </tbody>
+</table>
 
   <div class="field">
-    <%= form.label :repuestos_usados %>
-    <%= form.text_field :repuestos_usados, id: :order_repuestos_usados %>
+    <%= form.label :total %>
+    <%= form.text_field :total, id: :order_total %>
   </div>
 
-  <div class="field">
-    <%= form.label :equipo %>
-    <%= form.select(:equipo, ['', 'Taller1', 'Taller2', 'Central'], {}, { :class => 'my_style_class' })%>
-  </div>
 
   <div class="actions">
     <%= form.submit %>

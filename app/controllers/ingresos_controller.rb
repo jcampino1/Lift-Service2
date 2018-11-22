@@ -24,20 +24,23 @@ class IngresosController < ApplicationController
   # POST /ingresos
   # POST /ingresos.json
   def create
-    lista_repuestos = Ingreso.format(params[:repuestos])
-    #lista_repuestos = params[:repuestos]["repuestos"]
-    @ingreso = Ingreso.new(ingreso_params)
-    #@ingreso.repuestos = lista_repuestos
-    @ingreso.repuestos = lista_repuestos
+    correcto, lista_repuestos = Ingreso.format(params[:repuestos])
+    if correcto
+      @ingreso = Ingreso.new(ingreso_params)
+      @ingreso.repuestos = lista_repuestos
+      Repuesto.agregar(lista_repuestos)
 
-    respond_to do |format|
-      if @ingreso.save
-        format.html { redirect_to @ingreso, notice: 'Ingreso was successfully created.' }
-        format.json { render :show, status: :created, location: @ingreso }
-      else
-        format.html { render :new }
-        format.json { render json: @ingreso.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @ingreso.save
+          format.html { redirect_to @ingreso, notice: 'Ingreso was successfully created.' }
+          format.json { render :show, status: :created, location: @ingreso }
+        else
+          format.html { render :new }
+          format.json { render json: @ingreso.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      @errores = lista_repuestos
     end
   end
 
@@ -71,20 +74,7 @@ class IngresosController < ApplicationController
       @ingreso = Ingreso.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    #def ingreso_params
-    #  params.require(:ingreso).permit(:proveedor, :total, {
-    #    repuestos: [
-    #      repuesto: [
-    #        :codigo,
-    #        :cantidad,
-    #        :precio
-    #      ]
-    #    ]
-    #  })
-    #end
-
     def ingreso_params
-      params.require(:ingreso).permit(:proveedor, :total)
+      params.require(:ingreso).permit(:proveedor, :total, :fecha, :numero_factura)
     end
 end

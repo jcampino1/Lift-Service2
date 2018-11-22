@@ -26,12 +26,21 @@ class OrdersController < ApplicationController
   # POST /orders.json
 
   def create
-    @order = @grua.orders.build(order_params)
-    @order.grua = @grua
-    @order.numero = @grua.numero_serie
-    @order.save
+    lista_trabajos = Order.trabajos(params[:trabajos])
+    correcto, lista_repuestos = Order.repuestos(params[:repuestos])
+    if correcto
+      @order = @grua.orders.build(order_params)
+      @order.grua = @grua
+      @order.trabajos_realizados = lista_trabajos
+      @order.repuestos_usados = lista_repuestos
+      @order.save
 
-    redirect_to grua_orders_url
+      Repuesto.rebajar(lista_repuestos, @order.equipo)
+
+      redirect_to grua_orders_url
+    else
+      @errores = lista_repuestos
+    end
   end
 
   # PATCH/PUT /orders/1

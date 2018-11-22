@@ -10,9 +10,11 @@ class CreateOrders < ActiveRecord::Migration[5.1]
       t.float :horometro
       t.boolean :preventiva
       t.string :estado_maquina
-      t.text :trabajos_realizados
+      t.text :trabajos_realizados, array: true, default: []
       t.string :repuestos_usados, array: true, default: []
       t.string :equipo
+      t.float :total
+
 
       t.timestamps
     end

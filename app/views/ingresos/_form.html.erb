@@ -21,10 +21,14 @@
     <%= form.select(:proveedor, proveedores, {}, { :class => 'my_style_class' })%>
   </div>
 
+  <div class="field">
+    <%= form.label :numero_factura %>
+    <%= form.number_field :numero_factura, id: :ingreso_numero_factura %>
+  </div>
 
   <div class="field">
-    <%= form.label :total %>
-    <%= form.text_field :total, id: :ingreso_total %>
+    <%= form.label :fecha %>
+    <%= form.date_select :fecha, id: :ingreso_fecha %>
   </div>
 
   <table>
@@ -55,6 +59,12 @@
     <%end%>
   </tbody>
 </table>
+
+  <div class="field">
+    <%= form.label :total %>
+    <%= form.text_field :total, id: :ingreso_total %>
+  </div>
+
 
   <div class="actions">
     <%= form.submit %>

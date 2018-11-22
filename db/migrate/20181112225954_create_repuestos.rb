@@ -1,6 +1,6 @@
 class CreateRepuestos < ActiveRecord::Migration[5.1]
   def change
-    create_table :repuestos do |t|
+    create_table :repuestos, primary_key: %i[codigo] do |t|
       t.integer :codigo
       t.string :articulo
       t.float :panol
