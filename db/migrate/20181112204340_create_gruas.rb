@@ -1,8 +1,8 @@
 class CreateGruas < ActiveRecord::Migration[5.1]
   def change
-    create_table :gruas do |t|
-    	t.string :tipo
-    	t.float :numero_serie
+    create_table :gruas, primary_key: %i[numero_serie] do |t|
+    	t.integer :numero_serie
+      t.string :tipo
     	t.float :horometro
     	t.string :lugar_actual
     	t.string :cliente
@@ -10,6 +10,7 @@ class CreateGruas < ActiveRecord::Migration[5.1]
     	t.string :propietario
     	t.boolean :asegurada
     	t.string :estado
+      t.string :mantenciones, array: true, default: []
 
       t.timestamps
     end

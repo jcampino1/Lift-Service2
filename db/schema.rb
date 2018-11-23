@@ -23,9 +23,8 @@ ActiveRecord::Schema.define(version: 20181113152125) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "gruas", force: :cascade do |t|
+  create_table "gruas", primary_key: "numero_serie", id: :integer, default: nil, force: :cascade do |t|
     t.string "tipo"
-    t.float "numero_serie"
     t.float "horometro"
     t.string "lugar_actual"
     t.string "cliente"
@@ -33,6 +32,7 @@ ActiveRecord::Schema.define(version: 20181113152125) do
     t.string "propietario"
     t.boolean "asegurada"
     t.string "estado"
+    t.string "mantenciones", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20181113152125) do
   create_table "ingresos", force: :cascade do |t|
     t.string "proveedor"
     t.string "repuestos", default: [], array: true
-    t.float "total"
+    t.float "total", default: 0.0
     t.date "fecha"
     t.integer "numero_factura"
     t.datetime "created_at", null: false
@@ -60,19 +60,19 @@ ActiveRecord::Schema.define(version: 20181113152125) do
     t.text "trabajos_realizados", default: [], array: true
     t.string "repuestos_usados", default: [], array: true
     t.string "equipo"
-    t.float "total"
+    t.float "total", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "repuestos", primary_key: "codigo", id: :integer, default: nil, force: :cascade do |t|
     t.string "articulo"
-    t.float "panol"
-    t.float "movil1"
-    t.float "movil2"
-    t.float "stock"
-    t.float "stock_minimo"
-    t.float "valor"
+    t.float "panol", default: 0.0
+    t.float "movil1", default: 0.0
+    t.float "movil2", default: 0.0
+    t.float "stock", default: 0.0
+    t.float "stock_minimo", default: 0.0
+    t.float "valor", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

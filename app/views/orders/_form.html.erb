@@ -1,4 +1,4 @@
-<%= form_for([@grua, order]) do |form| %>
+<%= bootstrap_form_for([@grua, order]) do |form| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -12,7 +12,6 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :numero %>
     <%= form.number_field :numero, id: :order_numero %>
   </div>
 
@@ -23,52 +22,44 @@
   <%end%>
 
   <div class="field">
-    <%= form.label :cliente %>
     <%= form.select(:cliente, clientes, {}, { :class => 'my_style_class' })%>
   </div>
 
   <div class="field">
-    <%= form.label :equipo %>
     <%= form.select(:equipo, ['', 'Taller1', 'Taller2', 'Central'], {}, { :class => 'my_style_class' })%>
   </div>
 
   <div class="field">
-    <%= form.label :fecha %>
     <%= form.date_select :fecha, id: :order_fecha %>
   </div>
 
   <div class="field">
-    <%= form.label :hora_entrada %>
     <%= form.time_select :hora_entrada, id: :order_hora_entrada %>
   </div>
 
   <div class="field">
-    <%= form.label :hora_salida %>
     <%= form.time_select :hora_salida, id: :order_hora_salida %>
   </div>
 
   <div class="field">
-    <%= form.label :horometro %>
     <%= form.number_field :horometro, id: :order_horometro %>
   </div>
 
   <div class="field">
-    <%= form.label :preventiva %>
     <%= form.check_box :preventiva, id: :order_preventiva %>
   </div>
 
   <div class="field">
-    <%= form.label :estado_maquina %>
     <%= form.select(:estado_maquina, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
   </div>
 
   <h3> Trabajos realizados:</h3>
-  <div>
+  <div class="field">
     <%= text_field_tag "trabajos[]" %>
   </div>
   <% contador = 8 %>
   <% while contador > 0 %>
-    <div>
+    <div class="field">
       <%= text_field_tag "trabajos[]" %>
     </div>
     <%contador -= 1 %>
@@ -102,12 +93,11 @@
 </table>
 
   <div class="field">
-    <%= form.label :total %>
     <%= form.text_field :total, id: :order_total %>
   </div>
 
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Crear OT"%>
   </div>
 <% end %>

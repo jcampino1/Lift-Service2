@@ -1,4 +1,4 @@
-<%= form_with(model: repuesto, local: true) do |form| %>
+<%= bootstrap_form_with(model: repuesto, local: true) do |form| %>
   <% if repuesto.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(repuesto.errors.count, "error") %> prohibited this repuesto from being saved:</h2>
@@ -12,43 +12,35 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :codigo %>
-    <%= form.number_field :codigo, id: :repuesto_codigo %>
+    <%= form.number_field :codigo, label: "Código" %>
   </div>
 
   <div class="field">
-    <%= form.label :articulo %>
-    <%= form.text_field :articulo, id: :repuesto_articulo %>
+    <%= form.text_field :articulo, label: "Artículo" %>
   </div>
 
   <div class="field">
-    <%= form.label :panol %>
-    <%= form.text_field :panol, id: :repuesto_panol %>
+    <%= form.text_field :panol, label: "Pañol" %>
   </div>
 
   <div class="field">
-    <%= form.label :movil1 %>
-    <%= form.text_field :movil1, id: :repuesto_movil1 %>
+    <%= form.text_field :movil1, label: "Móvil 1" %>
   </div>
 
   <div class="field">
-    <%= form.label :movil2 %>
-    <%= form.text_field :movil2, id: :repuesto_movil2 %>
+    <%= form.text_field :movil2, label: "Móvil 2" %>
   </div>
 
   <div class="field">
-    <%= form.label :stock %>
-    <%= form.text_field :stock, id: :repuesto_stock %>
+    <%= form.text_field :stock, label: "Stock" %>
   </div>
 
   <div class="field">
-    <%= form.label :stock_minimo %>
-    <%= form.text_field :stock_minimo, id: :repuesto_stock_minimo %>
+    <%= form.text_field :stock_minimo, label: "Stock mínimo" %>
   </div>
 
   <div class="field">
-    <%= form.label :valor %>
-    <%= form.text_field :valor, id: :repuesto_valor %>
+    <%= form.text_field :valor, label: "Valor", prepend: "$" %>
   </div>
 
   <div class="actions">
