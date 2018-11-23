@@ -10,6 +10,7 @@ class GruasController < ApplicationController
   # GET /gruas/1
   # GET /gruas/1.json
   def show
+    @orders = @grua.orders.order('fecha ASC')
   end
 
   # GET /gruas/new

@@ -13,7 +13,7 @@ class CreateOrders < ActiveRecord::Migration[5.1]
       t.text :trabajos_realizados, array: true, default: []
       t.string :repuestos_usados, array: true, default: []
       t.string :equipo
-      t.float :total
+      t.float :total, default: 0
 
 
       t.timestamps

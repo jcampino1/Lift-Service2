@@ -1,4 +1,4 @@
-<%= form_with(model: grua, local: true), :html => {:class => "form-horizontal center"} do |form| %>
+<%= bootstrap_form_with(model: grua, local: true) do |form| %>
   <% if grua.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(grua.errors.count, "error") %> no dejo que se agregara esta grua:</h2>
@@ -12,58 +12,51 @@
   <% end %>
 
     <div class="field">
-      <%= form.label :tipo %>
+      <%= form.number_field :numero_serie, label: "Numero de serie" %>
+    </div>
+
+    <div class="field">
       <%= form.select(:tipo, ['', 'Gas', 'Eléctrica', 'Apilador Eléctrico'], {}, { :class => 'my_style_class' })%>
     </div>
 
     <div class="field">
-      <%= form.label :numero_serie %>
-      <%= form.number_field :numero_serie, id: :grua_numero_serie %>
-    </div>
-
-    <div class="field">
-      <%= form.label :horometro %>
-      <%= form.number_field :horometro, id: :grua_horometro %>
+      <%= form.number_field :horometro, label: "Horometro", help: "" %>
     </div>
 
     <% posibles_lugares = ['', 'Central', 'Taller externo'] %>
+    <% posibles_clientes = ['', 'Ninguno'] %>
     <% Cliente.all.each do |p| %>
       <% posibles_lugares.append(p.nombre) %>
+      <% posibles_clientes.append(p.nombre) %>
     <%end%>
 
     <div class="field">
-      <%= form.label :lugar_actual %>
-    <%= form.select(:tipo, posibles_lugares, {}, { :class => 'my_style_class' })%>
+      <%= form.select(:lugar_actual, posibles_lugares, {}, { :class => 'my_style_class' })%>
     </div>
 
     <div class="field">
-      <%= form.label :cliente %>
-      <%= form.text_field :cliente, id: :grua_cliente %>
+      <%= form.select(:cliente, posibles_clientes, {}) %>
     </div>
 
     <div class="field">
-      <%= form.label :contrato %>
-    <%= form.select(:tipo, ['', 'Fijo', 'Permanente'], {}, { :class => 'my_style_class' })%>
+      <%= form.select(:contrato, ['', 'Fijo', 'Permanente'], {}, { :class => 'my_style_class' })%>
     </div>
 
     <div class="field">
-      <%= form.label :propietario %>
-    <%= form.select(:tipo, ['', 'Leasing', 'LiftService'], {}, { :class => 'my_style_class' })%>
+      <%= form.select(:propietario, ['', 'Leasing', 'LiftService'], {}, { :class => 'my_style_class' })%>
     </div>
 
     <div class="field">
-      <%= form.label :asegurada %>
-      <%= form.check_box :asegurada, id: :grua_asegurada %>
+      <%= form.check_box :asegurada %>
     </div>
 
     <div class="field">
-      <%= form.label :estado %>
-    <%= form.select(:tipo, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
+      <%= form.select(:estado, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
     </div>
 
 
 
-  <div class="actions">
-    <%= form.submit :Crear %>
-  </div>
+    <div class="actions">
+      <%= form.submit "Crear" %>
+    </div>
 <% end %>

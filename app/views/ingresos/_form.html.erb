@@ -1,4 +1,4 @@
-<%= form_with(model: ingreso, local: true) do |form| %>
+<%= bootstrap_form_with(model: ingreso, local: true) do |form| %>
   <% if ingreso.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(ingreso.errors.count, "error") %> prohibited this ingreso from being saved:</h2>
@@ -17,24 +17,21 @@
   <%end%>
 
   <div class="field">
-    <%= form.label :proveedor %>
     <%= form.select(:proveedor, proveedores, {}, { :class => 'my_style_class' })%>
   </div>
 
   <div class="field">
-    <%= form.label :numero_factura %>
-    <%= form.number_field :numero_factura, id: :ingreso_numero_factura %>
+    <%= form.number_field :numero_factura, label: "Número de factura" %>
   </div>
 
   <div class="field">
-    <%= form.label :fecha %>
-    <%= form.date_select :fecha, id: :ingreso_fecha %>
+    <%= form.date_select :fecha %>
   </div>
 
   <table>
   <thead>
     <tr>
-      <th>Codigo repuesto</th>
+      <th>Código de repuesto</th>
       <th>Cantidad</th>
       <th>Precio por unidad</th>
       <th colspan="3"></th>
@@ -61,8 +58,7 @@
 </table>
 
   <div class="field">
-    <%= form.label :total %>
-    <%= form.text_field :total, id: :ingreso_total %>
+    <%= form.text_field :total, id: :ingreso_total, prepend: "$" %>
   </div>
 
 

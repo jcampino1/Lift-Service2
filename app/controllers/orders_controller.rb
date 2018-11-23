@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
 
       Repuesto.rebajar(lista_repuestos, @order.equipo)
 
-      redirect_to grua_orders_url
+      redirect_to grua_path(id: @grua.id)
     else
       @errores = lista_repuestos
     end
@@ -98,6 +98,6 @@ class OrdersController < ApplicationController
     def order_params
       params.require(:order).permit(:grua_id, :numero, :cliente, :fecha, :hora_entrada,
        :hora_salida, :horometro, :preventiva, :estado_maquina, :trabajos_realizados,
-        :repuestos_usados, :equipo, :order_id)
+        :repuestos_usados, :equipo, :order_id, :total)
     end
 end

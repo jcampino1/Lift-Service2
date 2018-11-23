@@ -1,8 +1,46 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Grua numero: <%=@grua.numero_serie%></h1>
 
-<%= link_to "Ordenes de Trabajo", grua_orders_path(grua_id: @grua) %>
+<h2>Ordenes de Trabajo</h2>
+
+<% total = 0 %>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Cliente</th>
+      <th>Preventiva</th>
+      <th>Estado maquina</th>
+      <th>Equipo</th>
+      <th> Total</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.fecha %></td>
+        <td><%= order.cliente %></td>
+        <td><%= order.preventiva %></td>
+        <td><%= order.estado_maquina %></td>
+        <td><%= order.equipo %></td>
+        <td><%= order.total %></td>
+        <td><%= link_to 'Mostrar', grua_order_path(grua_id: @grua, id: order) %></td>
+        <td><%= link_to 'Eliminar', grua_order_path(grua_id: @grua, id: order), method: :delete, data: { confirm: '¿Estás seguro que quieres eliminar la OT?' } %></td>
+      </tr>
+      <% total += order.total %>
+    <% end %>
+  </tbody>
+</table>
+
+<h3> Total: <%= total %></h3>
+
+<br>
+
+<div>
+	<%= link_to 'Nueva Orden', new_grua_order_path(grua_id: @grua) %>
+</div>
 
 
 <%= link_to 'Editar', edit_grua_path(@grua) %> |
