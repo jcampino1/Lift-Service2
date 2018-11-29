@@ -1,45 +1,60 @@
 <h1>Repuestos</h1>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Codigo</th>
-      <th>Articulo</th>
-      <th>Panol</th>
-      <th>Movil1</th>
-      <th>Movil2</th>
-      <th>Stock</th>
-      <th>Stock minimo</th>
-      <th>Valor</th>
-      <th>Situacion</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "Todos", repuestos_path(tipo: "todos") %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Tipo 1", repuestos_path(tipo: "tipo 1") %>
+  </li>
+  <li>
+  <%= link_to "Tipo 2", repuestos_path(tipo: "tipo 2") %>
+  </li>
+</ul>
 
-  <tbody>
-    <% @repuestos.each do |repuesto| %>
+<div style="height:500px;overflow-y:scroll;;" class="jumbotron">
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <td><%= repuesto.codigo %></td>
-        <td><%= repuesto.articulo %></td>
-        <td><%= repuesto.panol %></td>
-        <td><%= repuesto.movil1 %></td>
-        <td><%= repuesto.movil2 %></td>
-        <td><%= repuesto.stock %></td>
-        <td><%= repuesto.stock_minimo %></td>
-        <td><%= repuesto.valor %></td>
-        <% if repuesto.stock >= repuesto.stock_minimo %>
-          <td><p class="text-success"> Bien</p></td>
-        <% else %>
-          <td><p class="text-danger"> Necesita repuesto</p></td>
-        <%end%>
-        <td><%= link_to 'Show', repuesto %></td>
-        <td><%= link_to 'Edit', edit_repuesto_path(repuesto) %></td>
-        <td><%= link_to 'Destroy', repuesto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Código</th>
+        <th>Articulo</th>
+        <th>Panol</th>
+        <th>Móvil 1</th>
+        <th>Móvil 2</th>
+        <th>Stock</th>
+        <th>Stock mínimo</th>
+        <th>Valor</th>
+        <th>Situación</th>
+        <th colspan="2"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @repuestos.each do |repuesto| %>
+        <tr>
+          <td><%= repuesto.codigo %></td>
+          <td><%= repuesto.articulo %></td>
+          <td><%= repuesto.panol %></td>
+          <td><%= repuesto.movil1 %></td>
+          <td><%= repuesto.movil2 %></td>
+          <td><%= repuesto.stock %></td>
+          <td><%= repuesto.stock_minimo %></td>
+          <td><%= repuesto.valor %></td>
+          <% if repuesto.stock >= repuesto.stock_minimo %>
+            <td><p class="text-success"> Bien</p></td>
+          <% else %>
+            <td><p class="text-danger"> Necesita repuesto</p></td>
+          <%end%>
+          <td><%= link_to 'Mostrar', repuesto %></td>
+          <td><%= link_to 'Eliminar', repuesto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
-<%= link_to 'New Repuesto', new_repuesto_path %>
+<div class="jumbotron">
+  <center><%= link_to 'Nuevo Repuesto', new_repuesto_path, class: "btn btn-lg btn-primary", id:"link-b"  %></center>
+</div>

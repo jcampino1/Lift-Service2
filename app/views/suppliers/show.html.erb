@@ -1,39 +1,50 @@
-<p id="notice"><%= notice %></p>
+<% credito = "No" %>
+<% if @supplier.credito %>
+  <% credito = "Si" %>
+<% end %>
 
-<p>
-  <strong>Nombre:</strong>
-  <%= @supplier.nombre %>
-</p>
+<div>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Nombre:</strong></td>
+        <td><%= @supplier.nombre %></td>
+      </tr>
 
-<p>
-  <strong>Codigo:</strong>
-  <%= @supplier.codigo %>
-</p>
+      <tr>
+        <td><strong>Codigo:</strong></td>
+        <td><%= @supplier.codigo %></td>
+      </tr>
 
-<p>
-  <strong>Categoria:</strong>
-  <%= @supplier.categoria %>
-</p>
+      <tr>
+        <td><strong>Categoria:</strong></td>
+        <td><%= @supplier.categoria %></td>
+      </tr>
 
-<p>
-  <strong>Correo:</strong>
-  <%= @supplier.correo %>
-</p>
+      <tr>
+        <td><strong>Correo:</strong></td>
+        <td><%= @supplier.correo %></td>
+      </tr>
 
-<p>
-  <strong>Telefono:</strong>
-  <%= @supplier.telefono %>
-</p>
+      <tr>
+        <td><strong>Telefono:</strong></td>
+        <td><%= @supplier.telefono %></td>
+      </tr>
 
-<p>
-  <strong>Direccion:</strong>
-  <%= @supplier.direccion %>
-</p>
+      <tr>
+        <td><strong>Direccion:</strong></td>
+        <td><%= @supplier.direccion %></td>
+      </tr>
 
-<p>
-  <strong>Credito:</strong>
-  <%= @supplier.credito %>
-</p>
+      <tr>
+        <td><strong>Credito:</strong></td>
+        <td><%= credito %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<%= link_to 'Edit', edit_supplier_path(@supplier) %> |
-<%= link_to 'Back', suppliers_path %>
+<div>
+  <%= link_to 'Edit', edit_supplier_path(@supplier) %> |
+  <%= link_to 'Back', suppliers_path %>
+</div>

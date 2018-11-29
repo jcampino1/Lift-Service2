@@ -4,7 +4,24 @@ class GruasController < ApplicationController
   # GET /gruas
   # GET /gruas.json
   def index
-    @gruas = Grua.all
+    #@gruas = Grua.where(["numero_serie = ?", params[:search].to_i])
+    @gruas = Grua.all.order('numero_serie ASC')
+    tipo = params[:tipo]
+    if tipo == "Gas"
+      @gruas = @gruas.where("tipo = 'Gas'").order('numero_serie ASC')
+    elsif tipo == "Electricas"
+      @gruas = @gruas.where("tipo = 'Eléctrica'").order('numero_serie ASC')
+    elsif tipo == "Apiladores"
+      @gruas = @gruas.where("tipo = 'Apilador'").order('numero_serie ASC')
+    end
+    @numero = params[:search]
+    if @numero
+      if @gruas.exists?(@numero)
+        @gruas = [@gruas.find(@numero)]
+      else
+        @gruas = []
+      end
+    end
   end
 
   # GET /gruas/1
@@ -62,6 +79,11 @@ class GruasController < ApplicationController
     end
   end
 
+  def import
+    Grua.import(params[:file])
+    redirect_to root_url, notice: "Grua(s) importada(s)"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_grua
@@ -71,6 +93,7 @@ class GruasController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def grua_params
       params.require(:grua).permit(:tipo, :numero_serie, :horometro, :lugar_actual, :cliente, :contrato,
-        :propietario, :asegurada, :estado)
+        :propietario, :asegurada, :estado, :marca, :modelo, :serie, :motor, :patente, :ano,
+        :ton, :mastil, :observaciones)
     end
 end

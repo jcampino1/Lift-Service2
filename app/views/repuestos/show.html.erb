@@ -1,44 +1,51 @@
-<p id="notice"><%= notice %></p>
+<center><h1> Detalles repuesto</h1></center>
 
-<p>
-  <strong>Codigo:</strong>
-  <%= @repuesto.codigo %>
-</p>
+<div class="jumbotron">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Código:</strong></td>
+        <td><%= @repuesto.codigo %></td>
+      </tr>
 
-<p>
-  <strong>Articulo:</strong>
-  <%= @repuesto.articulo %>
-</p>
+      <tr>
+        <td><strong>Artículo:</strong></td>
+        <td><%= @repuesto.articulo %></td>
+      </tr>
 
-<p>
-  <strong>Panol:</strong>
-  <%= @repuesto.panol %>
-</p>
+      <tr>
+        <td><strong>Valor:</strong></td>
+        <td><%= number_to_currency(@repuesto.valor, unit: "$")%></td>
+      </tr>
 
-<p>
-  <strong>Movil1:</strong>
-  <%= @repuesto.movil1 %>
-</p>
+      <tr>
+        <td><strong>Stock mínimo:</strong></td>
+        <td><%= @repuesto.stock_minimo %></td>
+      </tr>
 
-<p>
-  <strong>Movil2:</strong>
-  <%= @repuesto.movil2 %>
-</p>
+      <tr>
+        <td><strong>Stock:</strong></td>
+        <td><%= @repuesto.stock %></td>
+      </tr>
 
-<p>
-  <strong>Stock:</strong>
-  <%= @repuesto.stock %>
-</p>
+      <tr>
+        <td><strong>Pañol:</strong></td>
+        <td><%= @repuesto.panol %></td>
+      </tr>
 
-<p>
-  <strong>Stock minimo:</strong>
-  <%= @repuesto.stock_minimo %>
-</p>
+      <tr>
+        <td><strong>Móvil 1:</strong></td>
+        <td><%= @repuesto.movil1 %></td>
+      </tr>
 
-<p>
-  <strong>Valor:</strong>
-  <%= @repuesto.valor %>
-</p>
+      <tr>
+        <td><strong>Móvil 2:</strong></td>
+        <td><%= @repuesto.movil2 %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<%= link_to 'Edit', edit_repuesto_path(@repuesto) %> |
-<%= link_to 'Back', repuestos_path %>
+<div class="jumbotron">
+  <center><%= link_to 'Realizar traspaso', edit_repuesto_path(@repuesto), class: "btn btn-lg btn-primary", id:"link-b"  %></center>
+</div>

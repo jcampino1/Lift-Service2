@@ -1,29 +1,39 @@
-<%= bootstrap_form_with(model: cliente, local: true) do |form| %>
-  <% if cliente.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(cliente.errors.count, "error") %> prohibited this cliente from being saved:</h2>
+<div class="jumbotron">
+  <%= bootstrap_form_with(model: cliente, local: true) do |form| %>
+    <% if cliente.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(cliente.errors.count, "error") %> prohibited this cliente from being saved:</h2>
 
-      <ul>
-      <% cliente.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% cliente.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.text_field :nombre, id: :cliente_nombre %>
+    </div>
+
+    <div class="field">
+      <%= form.select :contrato, ["", "Fijo", "Variable"], label: "Contrato" %>
+    </div>
+
+    <div class="field">
+      <%= form.number_field :telefono, id: :cliente_telefono %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Crear cliente" %>
     </div>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= form.text_field :nombre, id: :cliente_nombre %>
-  </div>
-
-  <div class="field">
-    <%= form.select :contrato, ["", "Fijo", "Variable"], label: "Contrato" %>
-  </div>
-
-  <div class="field">
-    <%= form.number_field :telefono, id: :cliente_telefono %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit "Crear cliente" %>
-  </div>
-<% end %>
+<div class="jumbotron">
+<h1>Importar Clientes</h1>
+  <%= form_tag import_clientes_path, multipart: true do %>
+    <%= file_field_tag :file, class: "btn" %>
+    <%= submit_tag "Importar", class: "btn btn-lg btn-primary", id:"link-b" %>
+  <% end %>
+</div>

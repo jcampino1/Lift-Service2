@@ -1,88 +1,142 @@
-<p id="notice"><%= notice %></p>
+<% preventiva = "No" %>
+<% if @order.preventiva %>
+  <% preventiva = "Si" %>
+<% end %>
 
-<p>
-  <strong>Grua:</strong>
-  <%= @order.grua_id %>
-</p>
+<h2> Detalles Orden de trabajo</h2>
+<div>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Grua:</strong></td>
+        <td><%= @order.grua_id %></td>
+      </tr>
 
-<p>
-  <strong>Numero:</strong>
-  <%= @order.numero %>
-</p>
+      <tr>
+        <td><strong>Numero OT:</strong></td>
+        <td><%= @order.numero %></td>
+      </tr>
 
-<p>
-  <strong>Cliente:</strong>
-  <%= @order.cliente %>
-</p>
+      <tr>
+        <td><strong>Cliente:</strong></td>
+        <td><%= @order.cliente %></td>
+      </tr>
 
-<p>
-  <strong>Fecha:</strong>
-  <%= @order.fecha %>
-</p>
+      <tr>
+        <td><strong>Fecha:</strong></td>
+        <td><%= @order.fecha %></td>
+      </tr>
 
-<p>
-  <strong>Hora entrada:</strong>
-  <%= @order.hora_entrada %>
-</p>
+      <tr>
+        <td><strong>Hora entrada:</strong></td>
+        <td><%= @order.hora_entrada.to_formatted_s(:time) %></td>
+      </tr>
 
-<p>
-  <strong>Hora salida:</strong>
-  <%= @order.hora_salida %>
-</p>
+      <tr>
+        <td><strong>Hora salida:</strong></td>
+        <td><%= @order.hora_salida.to_formatted_s(:time) %></td>
+      </tr>
 
-<p>
-  <strong>Horometro:</strong>
-  <%= @order.horometro %>
-</p>
+      <tr>
+        <td><strong>Horometro:</strong></td>
+        <td><%= @order.horometro %></td>
+      </tr>
 
-<p>
-  <strong>Preventiva:</strong>
-  <%= @order.preventiva %>
-</p>
+      <tr>
+        <td><strong>Estado maquina:</strong></td>
+        <td><%= @order.estado_maquina %></td>
+      </tr>
 
-<p>
-  <strong>Estado maquina:</strong>
-  <%= @order.estado_maquina %>
-</p>
+      <tr>
+        <td><strong>Equipo:</strong></td>
+        <td class="text-primary"><%= @order.equipo %></td>
+      </tr>
 
-<p>
-  <strong>Trabajos realizados:</strong>
-  <% @order.trabajos_realizados.each do |trabajo| %>
-    <p>- <%= trabajo %><p>
-  <%end%> 
-</p>
+      <tr>
+        <td><strong>Preventiva:</strong></td>
+        <td><%= preventiva %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<p>
-  <strong>Repuestos usados:</strong>
-  <table>
+<h2> Repuestos usados:</h2>
+<div class="jumbotron">
+  <table class="table">
     <thead>
       <tr>
         <th>Repuesto</th>
         <th>Cantidad</th>
+        <th>Valor unitario</th>
+        <th>Total</th>
       </tr>
     </thead>
 
     <tbody>
+      <% total = 0 %>
       <% @order.repuestos_usados.each do |tupla| %>
-        <% nombre = Repuesto.find(tupla[0].to_i).articulo %>
+        <% repuesto = Repuesto.find(tupla[0].to_i) %>
+        <% nombre, valor = repuesto.articulo, repuesto.valor %>
+        <% total_repuesto = tupla[1].to_f*valor %>
+        <% total += total_repuesto %>
         <tr>
           <td><%= nombre %></td>
           <td><%= tupla[1].to_f %></td>
+          <td><%= number_to_currency(valor, unit: "$") %></td>
+          <td class="text-danger"><%= number_to_currency(total_repuesto, unit: "$") %></td>
         </tr>
+
       <% end %>
     </tbody>
   </table>
-</p>
+  <h3 class="text-danger"> Total repuestos: <%= number_to_currency(total, unit: "$") %></h3>
+</div>
 
-<p>
-  <strong>Equipo:</strong>
-  <%= @order.equipo %>
-</p>
+<h2> Trabajos realizados: </h2>
+<% contador = 1 %>
+<div class="jumbotron">
+  <% @order.trabajos_realizados.each do |trabajo| %>
+    <h4><%= contador %>.- <%= trabajo %></h4>
+    <% contador += 1 %>
+  <%end%>
+</div>
 
-<p>
-  <strong>Total:</strong>
-  <%= @order.total %>
-</p>
 
-<%= link_to 'Editar', edit_grua_order_path(id: @order, grua_id: @grua) %> |
-<%= link_to 'Volver', grua_orders_path(grua_id: @grua) %>
+<% hh = (@order.hora_salida - @order.hora_entrada)/3600 %>
+<h2> Resumen </h2>
+<div class="jumbotron">
+  <div>
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>Total por repuestos</td>
+          <td class="text-danger"><%= number_to_currency(total, unit: "$") %></td>
+        </tr>
+        <tr>
+          <td>Horas hombre</td>
+          <td><%= hh %></td>
+        </tr>
+        <tr>
+          <td>Valor HH</td>
+          <td> $15.000 </td>
+        </tr>
+        <tr>
+          <td> Total HH </td>
+          <td class="text-danger"><%= number_to_currency(hh*15000, unit: "$") %></td>
+        </tr>
+        <tr>
+          <td> Costo viaje</td>
+          <td class="text-danger"><%= number_to_currency(@order.total, unit: "$") %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <% total_final = hh*15000 + total + @order.total %>
+  <h3 class="text-danger"> Total: <%= number_to_currency(total_final, unit: "$") %></h5>
+</div>
+
+
+<div>
+  <%= link_to 'Editar', edit_grua_order_path(id: @order, grua_id: @grua) %> |
+  <%= link_to 'Volver', grua_orders_path(grua_id: @grua) %>
+</div>

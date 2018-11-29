@@ -1,49 +1,59 @@
-<%= bootstrap_form_with(model: repuesto, local: true) do |form| %>
-  <% if repuesto.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(repuesto.errors.count, "error") %> prohibited this repuesto from being saved:</h2>
+<div class="jumbotron">
+  <%= bootstrap_form_with(model: repuesto, local: true) do |form| %>
+    <% if repuesto.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(repuesto.errors.count, "error") %> prohibited this repuesto from being saved:</h2>
 
-      <ul>
-      <% repuesto.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% repuesto.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.number_field :codigo, label: "Código" %>
+    </div>
+
+    <div class="field">
+      <%= form.text_field :articulo, label: "Artículo" %>
+    </div>
+
+    <div class="field">
+      <%= form.text_field :panol, label: "Pañol" %>
+    </div>
+
+    <div class="field">
+      <%= form.text_field :movil1, label: "Móvil 1" %>
+    </div>
+
+    <div class="field">
+      <%= form.text_field :movil2, label: "Móvil 2" %>
+    </div>
+
+    <div class="field">
+      <%= form.text_field :stock, label: "Stock" %>
+    </div>
+
+    <div class="field">
+      <%= form.text_field :stock_minimo, label: "Stock mínimo" %>
+    </div>
+
+    <div class="field">
+      <%= form.text_field :valor, label: "Valor", prepend: "$" %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit %>
     </div>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= form.number_field :codigo, label: "Código" %>
-  </div>
-
-  <div class="field">
-    <%= form.text_field :articulo, label: "Artículo" %>
-  </div>
-
-  <div class="field">
-    <%= form.text_field :panol, label: "Pañol" %>
-  </div>
-
-  <div class="field">
-    <%= form.text_field :movil1, label: "Móvil 1" %>
-  </div>
-
-  <div class="field">
-    <%= form.text_field :movil2, label: "Móvil 2" %>
-  </div>
-
-  <div class="field">
-    <%= form.text_field :stock, label: "Stock" %>
-  </div>
-
-  <div class="field">
-    <%= form.text_field :stock_minimo, label: "Stock mínimo" %>
-  </div>
-
-  <div class="field">
-    <%= form.text_field :valor, label: "Valor", prepend: "$" %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+<div class="jumbotron">
+<h1>Importar Repuestos</h1>
+  <%= form_tag import_repuestos_path, multipart: true do %>
+    <%= file_field_tag :file, class: "btn" %>
+    <%= submit_tag "Importar", class: "btn btn-lg btn-primary", id:"link-b" %>
+  <% end %>
+</div>

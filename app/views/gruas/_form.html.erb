@@ -1,62 +1,105 @@
-<%= bootstrap_form_with(model: grua, local: true) do |form| %>
-  <% if grua.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(grua.errors.count, "error") %> no dejo que se agregara esta grua:</h2>
+<div class="jumbotron">
+  <%= bootstrap_form_with(model: grua, local: true) do |form| %>
+    <% if grua.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(grua.errors.count, "error") %> no dejo que se agregara esta grua:</h2>
 
-      <ul>
-      <% grua.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
+        <ul>
+        <% grua.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+      <div class="field">
+        <%= form.number_field :numero_serie, label: "Numero interno" %>
+      </div>
+
+      <div class="field">
+        <%= form.select(:tipo, ['', 'Gas', 'Eléctrica', 'Apilador'], {}, { :class => 'my_style_class' })%>
+      </div>
+
+      <div class="field">
+        <%= form.number_field :horometro, label: "Horometro" %>
+      </div>
+
+      <% posibles_clientes = ['', 'Ninguno'] %>
+      <% Cliente.all.each do |p| %>
+        <% posibles_clientes.append(p.nombre) %>
+      <%end%>
+
+      <div class="field">
+        <%= form.text_field :lugar_actual, label: "Lugar actual" %>
+      </div>
+
+      <div class="field">
+        <%= form.select(:cliente, posibles_clientes, {}) %>
+      </div>
+
+      <div class="field">
+        <%= form.select(:contrato, ['', 'Temporada', 'Permanente'], {}, { :class => 'my_style_class' })%>
+      </div>
+
+      <div class="field">
+        <%= form.select(:propietario, ['', 'Leasing Security', 'LiftService', 'Tanner', 'Corpbanca'], {}, { :class => 'my_style_class' })%>
+      </div>
+
+      <div class="field">
+        <%= form.check_box :asegurada %>
+      </div>
+
+      <div class="field">
+        <%= form.select(:estado, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
+      </div>
+
+      <div class="field">
+        <%= form.text_field :marca, label: "Marca" %>
+      </div>
+
+      <div class="field">
+        <%= form.text_field :modelo, label: "Modelo" %>
+      </div>
+
+      <div class="field">
+        <%= form.text_field :serie, label: "Serie" %>
+      </div>
+
+      <div class="field">
+        <%= form.text_field :motor, label: "Motor" %>
+      </div>
+
+      <div class="field">
+        <%= form.text_field :patente, label: "Patente" %>
+      </div>
+
+      <div class="field">
+        <%= form.text_field :ano, label: "Año" %>
+      </div>
+
+      <div class="field">
+        <%= form.text_field :ton, label: "Ton" %>
+      </div>
+
+      <div class="field">
+        <%= form.text_field :mastil, label: "Mástil" %>
+      </div>
+
+      <div class="field">
+        <%= form.text_area :observaciones, label: "Observaciones" %>
+      </div>
+
+
+      <div class="actions">
+        <%= form.submit "Crear" %>
+      </div>
   <% end %>
+</div>
 
-    <div class="field">
-      <%= form.number_field :numero_serie, label: "Numero de serie" %>
-    </div>
-
-    <div class="field">
-      <%= form.select(:tipo, ['', 'Gas', 'Eléctrica', 'Apilador Eléctrico'], {}, { :class => 'my_style_class' })%>
-    </div>
-
-    <div class="field">
-      <%= form.number_field :horometro, label: "Horometro", help: "" %>
-    </div>
-
-    <% posibles_lugares = ['', 'Central', 'Taller externo'] %>
-    <% posibles_clientes = ['', 'Ninguno'] %>
-    <% Cliente.all.each do |p| %>
-      <% posibles_lugares.append(p.nombre) %>
-      <% posibles_clientes.append(p.nombre) %>
-    <%end%>
-
-    <div class="field">
-      <%= form.select(:lugar_actual, posibles_lugares, {}, { :class => 'my_style_class' })%>
-    </div>
-
-    <div class="field">
-      <%= form.select(:cliente, posibles_clientes, {}) %>
-    </div>
-
-    <div class="field">
-      <%= form.select(:contrato, ['', 'Fijo', 'Permanente'], {}, { :class => 'my_style_class' })%>
-    </div>
-
-    <div class="field">
-      <%= form.select(:propietario, ['', 'Leasing', 'LiftService'], {}, { :class => 'my_style_class' })%>
-    </div>
-
-    <div class="field">
-      <%= form.check_box :asegurada %>
-    </div>
-
-    <div class="field">
-      <%= form.select(:estado, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
-    </div>
-
-
-
-    <div class="actions">
-      <%= form.submit "Crear" %>
-    </div>
-<% end %>
+<div class="jumbotron">
+<h1>Importar Gruas</h1>
+  <%= form_tag import_gruas_path, multipart: true do %>
+    <%= file_field_tag :file, class: "btn" %>
+    <%= submit_tag "Importar", class: "btn btn-lg btn-primary", id:"link-b" %>
+  <% end %>
+</div>

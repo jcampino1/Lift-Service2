@@ -55,14 +55,14 @@
 
   <h3> Trabajos realizados:</h3>
   <div class="field">
-    <%= text_field_tag "trabajos[]" %>
+    <p> 1.- <%= text_field_tag "trabajos[]", '', size: 75 %></p>
   </div>
-  <% contador = 8 %>
-  <% while contador > 0 %>
+  <% contador = 2 %>
+  <% while contador < 9 %>
     <div class="field">
-      <%= text_field_tag "trabajos[]" %>
+      <p> <%=contador%>.- <%= text_field_tag "trabajos[]", '', size: 75 %></p>
     </div>
-    <%contador -= 1 %>
+    <%contador += 1 %>
   <%end%>
 
   <h3> Repuestos utilizados:</h3>

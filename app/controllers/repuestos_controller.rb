@@ -4,7 +4,13 @@ class RepuestosController < ApplicationController
   # GET /repuestos
   # GET /repuestos.json
   def index
-    @repuestos = Repuesto.all
+    tipo = params[:tipo]
+    if tipo == "tipo 1"
+      @repuestos = Repuesto.where("articulo = 'Goma'")
+    else
+      @repuestos = Repuesto.all.order('codigo ASC')
+    end
+    #@repuestos = Repuesto.all
   end
 
   # GET /repuestos/1
@@ -42,7 +48,7 @@ class RepuestosController < ApplicationController
   def update
     respond_to do |format|
       if @repuesto.update(repuesto_params)
-        format.html { redirect_to @repuesto, notice: 'Repuesto was successfully updated.' }
+        format.html { redirect_to @repuesto, notice: 'Traspaso realizado correctamnete.' }
         format.json { render :show, status: :ok, location: @repuesto }
       else
         format.html { render :edit }
@@ -59,6 +65,14 @@ class RepuestosController < ApplicationController
       format.html { redirect_to repuestos_url, notice: 'Repuesto was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def import
+    Repuesto.import(params[:file])
+    redirect_to repuestos_url, notice: "Repuesto(s) importado(s)"
+  end
+
+  def traspaso
   end
 
   private
