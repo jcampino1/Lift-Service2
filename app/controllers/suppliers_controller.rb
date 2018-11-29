@@ -61,6 +61,11 @@ class SuppliersController < ApplicationController
     end
   end
 
+  def import
+    Supplier.import(params[:file])
+    redirect_to suppliers_url, notice: "Proveedor(es) importado(s)"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_supplier

@@ -1,45 +1,147 @@
-<h1>Grua numero: <%=@grua.numero_serie%></h1>
+<center><h1>Grúa número <%=@grua.numero_serie%></h1></center>
+
+<h3> Detalles Grua</h3>
+
+<div class="center jumbotron">
+  <nav>
+    
+    <table class="table">
+      <tbody>
+        <ul>
+          <tr>
+            <td><strong>Tipo:</strong></td>
+            <td><%= @grua.tipo %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Horometro:</strong></td>
+            <td><%= @grua.horometro %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Lugar Actual:</strong></td>
+            <td><%= @grua.lugar_actual %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Cliente:</strong></td>
+            <td><%= @grua.cliente %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Contrato:</strong></td>
+            <td><%= @grua.contrato %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Propietario:</strong></td>
+            <td><%= @grua.propietario %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Asegurada:</strong></td>
+            <td><%= @grua.asegurada %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Estado:</strong></td>
+            <td><%= @grua.estado %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Marca:</strong></td>
+            <td><%= @grua.marca %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Modelo:</strong></td>
+            <td><%= @grua.modelo %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Serie:</strong></td>
+            <td><%= @grua.serie %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Motor:</strong></td>
+            <td><%= @grua.motor %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Patente:</strong></td>
+            <td><%= @grua.patente %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Ano:</strong></td>
+            <td><%= @grua.ano %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Ton:</strong></td>
+            <td><%= @grua.ton %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Mastil:</strong></td>
+            <td><%= @grua.mastil %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Observaciones:</strong></td>
+            <td><%= @grua.observaciones %></td>
+          </tr>
+        </ul>
+      </tbody>
+    </table>
+  </nav>
+</div>
+
 
 <h2>Ordenes de Trabajo</h2>
 
 <% total = 0 %>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Fecha</th>
-      <th>Cliente</th>
-      <th>Preventiva</th>
-      <th>Estado maquina</th>
-      <th>Equipo</th>
-      <th> Total</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @orders.each do |order| %>
+<div class="jumbotron">
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <td><%= order.fecha %></td>
-        <td><%= order.cliente %></td>
-        <td><%= order.preventiva %></td>
-        <td><%= order.estado_maquina %></td>
-        <td><%= order.equipo %></td>
-        <td><%= order.total %></td>
-        <td><%= link_to 'Mostrar', grua_order_path(grua_id: @grua, id: order) %></td>
-        <td><%= link_to 'Eliminar', grua_order_path(grua_id: @grua, id: order), method: :delete, data: { confirm: '¿Estás seguro que quieres eliminar la OT?' } %></td>
+        <th>Fecha</th>
+        <th>Cliente</th>
+        <th>Preventiva</th>
+        <th>Estado maquina</th>
+        <th>Equipo</th>
+        <th> Total</th>
+        <th colspan="2"></th>
       </tr>
-      <% total += order.total %>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.fecha %></td>
+          <td><%= order.cliente %></td>
+          <td><%= order.preventiva %></td>
+          <td><%= order.estado_maquina %></td>
+          <td><%= order.equipo %></td>
+          <td><%= order.total %></td>
+          <td><%= link_to 'Mostrar', grua_order_path(grua_id: @grua, id: order) %></td>
+          <td><%= link_to 'Eliminar', grua_order_path(grua_id: @grua, id: order), method: :delete, data: { confirm: '¿Estás seguro que quieres eliminar la OT?' } %></td>
+        </tr>
+        <% total += order.total %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <h3> Total: <%= total %></h3>
 
 <br>
 
-<div>
-	<%= link_to 'Nueva Orden', new_grua_order_path(grua_id: @grua) %>
+<div class="center jumbotron">
+  <center><h2> Ingresar una nueva Orden de trabajo: </h2></center>
+  <center><%= link_to "Nueva OT", new_grua_order_path(grua_id: @grua), class: "btn btn-lg btn-primary", id:"link-b" %></center>
 </div>
 
 

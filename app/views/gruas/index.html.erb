@@ -1,27 +1,59 @@
 <center><h1>Grúas</h1></center>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th> Numero </th>
-      <th> Tipo </th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "Todos", gruas_path(tipo: "todos") %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Gas", gruas_path(tipo: "Gas") %>
+  </li>
+  <li>
+  <%= link_to "Electricas", gruas_path(tipo: "Electricas") %>
+  </li>
+  <li>
+  <%= link_to "Apiladores", gruas_path(tipo: "Apiladores") %>
+  </li>
+</ul>
 
-  <tbody>
-    <% @gruas.each do |grua| %>
-      <tr>
-        <td><%= grua.numero_serie %></td>
-        <td><%= grua.tipo %></td>
-        <td><%= link_to 'Mostrar', grua %></td>
-        <td><%= link_to 'Editar', edit_grua_path(grua) %></td>
-        <td><%= link_to 'Borrar', grua, method: :delete, data: { confirm: 'Seguro que desea eliminar la grua?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= form_tag gruas_path, :method => 'get' do %>
+  <%= number_field_tag :search, params[:search] %>
+  <%= submit_tag "Buscar" %>
+<% end %>
 
-<div>
-  <%= link_to 'Nueva Grua', new_grua_path %>
+<% if @gruas.any? %>
+  <div style="height:500px;overflow-y:scroll;;">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th> Numero </th>
+          <th> Tipo </th>
+          <th> Lugar Actual </th>
+          <th> Horómetro </th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @gruas.each do |grua| %>
+          <tr>
+            <td><%= grua.numero_serie %></td>
+            <td><%= grua.tipo %></td>
+            <td><%= grua.lugar_actual %></td>
+            <td><%= grua.horometro %></td>
+            <td><%= link_to 'Mostrar', grua %></td>
+            <td><%= link_to 'Editar', edit_grua_path(grua) %></td>
+            <td><%= link_to 'Borrar', grua, method: :delete, data: { confirm: 'Seguro que desea eliminar la grua?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<% else %>
+  <h2> No existe ninguna grúa con ese número</h2>
+<% end %>
+
+<div class="jumbotron">
+  <center><h2> Ingresar nueva Grúa: </h2></center>
+  <center><%= link_to 'Nueva Grúa', new_grua_path, class: "btn btn-lg btn-primary", id:"link-b" %></center>
 </div>

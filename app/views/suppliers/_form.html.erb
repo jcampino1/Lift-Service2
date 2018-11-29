@@ -1,45 +1,55 @@
-<%= bootstrap_form_with(model: supplier, local: true) do |form| %>
-  <% if supplier.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(supplier.errors.count, "error") %> prohibited this supplier from being saved:</h2>
+<div class="jumbotron">
+  <%= bootstrap_form_with(model: supplier, local: true) do |form| %>
+    <% if supplier.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(supplier.errors.count, "error") %> prohibited this supplier from being saved:</h2>
 
-      <ul>
-      <% supplier.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% supplier.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.text_field :nombre %>
+    </div>
+
+    <div class="field">
+      <%= form.number_field :codigo, label: "Código" %>
+    </div>
+
+    <div class="field">
+      <%= form.text_field :categoria, label: "Categoría" %>
+    </div>
+
+    <div class="field">
+      <%= form.email_field :correo %>
+    </div>
+
+    <div class="field">
+      <%= form.telephone_field :telefono, label: "Teléfono" %>
+    </div>
+
+    <div class="field">
+      <%= form.text_field :direccion, label: "Dirección" %>
+    </div>
+
+    <div class="field">
+      <%= form.check_box :credito, label: "Crédito" %>
+    </div>
+
+    <div class="field">
+      <%= form.submit "Crear Proveedor"%>
     </div>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= form.text_field :nombre %>
-  </div>
-
-  <div class="field">
-    <%= form.number_field :codigo, label: "Código" %>
-  </div>
-
-  <div class="field">
-    <%= form.text_field :categoria, label: "Categoría" %>
-  </div>
-
-  <div class="field">
-    <%= form.email_field :correo %>
-  </div>
-
-  <div class="field">
-    <%= form.telephone_field :telefono, label: "Teléfono" %>
-  </div>
-
-  <div class="field">
-    <%= form.text_field :direccion, label: "Dirección" %>
-  </div>
-
-  <div class="field">
-    <%= form.check_box :credito, label: "Crédito" %>
-  </div>
-
-  <div class="field">
-    <%= form.submit "Crear Proveedor"%>
-  </div>
-<% end %>
+<div class="jumbotron">
+<h1>Importar Proveedores</h1>
+  <%= form_tag import_suppliers_path, multipart: true do %>
+    <%= file_field_tag :file, class: "btn" %>
+    <%= submit_tag "Importar", class: "btn btn-lg btn-primary", id:"link-b" %>
+  <% end %>
+</div>

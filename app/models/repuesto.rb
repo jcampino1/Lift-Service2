@@ -1,4 +1,11 @@
 class Repuesto < ApplicationRecord
+	require 'csv'
+
+   	def self.import(file)
+   		CSV.foreach(file.path, headers: false) do |row|
+      		Repuesto.create!(articulo: row[1], codigo: row[0], valor: row[5])
+    	end
+   	end
 
 	def self.agregar(lista_repuestos)
 		lista_repuestos.each do |tupla|
