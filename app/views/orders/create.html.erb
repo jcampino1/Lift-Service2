@@ -1,9 +1,19 @@
-<h1> No existen los repuestos con los siguientes códigos:</h1>
-
-<% @errores.each do |error| %>
-	<div>
-		<p> <%= error.to_i %> </p>
+<% if @malo %>
+	<div class="jumbotron">
+		<h2> Nuevo horometro menor que el antiguo, por favor corregir </h2>
 	</div>
 <% end %>
 
-<h2> Por favor, vuelva atrás y corriga dichos códigos para que la OT sea válida</h2>
+<% if not @correcto and @errores.length > 0 %>
+	<div class="jumbotron">
+		<h2> No existen los repuestos con los siguientes códigos:</h2>
+
+		<% @errores.each do |error| %>
+			<div>
+				<p> <%= error.to_i %> </p>
+			</div>
+		<% end %>
+
+		<h3> Por favor, vuelva atrás y corriga dichos códigos para que la OT sea válida</h3>
+	</div>
+<% end %>

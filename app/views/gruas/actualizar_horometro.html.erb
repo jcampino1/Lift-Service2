@@ -1,0 +1,38 @@
+<center><h1> Actualizacion de horometro </h1></center>
+<center><h2>Grua numero: <%= @grua.numero_serie %></h2></center>
+<center><h2>Tipo: <%= @grua.tipo %></h2></center>
+
+<% if @mensaje %>
+	<p> Nuevo horometro es menor que el antiguo, invalido </p>
+<% else %>
+	<p> Horometro actualizado: De <%= @horometro_antiguo %> a <%= @hor %></p>
+	<% if @necesita %>
+		<center><h2 class="text-danger"> Necesita mantencion! </h2></center>
+		<div class="jumbotron">
+			<p> Horometro: <%= @hor %></p>
+			<table class="table">
+				<thead>
+					<th>Secuencia</th>
+					<th>Horas faltantes</th>
+					<th>Horas teoricas de mantencion</th>
+				</thead>
+				<tbody>
+					<% @dicc.each do |key, value| %>
+						<tr>
+							<td>Cada <%= key %> horas</td>
+							<% if value[0] <= 0 %>
+								<td class="text-danger"><%= value[0] %> horas</td>
+							<% else %>
+								<td><%= value[0] %> horas</td>
+							<% end %>
+							<td><%= value[1] %> horas</td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	<% else %>
+	<h2 class="text-success"> No necesita mantencion preventiva </h2>
+	<% end %>
+	<%= link_to "Volver", @grua, class: "btn btn-lg btn-primary", id:"link-b" %>
+<% end %>

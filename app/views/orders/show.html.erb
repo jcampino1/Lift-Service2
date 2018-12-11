@@ -102,7 +102,6 @@
 </div>
 
 
-<% hh = (@order.hora_salida - @order.hora_entrada)/3600 %>
 <h2> Resumen </h2>
 <div class="jumbotron">
   <div>
@@ -114,7 +113,7 @@
         </tr>
         <tr>
           <td>Horas hombre</td>
-          <td><%= hh %></td>
+          <td><%= @order.horas_hombre %></td>
         </tr>
         <tr>
           <td>Valor HH</td>
@@ -122,16 +121,16 @@
         </tr>
         <tr>
           <td> Total HH </td>
-          <td class="text-danger"><%= number_to_currency(hh*15000, unit: "$") %></td>
+          <td class="text-danger"><%= number_to_currency(@order.horas_hombre*15000, unit: "$") %></td>
         </tr>
         <tr>
           <td> Costo viaje</td>
-          <td class="text-danger"><%= number_to_currency(@order.total, unit: "$") %></td>
+          <td class="text-danger"><%= number_to_currency(@order.costo, unit: "$") %></td>
         </tr>
       </tbody>
     </table>
   </div>
-  <% total_final = hh*15000 + total + @order.total %>
+  <% total_final = @order.horas_hombre*15000 + total + @order.costo %>
   <h3 class="text-danger"> Total: <%= number_to_currency(total_final, unit: "$") %></h5>
 </div>
 

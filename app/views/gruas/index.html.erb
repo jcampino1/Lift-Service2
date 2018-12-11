@@ -29,7 +29,7 @@
           <th> Tipo </th>
           <th> Lugar Actual </th>
           <th> Horómetro </th>
-          <th colspan="3"></th>
+          <th colspan="2"></th>
         </tr>
       </thead>
 
@@ -41,7 +41,6 @@
             <td><%= grua.lugar_actual %></td>
             <td><%= grua.horometro %></td>
             <td><%= link_to 'Mostrar', grua %></td>
-            <td><%= link_to 'Editar', edit_grua_path(grua) %></td>
             <td><%= link_to 'Borrar', grua, method: :delete, data: { confirm: 'Seguro que desea eliminar la grua?' } %></td>
           </tr>
         <% end %>
@@ -56,4 +55,9 @@
 <div class="jumbotron">
   <center><h2> Ingresar nueva Grúa: </h2></center>
   <center><%= link_to 'Nueva Grúa', new_grua_path, class: "btn btn-lg btn-primary", id:"link-b" %></center>
+</div>
+
+<div class="jumbotron">
+  <center><h2> Mantenciones </h2></center>
+  <center><%= link_to 'Revisar mantenciones', revisar_mantenciones_path, class: "btn btn-lg btn-primary", id:"link-b" %></center>
 </div>

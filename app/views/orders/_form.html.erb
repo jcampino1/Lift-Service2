@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= form.number_field :numero, id: :order_numero %>
+    <%= form.number_field :numero, label: "Número de la OT" %>
   </div>
 
 
@@ -22,35 +22,40 @@
   <%end%>
 
   <div class="field">
-    <%= form.select(:cliente, clientes, {}, { :class => 'my_style_class' })%>
+    <%= form.select :cliente, clientes %>
   </div>
 
   <div class="field">
-    <%= form.select(:equipo, ['', 'Taller1', 'Taller2', 'Central'], {}, { :class => 'my_style_class' })%>
+    <%= form.select :equipo, ["", "Móvil 1", "Móvil 2", "Central", "Taller Externo"], label: "Taller" %>
   </div>
 
   <div class="field">
-    <%= form.date_select :fecha, id: :order_fecha %>
+    <%= form.date_select :fecha %>
   </div>
 
   <div class="field">
-    <%= form.time_select :hora_entrada, id: :order_hora_entrada %>
+    <%= form.time_select :hora_entrada %>
   </div>
 
   <div class="field">
-    <%= form.time_select :hora_salida, id: :order_hora_salida %>
+    <%= form.time_select :hora_salida %>
   </div>
 
   <div class="field">
-    <%= form.number_field :horometro, id: :order_horometro %>
+    <%= form.number_field :horas_hombre, label: "Horas/hombre", help: "En caso de que no se pueda medir como la diferencia entre hora de entrada y salida" %>
   </div>
 
   <div class="field">
-    <%= form.check_box :preventiva, id: :order_preventiva %>
+    <% frase = "Debe ser mayor que el horometro actual: " + @grua.horometro.round(0).to_i.to_s %>
+    <%= form.number_field :horometro, label: "Horómetro", help: frase %>
+  </div>
+
+  <div class="jumbotron">
+    <%= form.check_box :preventiva %> <%= form.check_box :correctiva %> <%= form.check_box :dano, label: "Daño" %>
   </div>
 
   <div class="field">
-    <%= form.select(:estado_maquina, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
+    <%= form.select :estado_maquina, ['', 'Operativa', 'No Operativa'], label: "Estado de la máquina" %>
   </div>
 
   <h3> Trabajos realizados:</h3>
@@ -70,8 +75,8 @@
   <table>
   <thead>
     <tr>
-      <th>Codigo repuesto</th>
-      <th>Cantidad</th>
+      <th><center>Código repuesto</center></th>
+      <th><center>Cantidad</center></th>
     </tr>
   </thead>
 
@@ -93,7 +98,7 @@
 </table>
 
   <div class="field">
-    <%= form.text_field :total, id: :order_total %>
+    <%= form.number_field :costo, label: "Costos viaje", help: "Puede incluir costos del viaje y otros" %>
   </div>
 
 
