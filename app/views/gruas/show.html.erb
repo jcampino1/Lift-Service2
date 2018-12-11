@@ -1,8 +1,107 @@
-<center><h1>Grúa número <%=@grua.numero_serie%></h1></center>
+<center><h1>Grúa Num <%=@grua.numero_serie%></h1></center>
+<center><h2>Horometro: <%= number_with_delimiter(@grua.horometro.round(0).to_i, delimiter: ".") %></h2></center>
 
-<h3> Detalles Grua</h3>
+
+<p> Mantenciones: <%= @grua.dicc_mantenciones %></p>
+
+<% if @grua.necesita %>
+  <div class="jumbotron">
+    <center><h2 class="text-danger">Necesita mantencion </h2></center>
+    <br>
+    <table class="table">
+      <thead>
+        <th>Secuencia</th>
+        <th>Horas faltantes</th>
+        <th>Horas teoricas de mantencion</th>
+      </thead>
+      <tbody>
+        <% @grua.dicc_a_realizar.each do |key, value| %>
+          <tr>
+            <td>Cada <%= key %> horas</td>
+            <% if value[0] <= 0 %>
+              <td class="text-danger"><%= value[0] %> horas</td>
+            <% else %>
+              <td><%= value[0] %> horas</td>
+            <% end %>
+            <td><%= value[1] %> horas</td>
+            <td><%= link_to "Realizada", mantencion_realizada_path(grua_id: @grua.id, secuencia: key) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="jumbotron">
+    <center><h2 class="text-success">Mantenciones al dia</h2></center>
+  </div>
+<% end %>
+
+
+<div class="jumbotron">
+  <center><h2 class="text-primary">Ordenes de Trabajo</h2></center>
+  <br>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Cliente</th>
+        <th>Preventiva</th>
+        <th>Estado maquina</th>
+        <th>Equipo</th>
+        <th> Total</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.fecha %></td>
+          <td><%= order.cliente %></td>
+          <td><%= order.preventiva %></td>
+          <td><%= order.estado_maquina %></td>
+          <td><%= order.equipo %></td>
+          <td><%= order.total %></td>
+          <td><%= link_to 'Mostrar', grua_order_path(grua_id: @grua, id: order) %></td>
+          <td><%= link_to 'Eliminar', grua_order_path(grua_id: @grua, id: order), method: :delete, data: { confirm: '¿Estás seguro que quieres eliminar la OT?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+
+  <center><h2> Ingresar una nueva Orden de trabajo: </h2></center>
+  <center><%= link_to "Nueva OT", new_grua_order_path(grua_id: @grua), class: "btn btn-lg btn-primary", id:"link-b" %></center>
+</div>
+
+<div class="jumbotron">
+  <h3>Actualizar Horometro</h3>
+  <%= form_tag grua_actualizar_horometro_path(@grua), multipart: true do %>
+    <%= number_field_tag :nuevo_horometro, class: "btn" %>
+    <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
+  <% end %>
+  <p> Debe ser mayor que el horometro anterior: <%= @grua.horometro %></p>
+</div>
+
+<div class="jumbotron">
+  <h3>Calcular repuestos usados</h3>
+  <%= form_tag grua_calcular_repuestos_path(@grua), multipart: true do %>
+    <div class="field">
+      <p>Fecha inicial: <%= date_select :fecha_inicial, class: "btn" %></p>
+    </div>
+    <div class="field">
+      <p>Fecha final: <%= date_select :fecha_final, class: "btn" %></p>
+    </div>
+    <%= submit_tag "Calcular repuestos", class: "btn btn-lg btn-primary", id:"link-b" %>
+  <% end %>
+</div>
+
 
 <div class="center jumbotron">
+  <center><h2 class="text-primary"> Detalles Grua</h2></center>
+  <br>
   <nav>
     
     <table class="table">
@@ -97,53 +196,6 @@
     </table>
   </nav>
 </div>
-
-
-<h2>Ordenes de Trabajo</h2>
-
-<% total = 0 %>
-
-<div class="jumbotron">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Cliente</th>
-        <th>Preventiva</th>
-        <th>Estado maquina</th>
-        <th>Equipo</th>
-        <th> Total</th>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @orders.each do |order| %>
-        <tr>
-          <td><%= order.fecha %></td>
-          <td><%= order.cliente %></td>
-          <td><%= order.preventiva %></td>
-          <td><%= order.estado_maquina %></td>
-          <td><%= order.equipo %></td>
-          <td><%= order.total %></td>
-          <td><%= link_to 'Mostrar', grua_order_path(grua_id: @grua, id: order) %></td>
-          <td><%= link_to 'Eliminar', grua_order_path(grua_id: @grua, id: order), method: :delete, data: { confirm: '¿Estás seguro que quieres eliminar la OT?' } %></td>
-        </tr>
-        <% total += order.total %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
-<h3> Total: <%= total %></h3>
-
-<br>
-
-<div class="center jumbotron">
-  <center><h2> Ingresar una nueva Orden de trabajo: </h2></center>
-  <center><%= link_to "Nueva OT", new_grua_order_path(grua_id: @grua), class: "btn btn-lg btn-primary", id:"link-b" %></center>
-</div>
-
 
 <%= link_to 'Editar', edit_grua_path(@grua) %> |
 <%= link_to 'Volver', gruas_path %>

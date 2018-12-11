@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181126183826) do
+ActiveRecord::Schema.define(version: 20181201155552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,14 +44,20 @@ ActiveRecord::Schema.define(version: 20181126183826) do
     t.integer "ton"
     t.float "mastil"
     t.text "observaciones"
+    t.string "dicc_mantenciones"
+    t.boolean "necesita", default: false
+    t.string "dicc_a_realizar"
   end
 
   create_table "ingresos", force: :cascade do |t|
     t.string "proveedor"
     t.string "repuestos", default: [], array: true
+    t.string "repuestos_faltantes", default: [], array: true
     t.float "total", default: 0.0
     t.date "fecha"
     t.integer "numero_factura"
+    t.integer "orden_compra"
+    t.boolean "abierta"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -65,13 +71,17 @@ ActiveRecord::Schema.define(version: 20181126183826) do
     t.time "hora_salida"
     t.float "horometro"
     t.boolean "preventiva"
+    t.boolean "correctiva"
+    t.boolean "dano"
     t.string "estado_maquina"
     t.text "trabajos_realizados", default: [], array: true
     t.string "repuestos_usados", default: [], array: true
     t.string "equipo"
     t.float "total", default: 0.0
+    t.float "horas_hombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "costo"
   end
 
   create_table "repuestos", primary_key: "codigo", id: :integer, default: nil, force: :cascade do |t|

@@ -22,20 +22,44 @@ class OrdersController < ApplicationController
   def edit
   end
 
-  # POST /orders
-  # POST /orders.json
 
   def create
+
+    # Para ver que el horometro sea mayor
+    malo = false
+    horometro = order_params[:horometro].to_f
+    if horometro < @grua.horometro
+      @malo = true
+    end
+
+    # Para los trabajos y repuestos
     lista_trabajos = Order.trabajos(params[:trabajos])
     correcto, lista_repuestos = Order.repuestos(params[:repuestos])
-    if correcto
+
+    if correcto and not @malo
       @order = @grua.orders.build(order_params)
       @order.grua = @grua
       @order.trabajos_realizados = lista_trabajos
       @order.repuestos_usados = lista_repuestos
+      
+      # Si es que no puso nada en HH
+      if not @order.horas_hombre
+        @order.horas_hombre = (@order.hora_salida - @order.hora_entrada)/3600
+      end
+
+      total_repuestos = Repuesto.rebajar(lista_repuestos, @order.equipo)
+      @order.total = @order.costo + total_repuestos + @order.horas_hombre*15000
+
+      # Actualizar horometro y ver mantenciones
+      @grua.horometro = horometro
+      @necesita, @dicc = @grua.evaluar_mantenciones(horometro, @grua.dicc_mantenciones, 
+        @grua.mantenciones)
+      @grua.necesita = @necesita
+      @grua.dicc_a_realizar = @dicc
+      @grua.save
+
       @order.save
 
-      Repuesto.rebajar(lista_repuestos, @order.equipo)
 
       redirect_to grua_path(id: @grua.id)
     else
@@ -97,7 +121,7 @@ class OrdersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
       params.require(:order).permit(:grua_id, :numero, :cliente, :fecha, :hora_entrada,
-       :hora_salida, :horometro, :preventiva, :estado_maquina, :trabajos_realizados,
-        :repuestos_usados, :equipo, :order_id, :total)
+       :hora_salida, :horas_hombre, :horometro, :preventiva, :correctiva, :dano, :estado_maquina, :trabajos_realizados,
+        :repuestos_usados, :equipo, :order_id, :costo)
     end
 end

@@ -25,44 +25,50 @@
   </div>
 
   <div class="field">
+    <%= form.number_field :orden_compra, label: "Orden de Compra" %>
+  </div>
+
+  <div class="field">
     <%= form.date_select :fecha %>
   </div>
 
-  <table>
-  <thead>
-    <tr>
-      <th>Código de repuesto</th>
-      <th>Cantidad</th>
-      <th>Precio por unidad</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <div class="jumbotron">
+    <table>
+      <thead>
+        <tr>
+          <th><center>Código de repuesto</center></th>
+          <th><center>Cantidad</center></th>
+          <th><center>Precio por unidad</center></th>
+          <th><center>Faltante</center></th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <tr>
-      <td><%= number_field_tag "repuestos[repuestos][]repuesto[codigo]" %></td>
-      <td><%= number_field_tag "repuestos[repuestos][]repuesto[cantidad]" %></td>
-      <td><%= number_field_tag "repuestos[repuestos][]repuesto[precio]" %></td>
-    </tr>
+      <tbody>
+        <tr>
+          <td><%= number_field_tag "repuestos[repuestos][]repuesto[codigo]" %></td>
+          <td><%= number_field_tag "repuestos[repuestos][]repuesto[cantidad]" %></td>
+          <td><%= number_field_tag "repuestos[repuestos][]repuesto[precio]" %></td>
+          <td><%= number_field_tag "repuestos[repuestos][]repuesto[faltante]" %></td>
 
-    <% contador = 10 %>
-    <% while contador > 0 %>
-      <tr>
-        <td><input type="number" name="repuestos[repuestos][]repuesto[codigo]"></td>
-        <td><input type="number" name="repuestos[repuestos][]repuesto[cantidad]"></td>
-        <td><input type="number" name="repuestos[repuestos][]repuesto[precio]"></td>
-      </tr>
-      <% contador -= 1 %>
-    <%end%>
-  </tbody>
-</table>
+        </tr>
 
-  <div class="field">
-    <%= form.text_field :total, id: :ingreso_total, prepend: "$" %>
+        <% contador = 10 %>
+        <% while contador > 0 %>
+          <tr>
+            <td><input type="number" name="repuestos[repuestos][]repuesto[codigo]"></td>
+            <td><input type="number" name="repuestos[repuestos][]repuesto[cantidad]"></td>
+            <td><input type="number" name="repuestos[repuestos][]repuesto[precio]"></td>
+            <td><input type="number" name="repuestos[repuestos][]repuesto[faltante]"></td>
+          </tr>
+          <% contador -= 1 %>
+        <%end%>
+      </tbody>
+    </table>
   </div>
 
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="field">
+    <%= form.submit "Crear Ingreso", class: "btn btn-lg btn-primary", id:"link-b"%>
   </div>
 <% end %>

@@ -43,6 +43,16 @@ class GruasController < ApplicationController
   # POST /gruas.json
   def create
     @grua = Grua.new(grua_params)
+    @grua.dicc_mantenciones = @grua.set_dicc_mantenciones(@grua.tipo, @grua.horometro)
+
+    if @grua.tipo == "Eléctrica"
+        @grua.mantenciones = [6000, 2000, 1000, 250]
+      elsif @grua.tipo == "Gas"
+        @grua.mantenciones = [2450, 1400, 700, 350]
+      elsif @grua.tipo == "Apilador"
+        @grua.mantenciones = [2000, 1000, 500]
+      else @grua.mantenciones = []
+      end
 
     respond_to do |format|
       if @grua.save
@@ -84,6 +94,49 @@ class GruasController < ApplicationController
     redirect_to root_url, notice: "Grua(s) importada(s)"
   end
 
+  def actualizar_horometro
+    @grua = Grua.find(params[:grua_id])
+    @hor = params[:nuevo_horometro].to_f
+    @horometro_antiguo = @grua.horometro
+    if @grua.horometro > @hor
+      @mensaje = true
+    else
+      @mensaje = false
+      @grua.horometro = @hor
+      @necesita, @dicc = @grua.evaluar_mantenciones(@hor, @grua.dicc_mantenciones, @grua.mantenciones)
+      @grua.necesita = @necesita
+      @grua.dicc_a_realizar = @dicc
+      @grua.save
+    end
+  end
+
+  def calcular_repuestos
+    @grua = Grua.find(params[:grua_id])
+    @fecha_inicial, @fecha_final = params[:fecha_inicial], params[:fecha_final]
+    #@repuestos = @grua.calcular_repuestos(fecha_inicial, fecha_final)
+  end
+
+  def revisar_mantenciones
+    @gruas = Grua.where(necesita: true)
+  end
+
+  def mantencion_realizada
+    @grua = Grua.find(params[:grua_id])
+    secuencia = params[:secuencia].to_i
+    #@grua.dicc_mantenciones[secuencia] += 1
+    @grua.dicc_mantenciones.keys.each do |key|
+      if key <= secuencia
+        @grua.dicc_mantenciones[key] += 1
+      end
+    end
+    necesita, dicc = @grua.evaluar_mantenciones(@grua.horometro, @grua.dicc_mantenciones, @grua.mantenciones)
+    @grua.necesita = necesita
+    @grua.dicc_a_realizar = dicc
+    @grua.save
+
+    redirect_back(fallback_location: root_path)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_grua
@@ -94,6 +147,6 @@ class GruasController < ApplicationController
     def grua_params
       params.require(:grua).permit(:tipo, :numero_serie, :horometro, :lugar_actual, :cliente, :contrato,
         :propietario, :asegurada, :estado, :marca, :modelo, :serie, :motor, :patente, :ano,
-        :ton, :mastil, :observaciones)
+        :ton, :mastil, :observaciones, :dicc_mantenciones)
     end
 end

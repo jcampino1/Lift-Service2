@@ -24,11 +24,22 @@ class IngresosController < ApplicationController
   # POST /ingresos
   # POST /ingresos.json
   def create
-    correcto, lista_repuestos = Ingreso.format(params[:repuestos])
+    # Se ve siesque estan correctos los input
+    correcto, lista_repuestos, falta, lista_faltante = Ingreso.format(params[:repuestos])
+    
     if correcto
       @ingreso = Ingreso.new(ingreso_params)
       @ingreso.repuestos = lista_repuestos
-      Repuesto.agregar(lista_repuestos)
+
+
+      # Aca se agregan al inventario y se calcula el total agregado
+      @ingreso.total = Repuesto.agregar(lista_repuestos)
+      
+      # Si es que hay faltante
+      if falta
+        @ingreso.abierta = true # Se deja abierta la OC
+        @ingreso.repuestos_faltantes = lista_faltante
+      end
 
       respond_to do |format|
         if @ingreso.save
@@ -43,6 +54,7 @@ class IngresosController < ApplicationController
       @errores = lista_repuestos
     end
   end
+
 
   # PATCH/PUT /ingresos/1
   # PATCH/PUT /ingresos/1.json
@@ -68,6 +80,25 @@ class IngresosController < ApplicationController
     end
   end
 
+  def completar
+    @ingreso = Ingreso.find(params[:ingreso_id])
+    total_agregado = Repuesto.agregar_faltantes(@ingreso.repuestos_faltantes)
+    @ingreso.repuestos = Ingreso.agregar_faltantes(@ingreso.repuestos, @ingreso.repuestos_faltantes)
+    @ingreso.total += total_agregado
+    @ingreso.abierta = false
+    @ingreso.repuestos_faltantes = []
+    @ingreso.save
+    redirect_to @ingreso
+  end
+
+  def cerrar
+    @ingreso = Ingreso.find(params[:ingreso_id])
+    @ingreso.abierta = false
+    @ingreso.repuestos_faltantes = []
+    @ingreso.save
+    redirect_to @ingreso
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ingreso
@@ -75,6 +106,7 @@ class IngresosController < ApplicationController
     end
 
     def ingreso_params
-      params.require(:ingreso).permit(:proveedor, :total, :fecha, :numero_factura)
+      params.require(:ingreso).permit(:proveedor, :total, :fecha, :numero_factura,
+       :orden_compra)
     end
 end
