@@ -90,4 +90,41 @@ class Grua < ApplicationRecord
  		end
  		return necesita_mantencion, dicc_a_realizar
  	end
+
+ 	def calcular_repuestos(fecha_inicial, fecha_final)
+ 		ordenes = self.orders.where(:fecha => fecha_inicial..fecha_final)
+ 		dicc_repuestos = {}
+ 		ordenes.each do |orden|
+ 			orden.repuestos_usados.each do |tupla|
+ 				if dicc_repuestos.keys.include?(tupla[0])
+ 					dicc_repuestos[tupla[0]] += tupla[1].to_f
+ 				else
+ 					dicc_repuestos[tupla[0]] = tupla[1].to_f
+ 				end
+ 			end
+ 		end
+ 		return dicc_repuestos, ordenes
+ 	end
+
+ 	def self.calcular_repuestos_totales
+ 		dicc_repuestos = {}
+ 		total = 0
+ 		gruas = Grua.all
+ 		gruas.each do |grua|
+ 			dicc_grua = {}
+ 			grua.orders.each do |orden|
+ 				orden.repuestos_usados.each do |tupla|
+					if dicc_repuestos.keys.include?(tupla[0])
+ 						dicc_repuestos[tupla[0]] += tupla[1].to_f
+ 					else
+ 						dicc_repuestos[tupla[0]] = tupla[1].to_f
+ 					end
+ 					total += orden.total
+ 				end
+ 			end
+ 		end
+ 		return dicc_repuestos, total
+ 	end
+
+
 end

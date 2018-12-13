@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   get 'gruas/revisar_mantenciones', to: 'gruas#revisar_mantenciones',
    as: :revisar_mantenciones
+  get 'gruas/analisis', to: 'gruas#analisis', as: :analisis
 
   get 'gruas/mantencion_realizada', to: 'gruas#mantencion_realizada', as: :mantencion_realizada
 
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
   resources :gruas do
     collection { post :import }
     post 'actualizar_horometro', to: 'gruas#actualizar_horometro', as: :actualizar_horometro
+    post 'actualizar_cliente', to: 'gruas#actualizar_cliente', as: :actualizar_cliente
     post 'calcular_repuestos', to: 'gruas#calcular_repuestos', as: :calcular_repuestos
   	resources :orders
   end
