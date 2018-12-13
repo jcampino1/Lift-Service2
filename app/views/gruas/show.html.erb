@@ -2,17 +2,15 @@
 <center><h2>Horometro: <%= number_with_delimiter(@grua.horometro.round(0).to_i, delimiter: ".") %></h2></center>
 
 
-<p> Mantenciones: <%= @grua.dicc_mantenciones %></p>
-
 <% if @grua.necesita %>
   <div class="jumbotron">
-    <center><h2 class="text-danger">Necesita mantencion </h2></center>
+    <center><h2 class="text-danger">Necesita mantención </h2></center>
     <br>
     <table class="table">
       <thead>
         <th>Secuencia</th>
         <th>Horas faltantes</th>
-        <th>Horas teoricas de mantencion</th>
+        <th>Horas teóricas de mantención</th>
       </thead>
       <tbody>
         <% @grua.dicc_a_realizar.each do |key, value| %>
@@ -21,9 +19,9 @@
             <% if value[0] <= 0 %>
               <td class="text-danger"><%= value[0] %> horas</td>
             <% else %>
-              <td><%= value[0] %> horas</td>
+              <td><%= number_with_delimiter(value[0].to_i, delimiter: ".") %> horas</td>
             <% end %>
-            <td><%= value[1] %> horas</td>
+            <td><%= number_with_delimiter(value[1].to_i, delimiter: ".")%> horas</td>
             <td><%= link_to "Realizada", mantencion_realizada_path(grua_id: @grua.id, secuencia: key) %></td>
           </tr>
         <% end %>
@@ -32,7 +30,7 @@
   </div>
 <% else %>
   <div class="jumbotron">
-    <center><h2 class="text-success">Mantenciones al dia</h2></center>
+    <center><h2 class="text-success">Mantenciones al día</h2></center>
   </div>
 <% end %>
 
@@ -46,7 +44,7 @@
         <th>Fecha</th>
         <th>Cliente</th>
         <th>Preventiva</th>
-        <th>Estado maquina</th>
+        <th>Estado máquina</th>
         <th>Equipo</th>
         <th> Total</th>
         <th colspan="2"></th>
@@ -77,16 +75,32 @@
 </div>
 
 <div class="jumbotron">
-  <h3>Actualizar Horometro</h3>
-  <%= form_tag grua_actualizar_horometro_path(@grua), multipart: true do %>
-    <%= number_field_tag :nuevo_horometro, class: "btn" %>
-    <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
-  <% end %>
-  <p> Debe ser mayor que el horometro anterior: <%= @grua.horometro %></p>
+  <center><h2>Actualizar atributos</h2></center>
+  <div class="row">
+    <div class="col">
+      <h3>Actualizar horómetro</h3>
+      <%= form_tag grua_actualizar_horometro_path(@grua), multipart: true do %>
+        <%= number_field_tag :nuevo_horometro, class: "btn" %>
+        <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
+      <% end %>
+      <h4> Debe ser mayor que el horometro anterior: <%=number_with_delimiter(@grua.horometro.to_i, delimiter: ".") %></h4>
+    </div>
+
+    <p>---------------------------------------</p>
+
+    <div class="col">
+      <h3>Actualizar cliente y lugar</h3>
+      <%= form_tag grua_actualizar_cliente_path(@grua), multipart: true do %>
+        <h4>Cliente: <%= select("cliente", "cliente_id", Cliente.all.collect {|p| [ p.nombre, p.id ] }, { include_blank: true }) %></h4>
+        <h4>Lugar: <%= text_field_tag :lugar %></h4>
+        <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 <div class="jumbotron">
-  <h3>Calcular repuestos usados</h3>
+  <center><h2>Análisis entre fechas</h2></center>
   <%= form_tag grua_calcular_repuestos_path(@grua), multipart: true do %>
     <div class="field">
       <p>Fecha inicial: <%= date_select :fecha_inicial, class: "btn" %></p>
@@ -94,13 +108,13 @@
     <div class="field">
       <p>Fecha final: <%= date_select :fecha_final, class: "btn" %></p>
     </div>
-    <%= submit_tag "Calcular repuestos", class: "btn btn-lg btn-primary", id:"link-b" %>
+    <%= submit_tag "Realizar análisis", class: "btn btn-lg btn-primary", id:"link-b" %>
   <% end %>
 </div>
 
 
 <div class="center jumbotron">
-  <center><h2 class="text-primary"> Detalles Grua</h2></center>
+  <center><h2 class="text-primary"> Detalles Grúa</h2></center>
   <br>
   <nav>
     
@@ -199,3 +213,8 @@
 
 <%= link_to 'Editar', edit_grua_path(@grua) %> |
 <%= link_to 'Volver', gruas_path %>
+<br>
+<br>
+<br>
+<br>
+<br>

@@ -1,20 +1,20 @@
-<center><h1> Actualizacion de horometro </h1></center>
-<center><h2>Grua numero: <%= @grua.numero_serie %></h2></center>
+<center><h1> Actualizacion de horómetro </h1></center>
+<center><h2>Grúa numero: <%= @grua.numero_serie %></h2></center>
 <center><h2>Tipo: <%= @grua.tipo %></h2></center>
 
 <% if @mensaje %>
-	<p> Nuevo horometro es menor que el antiguo, invalido </p>
+	<p> Nuevo horómetro es menor que el antiguo, inválido </p>
 <% else %>
-	<p> Horometro actualizado: De <%= @horometro_antiguo %> a <%= @hor %></p>
+	<p> Horómetro actualizado: De <%= number_with_delimiter(@horometro_antiguo.to_i, delimiter: ".") %> a <%= number_with_delimiter(@hor.to_i, delimiter: ".") %></p>
 	<% if @necesita %>
-		<center><h2 class="text-danger"> Necesita mantencion! </h2></center>
+		<center><h2 class="text-danger"> Necesita mantención! </h2></center>
 		<div class="jumbotron">
-			<p> Horometro: <%= @hor %></p>
+			<p> Horometro: <%= number_with_delimiter(@hor.to_i, delimiter: ".") %></p>
 			<table class="table">
 				<thead>
 					<th>Secuencia</th>
 					<th>Horas faltantes</th>
-					<th>Horas teoricas de mantencion</th>
+					<th>Horas teoricas de mantención</th>
 				</thead>
 				<tbody>
 					<% @dicc.each do |key, value| %>
@@ -25,14 +25,14 @@
 							<% else %>
 								<td><%= value[0] %> horas</td>
 							<% end %>
-							<td><%= value[1] %> horas</td>
+							<td><%= number_with_delimiter(value[1].to_i, delimiter: ".") %> horas</td>
 						</tr>
 					<% end %>
 				</tbody>
 			</table>
 		</div>
 	<% else %>
-	<h2 class="text-success"> No necesita mantencion preventiva </h2>
+	<h2 class="text-success"> No necesita mantención preventiva </h2>
 	<% end %>
 	<%= link_to "Volver", @grua, class: "btn btn-lg btn-primary", id:"link-b" %>
 <% end %>

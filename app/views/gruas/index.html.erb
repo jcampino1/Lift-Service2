@@ -39,7 +39,7 @@
             <td><%= grua.numero_serie %></td>
             <td><%= grua.tipo %></td>
             <td><%= grua.lugar_actual %></td>
-            <td><%= grua.horometro %></td>
+            <td><%= number_with_delimiter(grua.horometro.to_i, delimiter: ".") %></td>
             <td><%= link_to 'Mostrar', grua %></td>
             <td><%= link_to 'Borrar', grua, method: :delete, data: { confirm: 'Seguro que desea eliminar la grua?' } %></td>
           </tr>
@@ -51,6 +51,7 @@
 <% else %>
   <h2> No existe ninguna grúa con ese número</h2>
 <% end %>
+<br>
 
 <div class="jumbotron">
   <center><h2> Ingresar nueva Grúa: </h2></center>
@@ -58,6 +59,13 @@
 </div>
 
 <div class="jumbotron">
-  <center><h2> Mantenciones </h2></center>
+  <h2><center>Revisar mantenciones</center></h2>
   <center><%= link_to 'Revisar mantenciones', revisar_mantenciones_path, class: "btn btn-lg btn-primary", id:"link-b" %></center>
+  <h3></h3>
+</div>
+
+<div class="jumbotron">
+  <h2><center>Realizar análisis de todas las gruas</center></h2>
+  <center><%= link_to 'Hacer análisis', analisis_path, class: "btn btn-lg btn-primary", id:"link-b" %></center>
+  <h3></h3>
 </div>

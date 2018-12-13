@@ -28,6 +28,10 @@ class GruasController < ApplicationController
   # GET /gruas/1.json
   def show
     @orders = @grua.orders.order('fecha ASC')
+    @lista_clientes = []
+    Cliente.all.each do |cliente|
+      @lista_clientes.push(cliente.nombre)
+    end
   end
 
   # GET /gruas/new
@@ -110,10 +114,20 @@ class GruasController < ApplicationController
     end
   end
 
+  def actualizar_cliente
+    @grua = Grua.find(params[:grua_id])
+    redirect_to @grua
+  end
+
   def calcular_repuestos
     @grua = Grua.find(params[:grua_id])
-    @fecha_inicial, @fecha_final = params[:fecha_inicial], params[:fecha_final]
-    #@repuestos = @grua.calcular_repuestos(fecha_inicial, fecha_final)
+    @fecha_inicial = Date.new(params[:fecha_inicial].values[0].to_i,
+                         params[:fecha_inicial].values[1].to_i,
+                         params[:fecha_inicial].values[2].to_i)
+    @fecha_final = Date.new(params[:fecha_final].values[0].to_i,
+                         params[:fecha_final].values[1].to_i,
+                         params[:fecha_final].values[2].to_i)
+    @repuestos, @ordenes = @grua.calcular_repuestos(@fecha_inicial, @fecha_final)
   end
 
   def revisar_mantenciones
@@ -135,6 +149,11 @@ class GruasController < ApplicationController
     @grua.save
 
     redirect_back(fallback_location: root_path)
+  end
+
+  def analisis
+    @gruas = Grua.all
+    @repuestos, @total = Grua.calcular_repuestos_totales
   end
 
   private
