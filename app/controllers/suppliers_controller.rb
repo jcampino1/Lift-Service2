@@ -4,7 +4,8 @@ class SuppliersController < ApplicationController
   # GET /suppliers
   # GET /suppliers.json
   def index
-    @suppliers = Supplier.all
+    @q = Supplier.search(params[:q])
+    @suppliers = @q.result
   end
 
   # GET /suppliers/1

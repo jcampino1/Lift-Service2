@@ -34,7 +34,7 @@ class RepuestosController < ApplicationController
 
     respond_to do |format|
       if @repuesto.save
-        format.html { redirect_to @repuesto, notice: 'Repuesto was successfully created.' }
+        format.html { redirect_to @repuesto, notice: 'Repuesto creado exitosamente' }
         format.json { render :show, status: :created, location: @repuesto }
       else
         format.html { render :new }
@@ -43,18 +43,7 @@ class RepuestosController < ApplicationController
     end
   end
 
-  # PATCH/PUT /repuestos/1
-  # PATCH/PUT /repuestos/1.json
   def update
-    respond_to do |format|
-      if @repuesto.update(repuesto_params)
-        format.html { redirect_to @repuesto, notice: 'Traspaso realizado correctamnete.' }
-        format.json { render :show, status: :ok, location: @repuesto }
-      else
-        format.html { render :edit }
-        format.json { render json: @repuesto.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /repuestos/1

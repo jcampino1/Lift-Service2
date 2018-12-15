@@ -1,13 +1,13 @@
-<center><h1> Actualizacion de horómetro </h1></center>
-<center><h2>Grúa numero: <%= @grua.numero_serie %></h2></center>
-<center><h2>Tipo: <%= @grua.tipo %></h2></center>
+<center><h1>Grúa numero: <%= @grua.numero_serie %> | <%= @grua.tipo %></h2></center>
+<br><br><br>
 
 <% if @mensaje %>
 	<p> Nuevo horómetro es menor que el antiguo, inválido </p>
 <% else %>
-	<p> Horómetro actualizado: De <%= number_with_delimiter(@horometro_antiguo.to_i, delimiter: ".") %> a <%= number_with_delimiter(@hor.to_i, delimiter: ".") %></p>
+	<h2> Horómetro actualizado: De <%= number_with_delimiter(@horometro_antiguo.to_i, delimiter: ".") %> a <%= number_with_delimiter(@hor.to_i, delimiter: ".") %></h2>
+	<br><br>
 	<% if @necesita %>
-		<center><h2 class="text-danger"> Necesita mantención! </h2></center>
+		<center><h1 class="text-danger"> Necesita mantención! </h1></center>
 		<div class="jumbotron">
 			<p> Horometro: <%= number_with_delimiter(@hor.to_i, delimiter: ".") %></p>
 			<table class="table">
@@ -35,4 +35,5 @@
 	<h2 class="text-success"> No necesita mantención preventiva </h2>
 	<% end %>
 	<%= link_to "Volver", @grua, class: "btn btn-lg btn-primary", id:"link-b" %>
+	<br><br>
 <% end %>

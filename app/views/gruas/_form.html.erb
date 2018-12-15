@@ -48,6 +48,7 @@
       <div class="field">
         <%= form.check_box :asegurada %>
       </div>
+      <br>
 
       <div class="field">
         <%= form.select(:estado, ['', 'Buena', 'Mala'], {}, { :class => 'my_style_class' })%>
@@ -91,7 +92,7 @@
 
 
       <div class="actions">
-        <%= form.submit "Crear" %>
+        <%= form.submit "Crear", class: "btn btn-lg btn-primary" %>
       </div>
   <% end %>
 </div>

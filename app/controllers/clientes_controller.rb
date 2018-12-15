@@ -4,7 +4,8 @@ class ClientesController < ApplicationController
   # GET /clientes
   # GET /clientes.json
   def index
-    @clientes = Cliente.all
+    @q = Cliente.search(params[:q])
+    @clientes = @q.result
   end
 
   # GET /clientes/1

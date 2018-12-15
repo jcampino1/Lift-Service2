@@ -39,7 +39,7 @@
           <td><%= repuesto.movil2 %></td>
           <td><%= repuesto.stock %></td>
           <td><%= repuesto.stock_minimo %></td>
-          <td><%= repuesto.valor %></td>
+          <td><%= number_to_currency(repuesto.valor, unit: "$") %></td>
           <% if repuesto.stock >= repuesto.stock_minimo %>
             <td><p class="text-success"> Bien</p></td>
           <% else %>

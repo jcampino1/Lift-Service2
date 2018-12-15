@@ -1,6 +1,6 @@
 <% credito = "No" %>
 <% if @supplier.credito %>
-  <% credito = "Si" %>
+  <% credito = "Sí" %>
 <% end %>
 
 <div>
@@ -12,7 +12,7 @@
       </tr>
 
       <tr>
-        <td><strong>Codigo:</strong></td>
+        <td><strong>Código:</strong></td>
         <td><%= @supplier.codigo %></td>
       </tr>
 
@@ -27,17 +27,17 @@
       </tr>
 
       <tr>
-        <td><strong>Telefono:</strong></td>
+        <td><strong>Teléfono:</strong></td>
         <td><%= @supplier.telefono %></td>
       </tr>
 
       <tr>
-        <td><strong>Direccion:</strong></td>
+        <td><strong>Dirección:</strong></td>
         <td><%= @supplier.direccion %></td>
       </tr>
 
       <tr>
-        <td><strong>Credito:</strong></td>
+        <td><strong>Crédito:</strong></td>
         <td><%= credito %></td>
       </tr>
     </tbody>
@@ -45,6 +45,6 @@
 </div>
 
 <div>
-  <%= link_to 'Edit', edit_supplier_path(@supplier) %> |
-  <%= link_to 'Back', suppliers_path %>
+  <%= link_to 'Editar', edit_supplier_path(@supplier), class: "btn btn-lg btn-primary" %> |
+  <%= link_to 'Volver a Proveedores', suppliers_path, class: "btn btn-lg btn-primary" %>
 </div>

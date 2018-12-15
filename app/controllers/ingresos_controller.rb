@@ -4,7 +4,7 @@ class IngresosController < ApplicationController
   # GET /ingresos
   # GET /ingresos.json
   def index
-    @ingresos = Ingreso.all
+    @ingresos = Ingreso.all.order('fecha DESC')
   end
 
   # GET /ingresos/1
@@ -55,21 +55,6 @@ class IngresosController < ApplicationController
     end
   end
 
-
-  # PATCH/PUT /ingresos/1
-  # PATCH/PUT /ingresos/1.json
-  def update
-    respond_to do |format|
-      if @ingreso.update(ingreso_params)
-        format.html { redirect_to @ingreso, notice: 'Ingreso was successfully updated.' }
-        format.json { render :show, status: :ok, location: @ingreso }
-      else
-        format.html { render :edit }
-        format.json { render json: @ingreso.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /ingresos/1
   # DELETE /ingresos/1.json
   def destroy
@@ -88,7 +73,7 @@ class IngresosController < ApplicationController
     @ingreso.abierta = false
     @ingreso.repuestos_faltantes = []
     @ingreso.save
-    redirect_to @ingreso
+    redirect_to ingresos_url
   end
 
   def cerrar
@@ -96,7 +81,7 @@ class IngresosController < ApplicationController
     @ingreso.abierta = false
     @ingreso.repuestos_faltantes = []
     @ingreso.save
-    redirect_to @ingreso
+    redirect_to ingresos_url
   end
 
   private

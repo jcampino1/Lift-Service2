@@ -1,37 +1,41 @@
-<h1>Ingresos</h1>
+<center><h1>Ingresos</h1></center>
+<br><br>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Proveedor</th>
-      <th>Numero de factura</th>
-      <th>Numero OC</th>
-      <th>Fecha</th>
-      <th>Total por recibido</th>
-      <th>Estado</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @ingresos.each do |ingreso| %>
+<div style="height:500px;overflow-y:scroll;;">
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <td><%= ingreso.proveedor %></td>
-        <td><%= ingreso.numero_factura %></td>
-        <td><%= ingreso.orden_compra %></td>
-        <td><%= ingreso.fecha %></td>
-        <td><%= number_to_currency(ingreso.total, unit: "$") %></td>
-        <% if ingreso.abierta %>
-          <td class="text-danger">Abierta</td>
-        <% else %>
-          <td class="text-success">Cerrada</td>
-        <% end %>
-        <td><%= link_to 'Detalles', ingreso %></td>
-        <td><%= link_to 'Borrar', ingreso, method: :delete, data: { confirm: 'Seguro que quieres borrar el ingreso?' } %></td>
+        <th>Proveedor</th>
+        <th>Numero de factura</th>
+        <th>Numero OC</th>
+        <th>Fecha</th>
+        <th>Total por recibido</th>
+        <th>Estado</th>
+        <th colspan="2"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @ingresos.each do |ingreso| %>
+        <tr>
+          <td><%= ingreso.proveedor %></td>
+          <td><%= ingreso.numero_factura %></td>
+          <td><%= ingreso.orden_compra %></td>
+          <td><%= ingreso.fecha %></td>
+          <td><%= number_to_currency(ingreso.total, unit: "$") %></td>
+          <% if ingreso.abierta %>
+            <td class="text-danger">Abierta</td>
+          <% else %>
+            <td class="text-success">Cerrada</td>
+          <% end %>
+          <td><%= link_to 'Detalles', ingreso %></td>
+          <td><%= link_to 'Borrar', ingreso, method: :delete, data: { confirm: 'Seguro que quieres borrar el ingreso?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 

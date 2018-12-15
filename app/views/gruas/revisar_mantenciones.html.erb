@@ -1,26 +1,27 @@
-<h1> Gruas que necesitan mantencion </h1>
+<center><h1> Gruas que necesitan mantención </h1></center>
+<br><br>
 
-<table class="table">
+<table class="table table-hover">
 	<thead>
 		<th>Numero de serie</th>
-		<th>Horometro</th>
+		<th>Horómetro</th>
 		<th>Secuencia</th>
 		<th>Horas faltantes</th>
-		<th>Horas teoricas de mantencion</th>
+		<th>Horas teoricas de mantención</th>
 	</thead>
 	<tbody>
 		<% @gruas.each do |grua| %>
 			<% grua.dicc_a_realizar.each do |key, value| %>
 				<tr>
 					<td><%= grua.numero_serie %></td>
-					<td><%= grua.horometro %></td>
+					<td><%= number_with_delimiter(grua.horometro.to_i, delimiter: ".") %></td>
 					<td>Cada <%= key %> horas</td>
           			<% if value[0] <= 0 %>
             			<td class="text-danger"><%= value[0] %> horas</td>
           			<% else %>
-            			<td><%= value[0] %> horas</td>
+            			<td class="text-primary"><%= value[0] %> horas</td>
           			<% end %>
-          			<td><%= value[1] %> horas</td>
+          			<td><%= number_with_delimiter(value[1].to_i, delimiter: ".") %> horas</td>
           			<td><%= link_to "Realizada", mantencion_realizada_path(grua_id: grua.id, secuencia: key) %></td>
 				</tr>
 			<% end %>

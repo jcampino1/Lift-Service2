@@ -58,3 +58,6 @@ gem 'bootstrap-sass'
 gem 'jquery-rails'
 
 gem "bootstrap_form", ">= 4.0.0"
+
+gem 'ransack'
+

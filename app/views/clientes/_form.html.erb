@@ -17,7 +17,7 @@
     </div>
 
     <div class="field">
-      <%= form.select :contrato, ["", "Fijo", "Variable"], label: "Contrato" %>
+      <%= form.text_field :contrato, label: "Contrato" %>
     </div>
 
     <div class="field">
@@ -25,7 +25,7 @@
     </div>
 
     <div class="actions">
-      <%= form.submit "Crear cliente" %>
+      <%= form.submit "Crear cliente", class: "btn btn-lg btn-primary" %>
     </div>
   <% end %>
 </div>

@@ -1,28 +1,35 @@
-<h1>Clientes</h1>
+<center><h1>Clientes</h1></center>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Contrato</th>
-      <th>Telefono</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= search_form_for @q, html: { class: "form-inline" } do |f| %>
+  <%= f.search_field :nombre_cont, placeholder: "Buscar cliente...", class: "form-control" %>
+<%end%>
+<br>
 
-  <tbody>
-    <% @clientes.each do |cliente| %>
+<div class="jumbotron">
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <td><%= cliente.nombre %></td>
-        <td><%= cliente.contrato %></td>
-        <td><%= cliente.telefono %></td>
-        <td><%= link_to 'Show', cliente %></td>
-        <td><%= link_to 'Edit', edit_cliente_path(cliente) %></td>
-        <td><%= link_to 'Destroy', cliente, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Nombre</th>
+        <th>Contrato</th>
+        <th>Telefono</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @clientes.each do |cliente| %>
+        <tr>
+          <td><%= cliente.nombre %></td>
+          <td><%= cliente.contrato %></td>
+          <td><%= cliente.telefono %></td>
+          <td><%= link_to 'Mostrar', cliente %></td>
+          <td><%= link_to 'Editar detalles', edit_cliente_path(cliente) %></td>
+          <td><%= link_to 'Eliminar', cliente, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
