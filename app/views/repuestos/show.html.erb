@@ -47,5 +47,14 @@
 </div>
 
 <div class="jumbotron">
-  <center><%= link_to 'Realizar traspaso y editar detalles', edit_repuesto_path(@repuesto), class: "btn btn-lg btn-primary", id:"link-b"  %></center>
+  <center><h2>Actualizar atributos</h2></center>
+  <%= form_tag repuesto_actualizar_atributos_path(@repuesto), multipart: true do %>
+    <p> Nuevo stock mínimo: <%= number_field_tag :nuevo_stock_minimo, class: "btn" %></p>
+    <p> Nuevo valor del repuesto: <%= number_field_tag :nuevo_valor, class: "btn" %></p>
+    <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
+  <% end %>
 </div>
+
+
+<%= link_to "Volver a Repuestos", repuestos_path %>
+<br><br>

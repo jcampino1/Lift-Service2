@@ -1,5 +1,5 @@
 <center><h1>Grúa Num <%=@grua.numero_serie%></h1></center>
-<center><h2>Horometro: <%= number_with_delimiter(@grua.horometro.round(0).to_i, delimiter: ".") %></h2></center>
+<center><h2>Horometro: <%= number_with_delimiter(@grua.horometro.to_i, delimiter: ".") %></h2></center>
 
 
 <% if @grua.necesita %>
@@ -56,7 +56,11 @@
         <tr>
           <td><%= order.fecha %></td>
           <td><%= order.cliente %></td>
-          <td><%= order.preventiva %></td>
+          <% if order.preventiva %>
+            <td>Sí</td>
+          <% else %>
+            <td>No</td>
+          <% end %>
           <td><%= order.estado_maquina %></td>
           <td><%= order.equipo %></td>
           <td><%= order.total %></td>

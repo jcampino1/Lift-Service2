@@ -17,6 +17,7 @@ class CreateOrders < ActiveRecord::Migration[5.1]
       t.string :equipo
       t.float :total, default: 0
       t.float :horas_hombre
+      t.float :costo
 
 
 

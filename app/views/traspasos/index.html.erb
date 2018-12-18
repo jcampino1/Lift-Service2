@@ -1,0 +1,25 @@
+<center><h1> Traspasos </h1></center>
+<br><br>
+
+<table class="table">
+	<thead>
+		<th><center>Fecha</center></th>
+		<th><center>Desde</center></th>
+		<th><center>Hacia</center></th>
+		<th><center>Cantidad de repuestos</center></th>
+	</thead>
+	<tbody>
+		<% @traspasos.each do |traspaso| %>
+			<tr>
+				<td><center><%= traspaso.fecha %></center></td>
+				<td><center><%= traspaso.desde %></center></td>
+				<td><center><%= traspaso.hacia %></center></td>
+				<td><center><%= traspaso.repuestos.length %></center></td>
+				<td><center><%= link_to "Ver detalles", traspaso %></center></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<br><br>
+
+<%= link_to "Volver a Repuestos", repuestos_path, class: "btn btn-lg btn-primary" %>

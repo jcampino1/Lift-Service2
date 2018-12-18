@@ -63,7 +63,7 @@
     <p> 1.- <%= text_field_tag "trabajos[]", '', size: 75 %></p>
   </div>
   <% contador = 2 %>
-  <% while contador < 9 %>
+  <% while contador < 11 %>
     <div class="field">
       <p> <%=contador%>.- <%= text_field_tag "trabajos[]", '', size: 75 %></p>
     </div>
@@ -77,36 +77,34 @@
     <tr>
       <th><center>Código repuesto</center></th>
       <th><center>Cantidad</center></th>
-      <th><center>Paga Cliente</center></th>
     </tr>
   </thead>
 
   <tbody>
     <tr>
-      <td><%= number_field_tag "repuestos[repuestos][]repuesto[codigo]" %></td>
+      <td><%= text_field_tag "repuestos[repuestos][]repuesto[codigo]" %></td>
       <td><%= number_field_tag "repuestos[repuestos][]repuesto[cantidad]" %></td>
-      <td><center><%= check_box_tag "repuestos[repuestos][]repuesto[cliente]" %></td></center>
     </tr>
 
     <% contador = 10 %>
     <% while contador > 0 %>
       <tr>
-        <td><input type="number" name="repuestos[repuestos][]repuesto[codigo]"></td>
+        <td><input type="text" name="repuestos[repuestos][]repuesto[codigo]"></td>
         <td><input type="number" name="repuestos[repuestos][]repuesto[cantidad]"></td>
-        <td><center><input type="checkbox" name="repuestos[repuestos][]repuesto[cliente]"></td></center>
       </tr>
       <% contador -= 1 %>
     <%end%>
   </tbody>
 </table>
+<br>
 
   <div class="field">
     <%= form.number_field :costo, label: "Costos viaje", help: "Puede incluir costos del viaje y otros"%>
-    <p> Paga Cliente: <%= check_box_tag :paga_cliente %></p>
   </div>
+  <br><br>
 
 
   <div class="actions">
-    <%= form.submit "Crear OT"%>
+    <%= form.submit "Crear OT", class: "btn btn-lg btn-primary" %>
   </div>
 <% end %>

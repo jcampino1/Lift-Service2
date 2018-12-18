@@ -1,0 +1,54 @@
+<div class="jumbotron">
+  <%= bootstrap_form_with(model: ajuste, local: true) do |form| %>
+
+    <div class="field">
+      <%= form.text_field :razon %>
+    </div>
+
+    <div class="field">
+      <%= form.select :sentido, ["", "Sube", "Baja"], label: "Sube/Baja" %>
+    </div>
+
+    <div class="field">
+      <%= form.date_select :fecha %>
+    </div>
+    <br>
+
+    <h3> Repuestos</h3>
+    <br>
+
+    <table>
+    <thead>
+      <tr>
+        <th><center>Código repuesto</center></th>
+        <th><center>Cantidad que sube/baja</center></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><%= text_field_tag "repuestos[repuestos][]repuesto[codigo]" %></td>
+        <td><%= number_field_tag "repuestos[repuestos][]repuesto[cantidad]" %></td>
+      </tr>
+
+      <% contador = 10 %>
+      <% while contador > 0 %>
+        <tr>
+          <td><input type="text" name="repuestos[repuestos][]repuesto[codigo]"></td>
+          <td><input type="number" name="repuestos[repuestos][]repuesto[cantidad]"></td>
+        </tr>
+        <% contador -= 1 %>
+      <%end%>
+    </tbody>
+  </table>
+  <br>
+  <br>
+
+    <div class="actions">
+        <%= form.submit "Realizar Ajuste", class: "btn btn-lg btn-primary" %>
+    </div>
+    
+  <% end %>
+
+
+</div>

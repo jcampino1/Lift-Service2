@@ -1,5 +1,7 @@
 <h1>Nueva Orden de Trabajo, Grua <%= @grua.numero_serie %></h1>
 
 <%= render 'form', order: @order %>
+<br><br>
 
-<%= link_to 'Volver', grua_orders_path(grua_id: @grua) %>
+<%= link_to 'Volver', @grua %>
+<br><br>

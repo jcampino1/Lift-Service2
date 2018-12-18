@@ -4,13 +4,25 @@ class RepuestosController < ApplicationController
   # GET /repuestos
   # GET /repuestos.json
   def index
+    @q = Repuesto.search(params[:q])
+    @repuestos = @q.result.order('codigo ASC')
+
     tipo = params[:tipo]
-    if tipo == "tipo 1"
-      @repuestos = Repuesto.where("articulo = 'Goma'")
-    else
-      @repuestos = Repuesto.all.order('codigo ASC')
+    if tipo == "Insumo"
+      @repuestos = @repuestos.where("familia = 'Insumo'")
+    elsif tipo == "Lubricante"
+      @repuestos = @repuestos.where("familia = 'Lubricante'")
+    elsif tipo == "Neumatico"
+      @repuestos = @repuestos.where("familia = 'Neumáticos'")
+    elsif tipo == "Pintura"
+      @repuestos = @repuestos.where("familia = 'Pintura'")
+    elsif tipo == "Repuesto"
+      @repuestos = @repuestos.where("familia = 'Repuesto'")
+    elsif tipo == "Seguridad"
+      @repuestos = @repuestos.where("familia = 'Seguridad'")
+    elsif tipo == "Faltantes"
+      @repuestos = @repuestos.where("stock < stock_minimo")
     end
-    #@repuestos = Repuesto.all
   end
 
   # GET /repuestos/1
@@ -61,7 +73,20 @@ class RepuestosController < ApplicationController
     redirect_to repuestos_url, notice: "Repuesto(s) importado(s)"
   end
 
-  def traspaso
+
+  def actualizar_atributos
+    @repuesto = Repuesto.find(params[:repuesto_id])
+    @nuevo_stock_minimo = params[:nuevo_stock_minimo]
+    @nuevo_valor = params[:nuevo_valor]
+    if @nuevo_stock_minimo != ''
+      @repuesto.stock_minimo = @nuevo_stock_minimo.to_f
+    end
+    if @nuevo_valor != ''
+      @repuesto.valor = @nuevo_valor.to_f
+    end
+    @repuesto.save
+
+    redirect_to @repuesto
   end
 
   private
@@ -72,6 +97,7 @@ class RepuestosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def repuesto_params
-      params.require(:repuesto).permit(:codigo, :articulo, :panol, :movil1, :movil2, :stock, :stock_minimo, :valor)
+      params.require(:repuesto).permit(:codigo, :articulo, :familia, :panol, :movil1,
+       :movil2, :stock, :stock_minimo, :valor)
     end
 end

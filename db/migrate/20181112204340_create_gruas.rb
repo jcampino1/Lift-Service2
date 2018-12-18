@@ -11,6 +11,7 @@ class CreateGruas < ActiveRecord::Migration[5.1]
     	t.boolean :asegurada
     	t.string :estado
       t.string :mantenciones, array: true, default: []
+      t.string :dicc_mantenciones
 
       t.timestamps
     end

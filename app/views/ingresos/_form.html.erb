@@ -46,7 +46,7 @@
 
       <tbody>
         <tr>
-          <td><%= number_field_tag "repuestos[repuestos][]repuesto[codigo]" %></td>
+          <td><%= text_field_tag "repuestos[repuestos][]repuesto[codigo]" %></td>
           <td><%= number_field_tag "repuestos[repuestos][]repuesto[cantidad]" %></td>
           <td><%= number_field_tag "repuestos[repuestos][]repuesto[precio]" %></td>
           <td><%= number_field_tag "repuestos[repuestos][]repuesto[faltante]" %></td>
@@ -56,7 +56,7 @@
         <% contador = 10 %>
         <% while contador > 0 %>
           <tr>
-            <td><input type="number" name="repuestos[repuestos][]repuesto[codigo]"></td>
+            <td><input type="text" name="repuestos[repuestos][]repuesto[codigo]"></td>
             <td><input type="number" name="repuestos[repuestos][]repuesto[cantidad]"></td>
             <td><input type="number" name="repuestos[repuestos][]repuesto[precio]"></td>
             <td><input type="number" name="repuestos[repuestos][]repuesto[faltante]"></td>

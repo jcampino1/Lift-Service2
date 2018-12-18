@@ -1,0 +1,51 @@
+<center><h1>Detalles Traspaso</h1></center>
+
+<br>
+
+<div class="jumbotron">
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><strong>Fecha:</strong></td>
+				<td><%=@traspaso.fecha%></td>
+			</tr>
+
+			<tr>
+				<td><strong>Desde:</strong></td>
+				<td><%= @traspaso.desde %></td>
+			</tr>
+
+			<tr>
+				<td><strong>Hacia:</strong></td>
+				<td><%= @traspaso.hacia %></td>
+			</tr>
+		</tbody>		
+	</table>
+</div>
+
+
+<h1 class="text-primary">Elementos traspasados:</h1>
+<div class="jumbotron">
+  <table class="table">
+	  <thead>
+	    <tr>
+	      <th>Repuesto</th>
+	      <th>Cantidad</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @traspaso.repuestos.each do |tupla| %>
+	    	<% r = Repuesto.find_by(codigo: tupla[0]) %>
+	    	<% nombre = r.articulo %>
+	      <tr>
+	        <td><%= nombre %></td>
+	        <td><%= tupla[1].to_f %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>
+
+<%= link_to "Volver a Traspasos", traspasos_path, class: "btn btn-lg btn-primary" %>
+<br><br>
