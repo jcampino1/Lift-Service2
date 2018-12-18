@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181211143212) do
+ActiveRecord::Schema.define(version: 20181218160821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ajustes", force: :cascade do |t|
+    t.string "razon"
+    t.string "sentido"
+    t.date "fecha"
+    t.string "repuestos", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "clientes", force: :cascade do |t|
     t.string "nombre"
@@ -33,6 +42,7 @@ ActiveRecord::Schema.define(version: 20181211143212) do
     t.boolean "asegurada"
     t.string "estado"
     t.string "mantenciones", default: [], array: true
+    t.string "dicc_mantenciones"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "marca"
@@ -44,7 +54,6 @@ ActiveRecord::Schema.define(version: 20181211143212) do
     t.integer "ton"
     t.float "mastil"
     t.text "observaciones"
-    t.string "dicc_mantenciones"
     t.boolean "necesita", default: false
     t.string "dicc_a_realizar"
   end
@@ -79,15 +88,22 @@ ActiveRecord::Schema.define(version: 20181211143212) do
     t.string "equipo"
     t.float "total", default: 0.0
     t.float "horas_hombre"
+    t.float "costo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "costo"
-    t.float "total_ls", default: 0.0
-    t.float "total_cliente", default: 0.0
   end
 
-  create_table "repuestos", primary_key: "codigo", id: :integer, default: nil, force: :cascade do |t|
+  create_table "otros", force: :cascade do |t|
+    t.string "key"
+    t.float "valor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "repuestos", force: :cascade do |t|
+    t.string "codigo"
     t.string "articulo"
+    t.string "familia"
     t.float "panol", default: 0.0
     t.float "movil1", default: 0.0
     t.float "movil2", default: 0.0
@@ -106,6 +122,15 @@ ActiveRecord::Schema.define(version: 20181211143212) do
     t.integer "telefono"
     t.string "direccion"
     t.boolean "credito"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "traspasos", force: :cascade do |t|
+    t.string "desde"
+    t.string "hacia"
+    t.date "fecha"
+    t.string "repuestos", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

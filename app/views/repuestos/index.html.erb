@@ -1,14 +1,38 @@
 <h1>Repuestos</h1>
 
+<%= search_form_for @q, html: { class: "form-inline" } do |f| %>
+  <%= f.search_field :codigo_cont, placeholder: "Buscar repuesto...", class: "form-control" %>
+<%end%>
+
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <%= link_to "Todos", repuestos_path(tipo: "todos") %>
   </li>
   <li class="nav-item">
-    <%= link_to "Tipo 1", repuestos_path(tipo: "tipo 1") %>
+    <%= link_to "Insumos", repuestos_path(tipo: "Insumo") %>
   </li>
   <li>
-  <%= link_to "Tipo 2", repuestos_path(tipo: "tipo 2") %>
+  <%= link_to "Lubricantes", repuestos_path(tipo: "Lubricante") %>
+  </li>
+
+  <li>
+  <%= link_to "Neumaticos", repuestos_path(tipo: "Neumatico") %>
+  </li>
+
+  <li>
+  <%= link_to "Pintura", repuestos_path(tipo: "Pintura") %>
+  </li>
+
+  <li>
+  <%= link_to "Repuesto", repuestos_path(tipo: "Repuesto") %>
+  </li>
+
+  <li>
+  <%= link_to "Seguridad", repuestos_path(tipo: "Seguridad") %>
+  </li>
+
+  <li>
+  <%= link_to "Repuestos con bajo stock", repuestos_path(tipo: "Faltantes") %>
   </li>
 </ul>
 
@@ -16,15 +40,15 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Código</th>
-        <th>Articulo</th>
-        <th>Panol</th>
-        <th>Móvil 1</th>
-        <th>Móvil 2</th>
-        <th>Stock</th>
-        <th>Stock mínimo</th>
-        <th>Valor</th>
-        <th>Situación</th>
+        <th><center>Código</center></th>
+        <th><center>Articulo</center></th>
+        <th><center>Panol</center></th>
+        <th><center>Móvil 1</center></th>
+        <th><center>Móvil 2</center></th>
+        <th><center>Stock</center></th>
+        <th><center>Stock mínimo</center></th>
+        <th><center>Valor</center></th>
+        <th><center>Situación</center></th>
         <th colspan="2"></th>
       </tr>
     </thead>
@@ -32,21 +56,21 @@
     <tbody>
       <% @repuestos.each do |repuesto| %>
         <tr>
-          <td><%= repuesto.codigo %></td>
-          <td><%= repuesto.articulo %></td>
-          <td><%= repuesto.panol %></td>
-          <td><%= repuesto.movil1 %></td>
-          <td><%= repuesto.movil2 %></td>
-          <td><%= repuesto.stock %></td>
-          <td><%= repuesto.stock_minimo %></td>
-          <td><%= number_to_currency(repuesto.valor, unit: "$") %></td>
+          <td><center><%= repuesto.codigo %></center></td>
+          <td><center><%= repuesto.articulo %></center></td>
+          <td><center><%= repuesto.panol %></center></td>
+          <td><center><%= repuesto.movil1 %></center></td>
+          <td><center><%= repuesto.movil2 %></center></td>
+          <td><center><%= repuesto.stock %></center></td>
+          <td><center><%= repuesto.stock_minimo %></center></td>
+          <td><center><%= number_to_currency(repuesto.valor, unit: "$") %></td>
           <% if repuesto.stock >= repuesto.stock_minimo %>
-            <td><p class="text-success"> Bien</p></td>
+            <td><center><p class="text-success"> Bien</p></center></td>
           <% else %>
-            <td><p class="text-danger"> Necesita repuesto</p></td>
+            <td><center><p class="text-danger"> Necesita repuesto</p></center></td>
           <%end%>
-          <td><%= link_to 'Mostrar', repuesto %></td>
-          <td><%= link_to 'Eliminar', repuesto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><center><%= link_to 'Mostrar', repuesto %></center></td>
+          <td><center><%= link_to 'Eliminar', repuesto, method: :delete, data: { confirm: 'Are you sure?' } %></center></td>
         </tr>
       <% end %>
     </tbody>
@@ -57,4 +81,12 @@
 
 <div class="jumbotron">
   <center><%= link_to 'Nuevo Repuesto', new_repuesto_path, class: "btn btn-lg btn-primary", id:"link-b"  %></center>
+</div>
+
+<div class="jumbotron">
+  <center><p><%= link_to "Ver Traspasos", traspasos_path, class: "btn btn-lg btn-primary" %> | <%= link_to 'Realizar Traspaso', new_traspaso_path, class: "btn btn-lg btn-primary" %></p></center>
+</div>
+
+<div class="jumbotron">
+  <center><p><%= link_to "Ver Ajustes", ajustes_path, class: "btn btn-lg btn-primary" %> | <%= link_to 'Realizar Ajuste de Inventario', new_ajuste_path, class: "btn btn-lg btn-primary" %></p></center>
 </div>

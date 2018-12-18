@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   resources :repuestos do
     collection { post :import }
+    post 'actualizar_atributos', to: 'repuestos#actualizar_atributos', as: :actualizar_atributos
   end
   
   resources :gruas do
@@ -30,6 +31,9 @@ Rails.application.routes.draw do
   resources :suppliers do
   	collection { post :import }
   end
+
+  resources :traspasos
+  resources :ajustes
 
   #get 'importar', to: 'gruas#importar', as: :importar
 

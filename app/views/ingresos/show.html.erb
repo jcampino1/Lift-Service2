@@ -44,7 +44,7 @@
 
 	  <tbody>
 	    <% @ingreso.repuestos.each do |tupla| %>
-	    	<% r = Repuesto.find(tupla[0].to_i) %>
+	    	<% r = Repuesto.find_by(codigo: tupla[0]) %>
 	    	<% nombre = r.articulo %>
 	    	<% valor = r.valor %>
 	      <tr>
@@ -76,7 +76,7 @@
 		  <tbody>
 		  	<% total_faltante = 0 %>
 		    <% @ingreso.repuestos_faltantes.each do |tupla| %>
-		    	<% r = Repuesto.find(tupla[0].to_i) %>
+		    	<% r = Repuesto.find_by(codigo: tupla[0]) %>
 	    		<% nombre = r.articulo %>
 	    		<% valor = r.valor %>
 	    		<% total_faltante += tupla[1].to_f*valor %>

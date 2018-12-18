@@ -75,7 +75,7 @@
     <tbody>
       <% total = 0 %>
       <% @order.repuestos_usados.each do |tupla| %>
-        <% repuesto = Repuesto.find(tupla[0].to_i) %>
+        <% repuesto = Repuesto.find_by(codigo: tupla[0]) %>
         <% nombre, valor = repuesto.articulo, repuesto.valor %>
         <% total_repuesto = tupla[1].to_f*valor %>
         <% total += total_repuesto %>
@@ -117,11 +117,11 @@
         </tr>
         <tr>
           <td>Valor HH</td>
-          <td> $15.000 </td>
+          <td><%= number_to_currency(@valor_hh, unit: "$") %></td>
         </tr>
         <tr>
           <td> Total HH </td>
-          <td class="text-danger"><%= number_to_currency(@order.horas_hombre*15000, unit: "$") %></td>
+          <td class="text-danger"><%= number_to_currency(@order.horas_hombre*@valor_hh, unit: "$") %></td>
         </tr>
         <tr>
           <td> Costo viaje</td>
@@ -130,12 +130,12 @@
       </tbody>
     </table>
   </div>
-  <% total_final = @order.horas_hombre*15000 + total + @order.costo %>
+  <% total_final = @order.horas_hombre*@valor_hh + total + @order.costo %>
   <h3 class="text-danger"> Total: <%= number_to_currency(total_final, unit: "$") %></h5>
 </div>
 
 
 <div>
   <%= link_to 'Editar', edit_grua_order_path(id: @order, grua_id: @grua) %> |
-  <%= link_to 'Volver', grua_orders_path(grua_id: @grua) %>
+  <%= link_to 'Volver', @grua %>
 </div>

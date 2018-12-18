@@ -11,6 +11,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @valor_hh = Otro.find(1).valor
   end
 
   # GET /orders/new
@@ -48,7 +49,8 @@ class OrdersController < ApplicationController
       end
 
       total_repuestos = Repuesto.rebajar(lista_repuestos, @order.equipo)
-      @order.total = @order.costo + total_repuestos + @order.horas_hombre*15000
+      valor_hh = Otro.find(1).valor
+      @order.total = @order.costo + total_repuestos + @order.horas_hombre*valor_hh
 
       # Actualizar horometro y ver mantenciones
       @grua.horometro = horometro

@@ -1,7 +1,5 @@
-class Order < ApplicationRecord
-	belongs_to :grua
-
-	def self.repuestos(dicc)
+class Traspaso < ApplicationRecord
+	def self.format(dicc)
 		correcto = true
 		lista_a_devolver = []
 		lista_errores = []
@@ -12,10 +10,12 @@ class Order < ApplicationRecord
 			if a != ''
 				if self.chequear_codigo(a)
 					lista.append(a)
-					lista.append(diccionario["repuesto"]["cantidad"])
-					lista_a_devolver.append(lista)
+					if diccionario["repuesto"]["cantidad"] != ''
+						lista.append(diccionario["repuesto"]["cantidad"])
+						lista_a_devolver.append(lista)
+					end
 				else
-					correcto = false
+					correcto = false 
 					lista_errores.append(a)
 				end
 			end
@@ -29,15 +29,5 @@ class Order < ApplicationRecord
 
 	def self.chequear_codigo(a)
 		return Repuesto.exists?(codigo: a)
-	end
-
-	def self.trabajos(lista_trabajos)
-		lista_a_devolver = []
-		lista_trabajos.each do |trabajo|
-			if trabajo != ""
-				lista_a_devolver.append(trabajo)
-			end
-		end
-		return lista_a_devolver
 	end
 end

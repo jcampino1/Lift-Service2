@@ -1,0 +1,25 @@
+<center><h1> Ajustes </h1></center>
+<br><br>
+
+<table class="table">
+	<thead>
+		<th><center>Fecha</center></th>
+		<th><center>Razon</center></th>
+		<th><center>Sube/Baja</center></th>
+		<th><center>Cantidad de repuestos</center></th>
+	</thead>
+	<tbody>
+		<% @ajustes.each do |ajuste| %>
+			<tr>
+				<td><center><%= ajuste.fecha %></center></td>
+				<td><center><%= ajuste.razon %></center></td>
+				<td><center><%= ajuste.sentido %></center></td>
+				<td><center><%= ajuste.repuestos.length %></center></td>
+				<td><center><%= link_to "Ver detalles", ajuste %></center></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<br><br>
+
+<%= link_to "Volver a Repuestos", repuestos_path, class: "btn btn-lg btn-primary" %>

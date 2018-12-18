@@ -14,7 +14,7 @@ class Ingreso < ApplicationRecord
 			faltante = []
 			a = diccionario["repuesto"]["codigo"]
 			if a != ''
-				if self.chequear_codigo(a.to_i)
+				if self.chequear_codigo(a)
 					lista.append(a)
 					lista.append(diccionario["repuesto"]["cantidad"])
 					lista.append(diccionario["repuesto"]["precio"])
@@ -37,8 +37,8 @@ class Ingreso < ApplicationRecord
 		end
 	end
 
-	def self.chequear_codigo(numero)
-		return Repuesto.exists?(numero)
+	def self.chequear_codigo(a)
+		return Repuesto.exists?(codigo: a)
 	end
 
 	def self.agregar_faltantes(repuestos, repuestos_faltantes)

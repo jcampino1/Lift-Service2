@@ -1,0 +1,51 @@
+<center><h1>Detalles Ajuste</h1></center>
+
+<br>
+
+<div class="jumbotron">
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><strong>Fecha:</strong></td>
+				<td><%=@ajuste.fecha%></td>
+			</tr>
+
+			<tr>
+				<td><strong>Razon:</strong></td>
+				<td><%= @ajuste.razon %></td>
+			</tr>
+
+			<tr>
+				<td><strong>Sube/Baja:</strong></td>
+				<td class="text-danger"><%= @ajuste.sentido %></td>
+			</tr>
+		</tbody>		
+	</table>
+</div>
+
+
+<h1 class="text-primary">Elementos ajustados:</h1>
+<div class="jumbotron">
+  <table class="table">
+	  <thead>
+	    <tr>
+	      <th>Repuesto</th>
+	      <th>Cantidad</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @ajuste.repuestos.each do |tupla| %>
+	    	<% r = Repuesto.find_by(codigo: tupla[0]) %>
+	    	<% nombre = r.articulo %>
+	      <tr>
+	        <td><%= nombre %></td>
+	        <td><%= tupla[1].to_f %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>
+
+<%= link_to "Volver a Ajustes", ajustes_path, class: "btn btn-lg btn-primary" %>
+<br><br>
