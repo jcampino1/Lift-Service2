@@ -3,12 +3,13 @@
   <% preventiva = "Si" %>
 <% end %>
 
-<h2> Detalles Orden de trabajo</h2>
+<center><h2 class="text-primary"> Detalles Orden de trabajo</h2></center>
+<br>
 <div>
   <table class="table">
     <tbody>
       <tr>
-        <td><strong>Grua:</strong></td>
+        <td><strong>Grúa:</strong></td>
         <td><%= @order.grua_id %></td>
       </tr>
 
@@ -38,12 +39,12 @@
       </tr>
 
       <tr>
-        <td><strong>Horometro:</strong></td>
+        <td><strong>Horómetro:</strong></td>
         <td><%= @order.horometro %></td>
       </tr>
 
       <tr>
-        <td><strong>Estado maquina:</strong></td>
+        <td><strong>Estado máquina:</strong></td>
         <td><%= @order.estado_maquina %></td>
       </tr>
 
@@ -136,6 +137,6 @@
 
 
 <div>
-  <%= link_to 'Editar', edit_grua_order_path(id: @order, grua_id: @grua) %> |
   <%= link_to 'Volver', @grua %>
 </div>
+<br><br>

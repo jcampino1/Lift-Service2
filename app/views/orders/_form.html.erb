@@ -16,13 +16,8 @@
   </div>
 
 
-  <% clientes = [''] %>
-  <% Cliente.all.each do |p| %>
-    <% clientes.append(p.nombre) %>
-  <%end%>
-
   <div class="field">
-    <%= form.select :cliente, clientes %>
+    <%= form.text_field :cliente %>
   </div>
 
   <div class="field">

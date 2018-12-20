@@ -63,7 +63,7 @@
           <% end %>
           <td><%= order.estado_maquina %></td>
           <td><%= order.equipo %></td>
-          <td><%= order.total %></td>
+          <td><%= number_to_currency(order.total, unit: "$") %></td>
           <td><%= link_to 'Mostrar', grua_order_path(grua_id: @grua, id: order) %></td>
           <td><%= link_to 'Eliminar', grua_order_path(grua_id: @grua, id: order), method: :delete, data: { confirm: '¿Estás seguro que quieres eliminar la OT?' } %></td>
         </tr>
