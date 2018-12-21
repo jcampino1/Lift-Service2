@@ -69,3 +69,13 @@
   <center><%= link_to 'Hacer análisis', analisis_path, class: "btn btn-lg btn-primary", id:"link-b" %></center>
   <h3></h3>
 </div>
+
+<div>
+  <h3>Actualizar valor hora hombre</h3>
+  <%= form_tag actualizar_hora_hombre_path, multipart: true do %>
+    <%= number_field_tag :nuevo_valor, class: "btn" %>
+    <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
+  <% end %>
+  <h5>Valor actual: <%= number_to_currency(Otro.find(1).valor, unit: "$") %></h5>
+</div>
+<br><br><br><br>

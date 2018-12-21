@@ -39,8 +39,13 @@
       </tr>
 
       <tr>
+        <td><strong>Horas hombre</strong></td>
+        <td><%= @order.horas_hombre %></td>
+      </tr>
+
+      <tr>
         <td><strong>Horómetro:</strong></td>
-        <td><%= @order.horometro %></td>
+        <td><%= number_with_delimiter(@order.horometro.to_i, delimiter: ".") %></td>
       </tr>
 
       <tr>
@@ -77,13 +82,13 @@
       <% total = 0 %>
       <% @order.repuestos_usados.each do |tupla| %>
         <% repuesto = Repuesto.find_by(codigo: tupla[0]) %>
-        <% nombre, valor = repuesto.articulo, repuesto.valor %>
-        <% total_repuesto = tupla[1].to_f*valor %>
+        <% nombre = repuesto.articulo %>
+        <% total_repuesto = tupla[1].to_f*tupla[2].to_f %>
         <% total += total_repuesto %>
         <tr>
           <td><%= nombre %></td>
           <td><%= tupla[1].to_f %></td>
-          <td><%= number_to_currency(valor, unit: "$") %></td>
+          <td><%= number_to_currency(tupla[2].to_f, unit: "$") %></td>
           <td class="text-danger"><%= number_to_currency(total_repuesto, unit: "$") %></td>
         </tr>
 
@@ -110,7 +115,7 @@
       <tbody>
         <tr>
           <td>Total por repuestos</td>
-          <td class="text-danger"><%= number_to_currency(total, unit: "$") %></td>
+          <td class="text-danger"><%= number_to_currency(total, unit: "$") %> | <%= @order.total_repuestos %></td>
         </tr>
         <tr>
           <td>Horas hombre</td>

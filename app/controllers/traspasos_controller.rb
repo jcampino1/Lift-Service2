@@ -12,9 +12,15 @@ class TraspasosController < ApplicationController
 
 			# Se hace el traspaso
 			Repuesto.traspasar(repuestos, @traspaso.desde, @traspaso.hacia)
-			@traspaso.save
-
-			redirect_to repuestos_url
+			respond_to do |format|
+		        if @traspaso.save
+		          format.html { redirect_to repuestos_url, notice: 'Traspaso creado exitosamente.' }
+		          format.json { render :show, status: :created, location: @traspaso }
+		        else
+		          format.html { render :new }
+		          format.json { render json: @traspaso.errors, status: :unprocessable_entity }
+		        end
+		    end
 		else
 			@errores = repuestos
 		end

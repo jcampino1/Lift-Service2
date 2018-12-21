@@ -1,39 +1,39 @@
 <center><h1>Grúa numero: <%= @grua.numero_serie %> | <%= @grua.tipo %></h2></center>
 <br><br><br>
 
-<% if @mensaje %>
-	<p> Nuevo horómetro es menor que el antiguo, inválido </p>
+
+<h2> Horómetro actualizado: De <%= number_with_delimiter(@horometro_antiguo.to_i, delimiter: ".") %> a <%= number_with_delimiter(@hor.to_i, delimiter: ".") %></h2>
+<br><br>
+<% if @necesita %>
+	<center><h1 class="text-danger"> Necesita mantención! </h1></center>
+	<div class="jumbotron">
+		<p> Horometro: <%= number_with_delimiter(@hor.to_i, delimiter: ".") %></p>
+		<table class="table">
+			<thead>
+				<th>Secuencia</th>
+				<th>Horas faltantes</th>
+				<th>Horas teoricas de mantención</th>
+			</thead>
+			<tbody>
+				<% @dicc.each do |key, value| %>
+					<tr>
+						<td>Cada <%= key %> horas</td>
+						<% if value[0] <= 0 %>
+							<td class="text-danger"><%= value[0] %> horas</td>
+						<% else %>
+							<td><%= value[0] %> horas</td>
+						<% end %>
+						<td><%= number_with_delimiter(value[1].to_i, delimiter: ".") %> horas</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
 <% else %>
-	<h2> Horómetro actualizado: De <%= number_with_delimiter(@horometro_antiguo.to_i, delimiter: ".") %> a <%= number_with_delimiter(@hor.to_i, delimiter: ".") %></h2>
-	<br><br>
-	<% if @necesita %>
-		<center><h1 class="text-danger"> Necesita mantención! </h1></center>
-		<div class="jumbotron">
-			<p> Horometro: <%= number_with_delimiter(@hor.to_i, delimiter: ".") %></p>
-			<table class="table">
-				<thead>
-					<th>Secuencia</th>
-					<th>Horas faltantes</th>
-					<th>Horas teoricas de mantención</th>
-				</thead>
-				<tbody>
-					<% @dicc.each do |key, value| %>
-						<tr>
-							<td>Cada <%= key %> horas</td>
-							<% if value[0] <= 0 %>
-								<td class="text-danger"><%= value[0] %> horas</td>
-							<% else %>
-								<td><%= value[0] %> horas</td>
-							<% end %>
-							<td><%= number_with_delimiter(value[1].to_i, delimiter: ".") %> horas</td>
-						</tr>
-					<% end %>
-				</tbody>
-			</table>
-		</div>
-	<% else %>
-	<h2 class="text-success"> No necesita mantención preventiva </h2>
-	<% end %>
-	<%= link_to "Volver", @grua, class: "btn btn-lg btn-primary", id:"link-b" %>
-	<br><br>
+	<div class="jumbotron">
+		<h2 class="text-success"><center> No necesita mantención preventiva </center></h2>
+	</div>
 <% end %>
+<br>
+<%= link_to "Volver", @grua, class: "btn btn-lg btn-primary", id:"link-b" %>
+<br><br>

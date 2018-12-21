@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
-    @valor_hh = Otro.find(1).valor
+    @valor_hh = @order.mano_obra/@order.horas_hombre
   end
 
   # GET /orders/new
@@ -26,46 +26,68 @@ class OrdersController < ApplicationController
 
   def create
 
-    # Para ver que el horometro sea mayor
-    malo = false
-    horometro = order_params[:horometro].to_f
-    if horometro < @grua.horometro
-      @malo = true
+    @parametros = params["order"]
+    @estan_todos = true
+    if @parametros["cliente"].empty? or @parametros["numero"].empty? or @parametros["equipo"].empty? or @parametros["horometro"].empty? or @parametros["costo"].empty? or @parametros["numero_gruas"].empty?
+      @estan_todos = false
     end
 
-    # Para los trabajos y repuestos
-    lista_trabajos = Order.trabajos(params[:trabajos])
-    correcto, lista_repuestos = Order.repuestos(params[:repuestos])
+    if @estan_todos
 
-    if correcto and not @malo
-      @order = @grua.orders.build(order_params)
-      @order.grua = @grua
-      @order.trabajos_realizados = lista_trabajos
-      @order.repuestos_usados = lista_repuestos
-      
-      # Si es que no puso nada en HH
-      if not @order.horas_hombre
-        @order.horas_hombre = (@order.hora_salida - @order.hora_entrada)/3600
+      # Para ver que el horometro sea mayor
+      malo = false
+      horometro = order_params[:horometro].to_f
+      if horometro < @grua.horometro
+        @malo = true
       end
 
-      total_repuestos = Repuesto.rebajar(lista_repuestos, @order.equipo)
-      valor_hh = Otro.find(1).valor
-      @order.total = @order.costo + total_repuestos + @order.horas_hombre*valor_hh
-
-      # Actualizar horometro y ver mantenciones
-      @grua.horometro = horometro
-      @necesita, @dicc = @grua.evaluar_mantenciones(horometro, @grua.dicc_mantenciones, 
-        @grua.mantenciones)
-      @grua.necesita = @necesita
-      @grua.dicc_a_realizar = @dicc
-      @grua.save
-
-      @order.save
+      # Para los trabajos y repuestos
+      lista_trabajos = Order.trabajos(params[:trabajos])
+      correcto, lista_repuestos = Order.repuestos(params[:repuestos])
 
 
-      redirect_to grua_path(id: @grua.id)
+      if correcto and not @malo
+        @order = @grua.orders.build(order_params)
+        @order.grua = @grua
+
+        @order.costo = @order.costo/@order.numero_gruas
+
+        @order.trabajos_realizados = lista_trabajos
+        @order.repuestos_usados = lista_repuestos
+        
+        # Si es que no puso nada en HH
+        if not @order.horas_hombre
+          @order.horas_hombre = (@order.hora_salida - @order.hora_entrada)/3600
+        end
+
+        # Guardar este total
+        total_repuestos = Repuesto.rebajar(lista_repuestos, @order.equipo)
+        @order.total_repuestos = total_repuestos
+
+        # Guardar el total por mano de obra
+        valor_hh = Otro.find(1).valor
+        @order.mano_obra = @order.horas_hombre*valor_hh
+
+        # Total de la OT con los precios historicos
+        @order.total = @order.costo + total_repuestos + @order.mano_obra
+
+        # Actualizar horometro y ver mantenciones
+        @grua.horometro = horometro
+        @necesita, @dicc = @grua.evaluar_mantenciones(horometro, @grua.dicc_mantenciones, 
+          @grua.mantenciones)
+        @grua.necesita = @necesita
+        @grua.dicc_a_realizar = @dicc
+        @grua.save
+
+        @order.save
+
+
+        redirect_to grua_path(id: @grua.id)
+      else
+        @errores = lista_repuestos
+      end
     else
-      @errores = lista_repuestos
+      @faltantes = []
     end
   end
 
@@ -124,6 +146,6 @@ class OrdersController < ApplicationController
     def order_params
       params.require(:order).permit(:grua_id, :numero, :cliente, :fecha, :hora_entrada,
        :hora_salida, :horas_hombre, :horometro, :preventiva, :correctiva, :dano, :estado_maquina, :trabajos_realizados,
-        :repuestos_usados, :equipo, :order_id, :costo)
+        :repuestos_usados, :equipo, :order_id, :costo, :numero_gruas)
     end
 end

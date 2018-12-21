@@ -11,10 +11,18 @@ class AjustesController < ApplicationController
 			@ajuste.repuestos = repuestos
 
 			# Se hace el traspaso
-			Repuesto.ajustar(repuestos, @ajuste.sentido)
-			@ajuste.save
+			Repuesto.ajustar(repuestos, @ajuste.sentido, @ajuste.equipo)
 
-			redirect_to repuestos_url
+			respond_to do |format|
+		        if @ajuste.save
+		          format.html { redirect_to repuestos_url, notice: 'Ajuste creado exitosamente.' }
+		          format.json { render :show, status: :created, location: @ajuste }
+		        else
+		          format.html { render :new }
+		          format.json { render json: @ajuste.errors, status: :unprocessable_entity }
+		        end
+		    end
+
 		else
 			@errores = repuestos
 		end
@@ -31,6 +39,6 @@ class AjustesController < ApplicationController
 	private
 	
 	def ajuste_params
-		params.require(:ajuste).permit(:razon, :sentido, :fecha)
+		params.require(:ajuste).permit(:razon, :sentido, :fecha, :equipo)
 	end
 end

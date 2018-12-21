@@ -4,6 +4,7 @@
 <table class="table table-hover">
 	<thead>
 		<th>Numero de serie</th>
+		<th>Cliente</th>
 		<th>Horómetro</th>
 		<th>Secuencia</th>
 		<th>Horas faltantes</th>
@@ -14,6 +15,7 @@
 			<% grua.dicc_a_realizar.each do |key, value| %>
 				<tr>
 					<td><%= grua.numero_serie %></td>
+					<td><%= grua.cliente %></td>
 					<td><%= number_with_delimiter(grua.horometro.to_i, delimiter: ".") %></td>
 					<td>Cada <%= key %> horas</td>
           			<% if value[0] <= 0 %>
