@@ -13,6 +13,8 @@ class Order < ApplicationRecord
 				if self.chequear_codigo(a)
 					lista.append(a)
 					lista.append(diccionario["repuesto"]["cantidad"])
+					r = Repuesto.find_by(codigo: a)
+					lista.append(r.valor)
 					lista_a_devolver.append(lista)
 				else
 					correcto = false

@@ -43,7 +43,7 @@ class IngresosController < ApplicationController
 
       respond_to do |format|
         if @ingreso.save
-          format.html { redirect_to @ingreso, notice: 'Ingreso was successfully created.' }
+          format.html { redirect_to @ingreso, notice: 'Ingreso creado exitosamente.' }
           format.json { render :show, status: :created, location: @ingreso }
         else
           format.html { render :new }

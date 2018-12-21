@@ -1,22 +1,53 @@
-<center><h1>Análisis</h1></center>
+<center><h1>Análisis de la Grua <%= @grua.numero_serie %></h1></center>
+<br>
 
-<h3>Fecha inicial: <%= @fecha_inicial %></h3>
-<h3>Fecha final: <%= @fecha_final %></h3>
+<div class="jumbotron">
+	<table class="table">
+		<tbody>
+			<tr>
+				<td>Fecha inicial:</td>
+				<td><%= @fecha_inicial %></td>
+			</tr>
+
+			<tr>
+				<td>Fecha final:</td>
+				<td><%= @fecha_final %></td>
+			</tr>
+
+			<% if @ordenes.length >= 2 %>
+				<tr>
+					<td>Horometro inicial:</td>
+					<td><%= number_with_delimiter(@hor_inicial.to_i, delimiter: ".") %></td>
+				</tr>
+
+				<tr>
+					<td>Horometro final:</td>
+					<td><%= number_with_delimiter(@hor_final.to_i, delimiter: ".") %></td>
+				</tr>
+
+				<tr>
+					<td>Horas de uso:</td>
+					<td><%= number_with_delimiter(@delta_hor.to_i, delimiter: ".") %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
 
 <div class="jumbotron">
 	<% total_repuestos = 0 %>
-	<center><h2>Repuestos usados</h2></center>
+	<center><h2 class="text-primary">Repuestos usados</h2></center>
 	<br>
 	<table class="table">
 		<thead>
 			<th>Repuesto</th>
 			<th>Cantidad</th>
-			<th>Valor unitario</th>
+			<th>Valor unitario actual</th>
 			<th>Total</th>
 		</thead>
 		<tbody>
 			<% @repuestos.each do |codigo_repuesto, cantidad| %>
-				<% repuesto = Repuesto.find(codigo_repuesto.to_i) %>
+				<% repuesto = Repuesto.find_by(codigo: codigo_repuesto) %>
 				<% total_repuesto = repuesto.valor.to_f * cantidad.to_f %>
 				<% total_repuestos += total_repuesto %>
 				<tr>
@@ -29,41 +60,95 @@
 		</tbody>
 	</table>
 	<br>
+	<h2 class="text-primary"> Total por repuestos a valor histórico: <%= number_to_currency(@total_por_repuestos, unit: "$") %> </h2>
+	<br>
 
-	<h3> Total por repuestos: <%= number_to_currency(total_repuestos, unit: "$") %> </h3>
+	<h3> Total por repuestos a valor actual: <%= number_to_currency(total_repuestos, unit: "$") %></h3>
+	<h4>Se pueden producir diferencias por cambios en los valores del inventario</h4>
 </div>
 
 <div class="jumbotron">
 	<% total_ots = 0 %>
 	<% total_viajes = 0 %>
-	<center><h2>Ordenes de Trabajo</h2></center>
+	<% total_mano_obra = 0 %>
+
+	<center><h2 class="text-primary">Ordenes de Trabajo</h2></center>
 	<br>
 	<table class="table">
 		<thead>
-			<th>Numero de OT</th>
-			<th>Cliente</th>
-			<th>Costos por viaje</th>
-			<th>Total Gastado</th>
+			<th><center>Fecha</center></th>
+			<th><center>Numero de OT</center></th>
+			<th><center>Cliente</center></th>
+			<th><center>Tipo</center></th>
+			<th><center>Costos por repuestos</center></th>
+			<th><center>Costos por viaje</center></th>
+			<th><center>Costos mano de obra</center></th>
+			<th><center>Costo total</center></th>
 		</thead>
 		<tbody>
 			<% @ordenes.each do |orden| %>
 				<% total_ots += orden.total %>
 				<% total_viajes += orden.costo %>
+				<% total_mano_obra += orden.mano_obra %>
+
 				<tr>
-					<td><%= orden.numero %></td>
-					<td><%= orden.cliente %></td>
-					<td><%= number_to_currency(orden.costo, unit: "$") %></td>
-					<td><%= number_to_currency(orden.total, unit: "$") %></td>
+					<td><center><%= orden.fecha %></center></td>
+					<td><center><%= orden.numero %></center></td>
+					<td><center><%= orden.cliente %></center></td>
+					<% if orden.preventiva %>
+						<td class="text-primary"><center>Preventiva</center></td>
+					<% else %>
+						<td class="text-danger"><center>Correctiva</center></td>
+					<% end %>
+					<td><center><%= number_to_currency(orden.total_repuestos, unit: "$") %></center></td>
+					<td><center><%= number_to_currency(orden.costo, unit: "$") %></center></td>
+					<td><center><%= number_to_currency(orden.mano_obra, unit: "$") %></center></td>
+					<td class="text-primary"><center><%= number_to_currency(orden.total, unit: "$") %></center></td>
 				</tr>
 			<% end %>
 		</tbody>
 	</table>
-	<br>
-	<h3> Total: <%= number_to_currency(total_ots, unit: "$") %> </h3>
 </div>
 
 <div class="jumbotron">
-	<center><h2>Otros</h2></center>
+	<center><h2 class="text-primary">Resumen</h2></center>
 	<br>
-	<h3>Total por viajes: <%= number_to_currency(total_viajes, unit: "$") %></h3>
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><h3>Total por repuestos</h3></td>
+				<td><h3><%= number_to_currency(total_repuestos, unit: "$") %></h3></td>
+			</tr>
+
+			<tr>
+				<td><h3>Total por viajes</h3></td>
+				<td><h3><%= number_to_currency(total_viajes, unit: "$") %></h3></td>
+			</tr>
+
+			<tr>
+				<td><h3>Total mano de obra</h3></td>
+				<td><h3><%= number_to_currency(total_mano_obra, unit: "$") %></h3></td>
+			</tr>
+
+			<tr>
+				<td><h3><strong>Total final</strong></h3></td>
+				<td><h3><strong><%= number_to_currency(total_ots, unit: "$") %></strong></h3></td>
+			</tr>
+
+			<% if @ordenes.length >= 2 %>
+				<tr>
+					<td><h3>Horas de uso</h3></td>
+					<td><h3><%= @delta_hor %></h3></td>
+				</tr>
+
+				<tr>
+					<td><h3>Total por hora</h3></td>
+					<td><h3><%= number_to_currency(total_ots/@delta_hor, unit: "$") %></h3></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 </div>
+
+<%= link_to "Volver", @grua, class: "btn btn-lg btn-primary" %>
+<br><br>

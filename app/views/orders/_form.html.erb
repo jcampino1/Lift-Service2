@@ -1,4 +1,4 @@
-<%= bootstrap_form_for([@grua, order]) do |form| %>
+<%= bootstrap_form_for([@grua, order], html: { autocomplete: "off" }) do |form| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -95,6 +95,10 @@
 
   <div class="field">
     <%= form.number_field :costo, label: "Costos viaje", help: "Puede incluir costos del viaje y otros"%>
+  </div>
+
+  <div class="field">
+    <%= form.number_field :numero_gruas, label: "Número de gruas atendidas", help: "Para dividir el costo del viaje entre las maquinas atendidas" %>
   </div>
   <br><br>
 

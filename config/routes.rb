@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'gruas/mantencion_realizada', to: 'gruas#mantencion_realizada', as: :mantencion_realizada
 
+  post 'gruas/actualizar_hora_hombre', to: 'gruas#actualizar_hora_hombre', as: :actualizar_hora_hombre
+  
   resources :ingresos do
     get 'cerrar', to: "ingresos#cerrar", as: :cerrar
     get 'completar', to: "ingresos#completar", as: :completar

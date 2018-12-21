@@ -92,7 +92,8 @@ class Grua < ApplicationRecord
  	end
 
  	def calcular_repuestos(fecha_inicial, fecha_final)
- 		ordenes = self.orders.where(:fecha => fecha_inicial..fecha_final)
+ 		ordenes = self.orders.where(:fecha => fecha_inicial..fecha_final).order('fecha ASC')
+ 		total = 0
  		dicc_repuestos = {}
  		ordenes.each do |orden|
  			orden.repuestos_usados.each do |tupla|
@@ -102,8 +103,9 @@ class Grua < ApplicationRecord
  					dicc_repuestos[tupla[0]] = tupla[1].to_f
  				end
  			end
+ 			total += orden.total_repuestos
  		end
- 		return dicc_repuestos, ordenes
+ 		return dicc_repuestos, total, ordenes
  	end
 
  	def self.calcular_repuestos_totales

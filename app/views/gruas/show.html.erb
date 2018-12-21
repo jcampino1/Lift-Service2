@@ -87,7 +87,6 @@
         <%= number_field_tag :nuevo_horometro, class: "btn" %>
         <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
       <% end %>
-      <h4> Debe ser mayor que el horometro anterior: <%=number_with_delimiter(@grua.horometro.to_i, delimiter: ".") %></h4>
     </div>
 
     <p>---------------------------------------</p>
@@ -95,7 +94,7 @@
     <div class="col">
       <h3>Actualizar cliente y lugar</h3>
       <%= form_tag grua_actualizar_cliente_path(@grua), multipart: true do %>
-        <h4>Cliente: <%= select("cliente", "cliente_id", Cliente.all.collect {|p| [ p.nombre, p.id ] }, { include_blank: true }) %></h4>
+        <h4>Cliente: <%= text_field_tag :cliente %></h4>
         <h4>Lugar: <%= text_field_tag :lugar %></h4>
         <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
       <% end %>
@@ -157,7 +156,11 @@
 
           <tr>
             <td><strong>Asegurada:</strong></td>
-            <td><%= @grua.asegurada %></td>
+            <% if @grua.asegurada %>
+              <td>Sí</td>
+            <% else %>
+              <td>No</td>
+            <% end %>
           </tr>
 
           <tr>

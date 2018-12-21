@@ -100,22 +100,29 @@ class GruasController < ApplicationController
 
   def actualizar_horometro
     @grua = Grua.find(params[:grua_id])
-    @hor = params[:nuevo_horometro].to_f
     @horometro_antiguo = @grua.horometro
-    if @grua.horometro > @hor
-      @mensaje = true
-    else
-      @mensaje = false
-      @grua.horometro = @hor
-      @necesita, @dicc = @grua.evaluar_mantenciones(@hor, @grua.dicc_mantenciones, @grua.mantenciones)
+    @hor = params[:nuevo_horometro].to_f
+    @grua.horometro = @hor
+
+    if @hor > @horometro_antiguo
+      @necesita, @dicc = @grua.evaluar_mantenciones(@hor, @grua.dicc_mantenciones, 
+        @grua.mantenciones)
       @grua.necesita = @necesita
       @grua.dicc_a_realizar = @dicc
-      @grua.save
     end
+    @grua.save
+
   end
 
   def actualizar_cliente
     @grua = Grua.find(params[:grua_id])
+    if params[:cliente] != ''
+      @grua.cliente = params[:cliente]
+    end
+    if params[:lugar] != ''
+      @grua.lugar_actual = params[:lugar]
+    end
+    @grua.save
     redirect_to @grua
   end
 
@@ -127,7 +134,13 @@ class GruasController < ApplicationController
     @fecha_final = Date.new(params[:fecha_final].values[0].to_i,
                          params[:fecha_final].values[1].to_i,
                          params[:fecha_final].values[2].to_i)
-    @repuestos, @ordenes = @grua.calcular_repuestos(@fecha_inicial, @fecha_final)
+    @repuestos, @total_por_repuestos, @ordenes = @grua.calcular_repuestos(@fecha_inicial, @fecha_final)
+    
+    if @ordenes.length >= 2
+      @hor_inicial = @ordenes[0].horometro
+      @hor_final = @ordenes[-1].horometro
+      @delta_hor = @hor_final - @hor_inicial
+    end
   end
 
   def revisar_mantenciones
@@ -154,6 +167,14 @@ class GruasController < ApplicationController
   def analisis
     @gruas = Grua.all
     @repuestos, @total = Grua.calcular_repuestos_totales
+  end
+
+  def actualizar_hora_hombre
+    nuevo_valor = params[:nuevo_valor]
+    hh = Otro.find(1)
+    hh.valor = nuevo_valor
+    hh.save
+    redirect_to root_url
   end
 
   private

@@ -1,4 +1,6 @@
 class Traspaso < ApplicationRecord
+	validates :desde, :hacia, presence: true
+	
 	def self.format(dicc)
 		correcto = true
 		lista_a_devolver = []

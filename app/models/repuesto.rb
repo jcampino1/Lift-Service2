@@ -120,19 +120,25 @@ class Repuesto < ApplicationRecord
 		end
 	end
 
-	def self.ajustar(lista_repuestos, sentido)
+	def self.ajustar(lista_repuestos, sentido, equipo)
 		if sentido == 'Baja'
-			self.rebajar(lista_repuestos, 'Panol')
+			self.rebajar(lista_repuestos, equipo)
 		else
-			self.aumentar(lista_repuestos)
+			self.aumentar(lista_repuestos, equipo)
 		end
 	end
 
-	def self.aumentar(lista_repuestos)
+	def self.aumentar(lista_repuestos, equipo)
 		lista_repuestos.each do |tupla|
 			r = Repuesto.find_by(codigo: tupla[0])
 			r.stock += tupla[1].to_f
-			r.panol += tupla[1].to_f
+			if equipo == "Móvil 1"
+				r.movil1 += tupla[1].to_f
+			elsif equipo == "Móvil 2"
+				r.movil2 += tupla[1].to_f
+			else
+				r.panol += tupla[1].to_f
+			end
 			r.save
 		end
 	end
