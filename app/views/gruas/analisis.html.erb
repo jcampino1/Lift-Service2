@@ -1,36 +1,129 @@
 <center><h1>Análisis de todas las Gruas</h1></center>
 
+<div class="jumbotron">
+	<table class="table">
+		<tbody>
+			<tr>
+				<td>Fecha inicial:</td>
+				<td><%= @fecha_inicial %></td>
+			</tr>
+
+			<tr>
+				<td>Fecha final:</td>
+				<td><%= @fecha_final %></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
 
 <div class="jumbotron">
 	<% total_repuestos = 0 %>
-	<center><h2>Repuestos usados</h2></center>
+	<center><h2 class="text-primary">Repuestos usados</h2></center>
 	<br>
 	<table class="table">
 		<thead>
 			<th>Repuesto</th>
 			<th>Cantidad</th>
-			<th>Valor unitario</th>
+			<th>Valor unitario actual</th>
 			<th>Total</th>
 		</thead>
 		<tbody>
 			<% @repuestos.each do |codigo_repuesto, cantidad| %>
-				<% repuesto = Repuesto.find(codigo_repuesto.to_i) %>
+				<% repuesto = Repuesto.find_by(codigo: codigo_repuesto) %>
 				<% total_repuesto = repuesto.valor.to_f * cantidad.to_f %>
 				<% total_repuestos += total_repuesto %>
 				<tr>
 					<td><%= repuesto.articulo %></td>
 					<td><%= cantidad.to_f %></td>
-					<td><%= number_to_currency(repuesto.valor.to_f, unit: "$") %></td>
-					<td><%= number_to_currency(total_repuesto, unit: "$") %></td>
+					<td><%= number_to_currency(repuesto.valor.to_f,  delimiter: ".", precision: 0) %></td>
+					<td><%= number_to_currency(total_repuesto,  delimiter: ".", precision: 0) %></td>
 				</tr>
 			<% end %>
 		</tbody>
 	</table>
 	<br>
 
-	<h3> Total por repuestos: <%= number_to_currency(total_repuestos, unit: "$") %> </h3>
+	<h3> Total por repuestos (a valor actual): <%= number_to_currency(total_repuestos,  delimiter: ".", precision: 0) %> </h3>
 </div>
 
 <div class="jumbotron">
-	<h2> Total OT: <%= number_to_currency(@total.to_f, unit: "$") %></h2>
+	<center><h2 class="text-primary">Resumen por máquina</h2></center>
+	<br>
+	<table class="table table-striped table-bordered table-sm">
+		<thead>
+			<th>Número</th>
+			<th>Tipo</th>
+			<th>Horas recorridas</th>
+			<th>Costo por repuestos</th>
+			<th>Costo por viajes</th>
+			<th>Costo mano de obra</th>
+			<th>Total</th>
+		</thead>
+
+		<tbody>
+			<% final_repuestos, final_viajes, final_hh, final_total = 0, 0, 0, 0 %>
+			<% @gruas.each do |grua| %>
+				<% ordenes = grua.orders.where(:fecha => @fecha_inicial..@fecha_final).order('fecha ASC') %>
+				<% if ordenes.length >= 2 %>
+					<% horas_recorridas = ordenes[-1].horometro - ordenes[0].horometro %>
+				<% else %>
+					<% horas_recorridas = '-' %>
+				<% end %>
+				<% total_repuestos, total_viajes, total_hh, total = 0, 0, 0, 0 %>
+				<% ordenes.each do |orden| %>
+					<% total_repuestos += orden.total_repuestos %>
+					<% total_viajes += orden.costo %>
+					<% total_hh += orden.mano_obra %>
+					<% total += orden.total %>
+				<% end %>
+
+				<% final_repuestos += total_repuestos %>
+				<% final_viajes += total_viajes %>
+				<% final_hh += total_hh %>
+				<% final_total += total %>
+
+				<tr>
+					<td><%= grua.numero_serie %></td>
+					<td><%= grua.tipo %></td>
+					<td><%= horas_recorridas %></td>
+					<td><%= number_to_currency(total_repuestos,  delimiter: ".", precision: 0) %></td>
+					<td><%= number_to_currency(total_viajes,  delimiter: ".", precision: 0) %></td>
+					<td><%= number_to_currency(total_hh,  delimiter: ".", precision: 0) %></td>
+					<td><%= number_to_currency(total,  delimiter: ".", precision: 0) %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 </div>
+
+<div class="jumbotron">
+	<center><h2 class="text-primary">Resumen</h2></center>
+	<br>
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><h3>Total por repuestos</h3></td>
+				<td><h3><%= number_to_currency(final_repuestos, delimiter: ".", precision: 0) %></h3></td>
+			</tr>
+
+			<tr>
+				<td><h3>Total por viajes</h3></td>
+				<td><h3><%= number_to_currency(final_viajes,  delimiter: ".", precision: 0) %></h3></td>
+			</tr>
+
+			<tr>
+				<td><h3>Total mano de obra</h3></td>
+				<td><h3><%= number_to_currency(final_hh,  delimiter: ".", precision: 0) %></h3></td>
+			</tr>
+
+			<tr>
+				<td><h3><strong>Total final</strong></h3></td>
+				<td><h3><strong><%= number_to_currency(final_total,  delimiter: ".", precision: 0) %></strong></h3></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<%= link_to "Volver", gruas_path, class: "btn btn-lg btn-primary" %>
+<br><br>

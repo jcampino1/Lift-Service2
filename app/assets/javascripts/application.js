@@ -16,3 +16,5 @@
 
 //= require jquery
 //= require bootstrap-sprockets
+//= require bootstrap-table
+//= require dataTables/jquery.dataTables

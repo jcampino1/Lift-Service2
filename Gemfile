@@ -61,3 +61,6 @@ gem "bootstrap_form", ">= 4.0.0"
 
 gem 'ransack'
 
+gem "bootstrap-table-rails"
+
+gem 'jquery-datatables-rails', '~> 3.4.0'

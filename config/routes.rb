@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get 'gruas/revisar_mantenciones', to: 'gruas#revisar_mantenciones',
    as: :revisar_mantenciones
-  get 'gruas/analisis', to: 'gruas#analisis', as: :analisis
+  post 'gruas/analisis', to: 'gruas#analisis', as: :analisis
 
   get 'gruas/mantencion_realizada', to: 'gruas#mantencion_realizada', as: :mantencion_realizada
 

@@ -108,7 +108,11 @@ class GruasController < ApplicationController
       @necesita, @dicc = @grua.evaluar_mantenciones(@hor, @grua.dicc_mantenciones, 
         @grua.mantenciones)
       @grua.necesita = @necesita
-      @grua.dicc_a_realizar = @dicc
+      if @grua.necesita
+        @grua.secuencia = @dicc.keys()[0]
+        @grua.horas_faltantes = @dicc.values()[0][0]
+        @grua.horas_teoricas = @dicc.values()[0][1]
+      end
     end
     @grua.save
 
@@ -144,7 +148,7 @@ class GruasController < ApplicationController
   end
 
   def revisar_mantenciones
-    @gruas = Grua.where(necesita: true)
+    @gruas = Grua.where(necesita: true).order(horas_faltantes: :asc)
   end
 
   def mantencion_realizada
@@ -158,14 +162,25 @@ class GruasController < ApplicationController
     end
     necesita, dicc = @grua.evaluar_mantenciones(@grua.horometro, @grua.dicc_mantenciones, @grua.mantenciones)
     @grua.necesita = necesita
-    @grua.dicc_a_realizar = dicc
+    #@grua.dicc_a_realizar = dicc
+    if @grua.necesita
+      @grua.secuencia = dicc.keys()[0]
+      @grua.horas_faltantes = dicc.values()[0][0]
+      @grua.horas_teoricas = dicc.values()[0][1]
+    end
     @grua.save
 
     redirect_back(fallback_location: root_path)
   end
 
   def analisis
-    @gruas = Grua.all
+    @gruas = Grua.all.order('numero_serie ASC')
+    @fecha_inicial = Date.new(params[:fecha_inicial].values[0].to_i,
+                         params[:fecha_inicial].values[1].to_i,
+                         params[:fecha_inicial].values[2].to_i)
+    @fecha_final = Date.new(params[:fecha_final].values[0].to_i,
+                         params[:fecha_final].values[1].to_i,
+                         params[:fecha_final].values[2].to_i)
     @repuestos, @total = Grua.calcular_repuestos_totales
   end
 

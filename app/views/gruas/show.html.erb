@@ -13,18 +13,18 @@
         <th>Horas teóricas de mantención</th>
       </thead>
       <tbody>
-        <% @grua.dicc_a_realizar.each do |key, value| %>
-          <tr>
-            <td>Cada <%= key %> horas</td>
-            <% if value[0] <= 0 %>
-              <td class="text-danger"><%= value[0] %> horas</td>
-            <% else %>
-              <td><%= number_with_delimiter(value[0].to_i, delimiter: ".") %> horas</td>
-            <% end %>
-            <td><%= number_with_delimiter(value[1].to_i, delimiter: ".")%> horas</td>
-            <td><%= link_to "Realizada", mantencion_realizada_path(grua_id: @grua.id, secuencia: key) %></td>
-          </tr>
-        <% end %>
+
+        <tr>
+          <td>Cada <%= @grua.secuencia %> horas</td>
+          <% if @grua.horas_faltantes <= 0 %>
+            <td class="text-danger"><%= number_with_delimiter(@grua.horas_faltantes.to_i, delimiter: ".") %> horas</td>
+          <% else %>
+            <td><%= number_with_delimiter(@grua.horas_faltantes.to_i, delimiter: ".") %> horas</td>
+          <% end %>
+          <td><%= number_with_delimiter(@grua.horas_teoricas.to_i, delimiter: ".")%> horas</td>
+          <td><%= link_to "Realizada", mantencion_realizada_path(grua_id: @grua.id, secuencia: @grua.secuencia) %></td>
+        </tr>
+        
       </tbody>
     </table>
   </div>

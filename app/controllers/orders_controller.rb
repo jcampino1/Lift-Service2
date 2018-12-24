@@ -76,7 +76,11 @@ class OrdersController < ApplicationController
         @necesita, @dicc = @grua.evaluar_mantenciones(horometro, @grua.dicc_mantenciones, 
           @grua.mantenciones)
         @grua.necesita = @necesita
-        @grua.dicc_a_realizar = @dicc
+        if @grua.necesita
+          @grua.secuencia = @dicc.keys()[0]
+          @grua.horas_faltantes = @dicc.values()[0][0]
+          @grua.horas_teoricas = @dicc.values()[0][1]
+        end
         @grua.save
 
         @order.save

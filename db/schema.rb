@@ -43,6 +43,9 @@ ActiveRecord::Schema.define(version: 20181221153147) do
     t.boolean "asegurada"
     t.string "estado"
     t.string "mantenciones", default: [], array: true
+    t.integer "secuencia"
+    t.float "horas_faltantes"
+    t.float "horas_teoricas"
     t.string "dicc_mantenciones"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -56,7 +59,6 @@ ActiveRecord::Schema.define(version: 20181221153147) do
     t.float "mastil"
     t.text "observaciones"
     t.boolean "necesita", default: false
-    t.string "dicc_a_realizar"
   end
 
   create_table "ingresos", force: :cascade do |t|

@@ -1,6 +1,5 @@
 class Grua < ApplicationRecord
 	serialize :dicc_mantenciones
-	serialize :dicc_a_realizar
 	has_many :orders
 
 	require 'csv'

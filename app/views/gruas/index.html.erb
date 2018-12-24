@@ -66,8 +66,16 @@
 
 <div class="jumbotron">
   <h2><center>Realizar análisis de todas las gruas</center></h2>
-  <center><%= link_to 'Hacer análisis', analisis_path, class: "btn btn-lg btn-primary", id:"link-b" %></center>
-  <h3></h3>
+  <br>
+  <%= form_tag analisis_path, multipart: true do %>
+    <div class="field">
+      <center><p>Fecha inicial: <%= date_select :fecha_inicial, class: "btn" %></p></center>
+    </div>
+    <div class="field">
+      <center><p>Fecha final: <%= date_select :fecha_final, class: "btn" %></p></center>
+    </div>
+    <center><%= submit_tag "Realizar análisis", class: "btn btn-lg btn-primary", id:"link-b" %></center>
+  <% end %>
 </div>
 
 <div>
