@@ -5,7 +5,13 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    @orders = Order.all.order('fecha ASC')
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @orders.to_csv }
+      format.xls { send_data @orders.to_csv(col_sep: "\t") }
+    end
   end
 
   # GET /orders/1
