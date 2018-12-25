@@ -1,6 +1,12 @@
 <center><h1> Grúas que necesitan mantención </h1></center>
 <br><br>
 
+<p>
+  Descargar:
+  <%= link_to "CSV", revisar_mantenciones_path(format: "csv") %> |
+  <%= link_to "Excel", revisar_mantenciones_path(format: "xls") %>
+</p>
+
 <table   class="table table-striped table-bordered table-sm">
 	<thead>
 		<th>Número de serie</th>

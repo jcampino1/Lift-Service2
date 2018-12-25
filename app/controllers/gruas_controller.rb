@@ -27,7 +27,7 @@ class GruasController < ApplicationController
   # GET /gruas/1
   # GET /gruas/1.json
   def show
-    @orders = @grua.orders.order('fecha ASC')
+    @orders = @grua.orders.order('fecha DESC')
     @lista_clientes = []
     Cliente.all.each do |cliente|
       @lista_clientes.push(cliente.nombre)
@@ -149,6 +149,12 @@ class GruasController < ApplicationController
 
   def revisar_mantenciones
     @gruas = Grua.where(necesita: true).order(horas_faltantes: :asc)
+
+    respond_to do |format|
+    format.html
+    format.csv { send_data @gruas.to_csv }
+    format.xls { send_data @gruas.to_csv(col_sep: "\t") }
+  end
   end
 
   def mantencion_realizada

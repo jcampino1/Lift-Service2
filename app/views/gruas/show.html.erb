@@ -35,7 +35,7 @@
 <% end %>
 
 
-<div class="jumbotron">
+<div class="jumbotron" style="height:500px;overflow-y:scroll;;">
   <center><h2 class="text-primary">Ordenes de Trabajo</h2></center>
   <br>
   <table class="table table-hover">
@@ -76,6 +76,8 @@
 
   <center><h2> Ingresar una nueva Orden de trabajo: </h2></center>
   <center><%= link_to "Nueva OT", new_grua_order_path(grua_id: @grua), class: "btn btn-lg btn-primary", id:"link-b" %></center>
+  <br>
+  <center><%= link_to "Ver hoja de vida", grua_orders_path(@grua) %></center>
 </div>
 
 <div class="jumbotron">

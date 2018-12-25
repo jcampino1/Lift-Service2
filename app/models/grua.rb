@@ -4,6 +4,16 @@ class Grua < ApplicationRecord
 
 	require 'csv'
 
+	def self.to_csv(options = {})
+		column_names = %w{numero_serie cliente horometro secuencia horas_faltantes horas_teoricas}
+		CSV.generate(options) do |csv|
+		    csv << column_names
+		    all.each do |grua|
+		      csv << grua.attributes.values_at(*column_names)
+		    end
+  		end
+	end
+
 	def self.import(file)
 		CSV.foreach(file.path, headers: false) do |row|
 			if row[16] == 'Si'
