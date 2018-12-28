@@ -50,14 +50,14 @@
 	      <tr>
 	        <td><%= nombre %></td>
 	        <td><%= tupla[1].to_f %></td>
-	        <td><%= number_to_currency(valor, unit: "$") %></td>
+	        <td><%= number_to_currency(valor, delimiter: ".", precision: 0) %></td>
 	      </tr>
 	    <% end %>
 	  </tbody>
 	</table>
 	<br>
 
-	<h3>Total por elementos agregados: <strong><%= number_to_currency(@ingreso.total, unit: "$")%></strong></h3>
+	<h3>Total por elementos agregados: <strong><%= number_to_currency(@ingreso.total, delimiter: ".", precision: 0)%></strong></h3>
 </div>
 
 <% if @ingreso.abierta %>
@@ -83,12 +83,12 @@
 		      <tr>
 		        <td><%= nombre %></td>
 		        <td><%= tupla[1].to_f %></td>
-		        <td><%= number_to_currency(valor, unit: "$") %></td>
+		        <td><%= number_to_currency(valor, delimiter: ".", precision: 0) %></td>
 		      </tr>
 		    <% end %>
 		  </tbody>
 		</table>
-		<h3>Total por elementos faltantes: <strong><%= number_to_currency(total_faltante, unit: "$")%></strong></h3>
+		<h3>Total por elementos faltantes: <strong><%= number_to_currency(total_faltante, delimiter: ".", precision: 0)%></strong></h3>
 	</div>
 	
 	<div class="jumbotron">
