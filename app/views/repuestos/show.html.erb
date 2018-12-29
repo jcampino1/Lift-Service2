@@ -15,7 +15,7 @@
 
       <tr>
         <td><strong>Valor:</strong></td>
-        <td><%= number_to_currency(@repuesto.valor, unit: "$")%></td>
+        <td><%= number_to_currency(@repuesto.valor, delimiter: ".", precision: 0)%></td>
       </tr>
 
       <tr>

@@ -52,7 +52,7 @@ class GruasController < ApplicationController
     if @grua.tipo == "Eléctrica"
         @grua.mantenciones = [6000, 2000, 1000, 250]
       elsif @grua.tipo == "Gas"
-        @grua.mantenciones = [2450, 1400, 700, 350]
+        @grua.mantenciones = [2800, 1400, 700, 350]
       elsif @grua.tipo == "Apilador"
         @grua.mantenciones = [2000, 1000, 500]
       else @grua.mantenciones = []
@@ -151,10 +151,10 @@ class GruasController < ApplicationController
     @gruas = Grua.where(necesita: true).order(horas_faltantes: :asc)
 
     respond_to do |format|
-    format.html
-    format.csv { send_data @gruas.to_csv }
-    format.xls { send_data @gruas.to_csv(col_sep: "\t") }
-  end
+      format.html
+      format.csv { send_data @gruas.to_csv }
+      format.xls { send_data @gruas.to_csv(col_sep: "\t") }
+    end
   end
 
   def mantencion_realizada
@@ -188,6 +188,7 @@ class GruasController < ApplicationController
                          params[:fecha_final].values[1].to_i,
                          params[:fecha_final].values[2].to_i)
     @repuestos, @total = Grua.calcular_repuestos_totales
+
   end
 
   def actualizar_hora_hombre

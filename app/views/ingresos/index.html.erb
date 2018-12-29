@@ -23,7 +23,7 @@
           <td><%= ingreso.numero_factura %></td>
           <td><%= ingreso.orden_compra %></td>
           <td><%= ingreso.fecha %></td>
-          <td><%= number_to_currency(ingreso.total, unit: "$") %></td>
+          <td><%= number_to_currency(ingreso.total, delimiter: ".", precision: 0) %></td>
           <% if ingreso.abierta %>
             <td class="text-danger">Abierta</td>
           <% else %>

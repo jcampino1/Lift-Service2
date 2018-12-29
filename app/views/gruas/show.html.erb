@@ -1,6 +1,8 @@
 <center><h1>Grúa Num <%=@grua.numero_serie%></h1></center>
 <center><h2>Horometro: <%= number_with_delimiter(@grua.horometro.to_i, delimiter: ".") %></h2></center>
 
+<%= @grua.dicc_mantenciones %>
+
 
 <% if @grua.necesita %>
   <div class="jumbotron">
@@ -63,7 +65,7 @@
           <% end %>
           <td><%= order.estado_maquina %></td>
           <td><%= order.equipo %></td>
-          <td><%= number_to_currency(order.total, unit: "$") %></td>
+          <td><%= number_to_currency(order.total, delimiter: ".", precision: 0) %></td>
           <td><%= link_to 'Mostrar', grua_order_path(grua_id: @grua, id: order) %></td>
           <td><%= link_to 'Eliminar', grua_order_path(grua_id: @grua, id: order), method: :delete, data: { confirm: '¿Estás seguro que quieres eliminar la OT?' } %></td>
         </tr>
@@ -133,7 +135,7 @@
 
           <tr>
             <td><strong>Horometro:</strong></td>
-            <td><%= @grua.horometro %></td>
+            <td><%= number_with_delimiter(@grua.horometro.to_i, delimiter: ".") %></td>
           </tr>
 
           <tr>
@@ -220,7 +222,7 @@
   </nav>
 </div>
 
-<%= link_to 'Editar', edit_grua_path(@grua) %> |
+<!%= link_to 'Editar', edit_grua_path(@grua) %>
 <%= link_to 'Volver', gruas_path %>
 <br>
 <br>

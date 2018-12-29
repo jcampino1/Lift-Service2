@@ -53,17 +53,17 @@
 				<tr>
 					<td><%= repuesto.articulo %></td>
 					<td><%= cantidad.to_f %></td>
-					<td><%= number_to_currency(repuesto.valor.to_f, unit: "$") %></td>
-					<td><%= number_to_currency(total_repuesto, unit: "$") %></td>
+					<td><%= number_to_currency(repuesto.valor.to_f, delimiter: ".", precision: 0) %></td>
+					<td><%= number_to_currency(total_repuesto, delimiter: ".", precision: 0) %></td>
 				</tr>
 			<% end %>
 		</tbody>
 	</table>
 	<br>
-	<h2 class="text-primary"> Total por repuestos a valor histórico: <%= number_to_currency(@total_por_repuestos, unit: "$") %> </h2>
+	<h2 class="text-primary"> Total por repuestos a valor histórico: <%= number_to_currency(@total_por_repuestos, delimiter: ".", precision: 0) %> </h2>
 	<br>
 
-	<h3> Total por repuestos a valor actual: <%= number_to_currency(total_repuestos, unit: "$") %></h3>
+	<h3> Total por repuestos a valor actual: <%= number_to_currency(total_repuestos, delimiter: ".", precision: 0) %></h3>
 	<h4>Se pueden producir diferencias por cambios en los valores del inventario</h4>
 </div>
 
@@ -100,10 +100,10 @@
 					<% else %>
 						<td class="text-danger"><center>Correctiva</center></td>
 					<% end %>
-					<td><center><%= number_to_currency(orden.total_repuestos, unit: "$") %></center></td>
-					<td><center><%= number_to_currency(orden.costo, unit: "$") %></center></td>
-					<td><center><%= number_to_currency(orden.mano_obra, unit: "$") %></center></td>
-					<td class="text-primary"><center><%= number_to_currency(orden.total, unit: "$") %></center></td>
+					<td><center><%= number_to_currency(orden.total_repuestos, delimiter: ".", precision: 0) %></center></td>
+					<td><center><%= number_to_currency(orden.costo, delimiter: ".", precision: 0) %></center></td>
+					<td><center><%= number_to_currency(orden.mano_obra, delimiter: ".", precision: 0) %></center></td>
+					<td class="text-primary"><center><%= number_to_currency(orden.total, delimiter: ".", precision: 0) %></center></td>
 				</tr>
 			<% end %>
 		</tbody>
@@ -117,22 +117,22 @@
 		<tbody>
 			<tr>
 				<td><h3>Total por repuestos</h3></td>
-				<td><h3><%= number_to_currency(total_repuestos, unit: "$") %></h3></td>
+				<td><h3><%= number_to_currency(total_repuestos, delimiter: ".", precision: 0) %></h3></td>
 			</tr>
 
 			<tr>
 				<td><h3>Total por viajes</h3></td>
-				<td><h3><%= number_to_currency(total_viajes, unit: "$") %></h3></td>
+				<td><h3><%= number_to_currency(total_viajes, delimiter: ".", precision: 0) %></h3></td>
 			</tr>
 
 			<tr>
 				<td><h3>Total mano de obra</h3></td>
-				<td><h3><%= number_to_currency(total_mano_obra, unit: "$") %></h3></td>
+				<td><h3><%= number_to_currency(total_mano_obra, delimiter: ".", precision: 0) %></h3></td>
 			</tr>
 
 			<tr>
 				<td><h3><strong>Total final</strong></h3></td>
-				<td><h3><strong><%= number_to_currency(total_ots, unit: "$") %></strong></h3></td>
+				<td><h3><strong><%= number_to_currency(total_ots, delimiter: ".", precision: 0) %></strong></h3></td>
 			</tr>
 
 			<% if @ordenes.length >= 2 %>
@@ -143,7 +143,7 @@
 
 				<tr>
 					<td><h3>Total por hora</h3></td>
-					<td><h3><%= number_to_currency(total_ots/@delta_hor, unit: "$") %></h3></td>
+					<td><h3><%= number_to_currency(total_ots/@delta_hor, delimiter: ".", precision: 0) %></h3></td>
 				</tr>
 			<% end %>
 		</tbody>

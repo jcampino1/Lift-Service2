@@ -88,14 +88,14 @@
         <tr>
           <td><%= nombre %></td>
           <td><%= tupla[1].to_f %></td>
-          <td><%= number_to_currency(tupla[2].to_f, unit: "$") %></td>
-          <td class="text-danger"><%= number_to_currency(total_repuesto, unit: "$") %></td>
+          <td><%= number_to_currency(tupla[2].to_f, delimiter: ".", precision: 0) %></td>
+          <td class="text-danger"><%= number_to_currency(total_repuesto, delimiter: ".", precision: 0) %></td>
         </tr>
 
       <% end %>
     </tbody>
   </table>
-  <h3 class="text-danger"> Total repuestos: <%= number_to_currency(total, unit: "$") %></h3>
+  <h3 class="text-danger"> Total repuestos: <%= number_to_currency(total, delimiter: ".", precision: 0) %></h3>
 </div>
 
 <h2> Trabajos realizados: </h2>
@@ -115,7 +115,7 @@
       <tbody>
         <tr>
           <td>Total por repuestos</td>
-          <td class="text-danger"><%= number_to_currency(total, unit: "$") %> | <%= @order.total_repuestos %></td>
+          <td class="text-danger"><%= number_to_currency(total, delimiter: ".", precision: 0) %></td>
         </tr>
         <tr>
           <td>Horas hombre</td>
@@ -123,21 +123,21 @@
         </tr>
         <tr>
           <td>Valor HH</td>
-          <td><%= number_to_currency(@valor_hh, unit: "$") %></td>
+          <td><%= number_to_currency(@valor_hh, delimiter: ".", precision: 0) %></td>
         </tr>
         <tr>
           <td> Total HH </td>
-          <td class="text-danger"><%= number_to_currency(@order.horas_hombre*@valor_hh, unit: "$") %></td>
+          <td class="text-danger"><%= number_to_currency(@order.horas_hombre*@valor_hh, delimiter: ".", precision: 0) %></td>
         </tr>
         <tr>
           <td> Costo viaje</td>
-          <td class="text-danger"><%= number_to_currency(@order.costo, unit: "$") %></td>
+          <td class="text-danger"><%= number_to_currency(@order.costo, delimiter: ".", precision: 0) %></td>
         </tr>
       </tbody>
     </table>
   </div>
   <% total_final = @order.horas_hombre*@valor_hh + total + @order.costo %>
-  <h3 class="text-danger"> Total: <%= number_to_currency(total_final, unit: "$") %></h5>
+  <h3 class="text-danger"> Total: <%= number_to_currency(total_final, delimiter: ".", precision: 0) %></h5>
 </div>
 
 

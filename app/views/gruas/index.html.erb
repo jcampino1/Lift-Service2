@@ -27,6 +27,7 @@
         <tr>
           <th> Numero </th>
           <th> Tipo </th>
+          <th>Cliente</th>
           <th> Lugar Actual </th>
           <th> Horómetro </th>
           <th colspan="2"></th>
@@ -38,6 +39,7 @@
           <tr>
             <td><%= grua.numero_serie %></td>
             <td><%= grua.tipo %></td>
+            <td><%= grua.cliente %></td>
             <td><%= grua.lugar_actual %></td>
             <td><%= number_with_delimiter(grua.horometro.to_i, delimiter: ".") %></td>
             <td><%= link_to 'Mostrar', grua %></td>
@@ -84,6 +86,6 @@
     <%= number_field_tag :nuevo_valor, class: "btn" %>
     <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
   <% end %>
-  <h5>Valor actual: <%= number_to_currency(Otro.find(1).valor, unit: "$") %></h5>
+  <h5>Valor actual: <%= number_to_currency(Otro.find(1).valor, delimiter: ".", precision: 0) %></h5>
 </div>
 <br><br><br><br>
