@@ -30,7 +30,7 @@ class Grua < ApplicationRecord
    		if grua.tipo == "Eléctrica"
    			grua.mantenciones = [6000, 2000, 1000, 250]
    		elsif grua.tipo == "Gas"
-   			grua.mantenciones = [2450, 1400, 700, 350]
+   			grua.mantenciones = [2800, 1400, 700, 350]
    		elsif grua.tipo == "Apilador"
    			grua.mantenciones = [2000, 1000, 500]
    		else grua.mantenciones = []
@@ -41,7 +41,7 @@ class Grua < ApplicationRecord
  	end
 
  	def set_dicc_mantenciones(tipo, horometro)
- 		dicc_default_gas = {350 => 0, 700 => 0, 1400 => 0, 2450 => 0}
+ 		dicc_default_gas = {350 => 0, 700 => 0, 1400 => 0, 2800 => 0}
  		dicc_default_electrica = {250 => 0, 1000 => 0, 2000 => 0, 6000 => 0}
 
  		# Evaluar hacerlo cada 50 hr
