@@ -48,9 +48,10 @@
 </div>
 
 <div class="jumbotron">
+	<button class="btn btn-primary" onclick="exportTableToExcel('tabla-resumen-por-maquina', 'resumen general maquinas')">Excel</button>
 	<center><h2 class="text-primary">Resumen por máquina</h2></center>
 	<br>
-	<table class="table table-striped table-bordered table-sm">
+	<table class="table table-striped table-bordered table-sm" id="tabla-resumen-por-maquina">
 		<thead>
 			<th>Número</th>
 			<th>Tipo</th>
@@ -127,3 +128,37 @@
 
 <%= link_to "Volver", gruas_path, class: "btn btn-lg btn-primary" %>
 <br><br>
+
+
+<script type="text/javascript">
+	function exportTableToExcel(tableID, filename = ''){
+	    var downloadLink;
+	    var dataType = 'application/vnd.ms-excel';
+	    var tableSelect = document.getElementById(tableID);
+	    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+	    
+	    // Specify file name
+	    filename = filename?filename+'.xls':'excel_data.xls';
+	    
+	    // Create download link element
+	    downloadLink = document.createElement("a");
+	    
+	    document.body.appendChild(downloadLink);
+	    
+	    if(navigator.msSaveOrOpenBlob){
+	        var blob = new Blob(['\ufeff', tableHTML], {
+	            type: dataType
+	        });
+	        navigator.msSaveOrOpenBlob( blob, filename);
+	    }else{
+	        // Create a link to the file
+	        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+	    
+	        // Setting the file name
+	        downloadLink.download = filename;
+	        
+	        //triggering the function
+	        downloadLink.click();
+	    }
+	}
+</script>
