@@ -4,7 +4,7 @@ class Order < ApplicationRecord
 	def self.to_csv(options = {})
 		column_names = %w{fecha cliente preventiva equipo total_repuestos mano_obra costo total}
 		CSV.generate(options) do |csv|
-		    csv << column_names
+		    csv << ['Fecha', 'Cliente', 'Preventiva', 'Taller', 'Repuestos', 'Mano de obra', 'Viaje', 'Total']
 		    all.each do |order|
 		      csv << order.attributes.values_at(*column_names)
 		    end

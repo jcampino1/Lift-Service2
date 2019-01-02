@@ -7,7 +7,7 @@ class Grua < ApplicationRecord
 	def self.to_csv(options = {})
 		column_names = %w{numero_serie cliente horometro secuencia horas_faltantes horas_teoricas}
 		CSV.generate(options) do |csv|
-		    csv << column_names
+		    csv << ['Numero interno', 'Cliente', 'Horometro', 'Secuencia', 'Horas faltantes', 'Horas teoricas']
 		    all.each do |grua|
 		      csv << grua.attributes.values_at(*column_names)
 		    end
