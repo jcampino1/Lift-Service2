@@ -12,19 +12,44 @@
   <body>
     <header>
       <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <%= link_to "Grúas", root_url, class: 'btn btn-lg', id: "logo" %>
-          <%= link_to "Repuestos", repuestos_path, class: 'btn btn-lg' %>
-          <%= link_to "Ingresos", ingresos_path, class: 'btn btn-lg' %>
-          <%= link_to "Proveedores", suppliers_path, class: 'btn btn-lg' %>
-          <%= link_to "Clientes", clientes_path, class: 'btn btn-lg' %>
-        </div> 
+        <% if user_signed_in? %>
+          <% if current_user.admin? %>
+            <div class="navbar-left">
+              <%= link_to "Grúas", root_url, class: 'btn btn-lg', id: "logo" %>
+              <%= link_to "Repuestos", repuestos_path, class: 'btn btn-lg' %>
+              <%= link_to "Ingresos", ingresos_path, class: 'btn btn-lg' %>
+              <%= link_to "Proveedores", suppliers_path, class: 'btn btn-lg' %>
+              <%= link_to "Clientes", clientes_path, class: 'btn btn-lg' %>
+            </div>
+          <% end %>
+        <% end %>
+        <div class="navbar-right">
+          <% if user_signed_in? %>
+            <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, class: 'btn btn-lg' %>
+          <% else %>
+            <%= link_to "Iniciar Sesión", new_user_session_path, class: 'btn btn-lg' %><%= link_to "Registrarte", new_user_registration_path, class: 'btn btn-lg' %>
+          <% end %>
+        </div>
       </nav>
     </header>
     <div class="container">
       <p class="text-success"><%= notice %></p>
       <p class="alert"><%= alert %></p>
-      <%= yield %>
+
+
+      <% if current_page?(new_user_session_path) or current_page?(new_user_registration_path) %>
+        <%= yield %>
+      <% end %>
+
+
+
+      <% if user_signed_in? %>
+        <% if current_user.admin? %>
+          <%= yield %>
+        <% else %>
+          <h2>Debes ser administrador para participar</h2>
+        <% end %>
+      <% end %>
     </div>
   </body>
 </html>

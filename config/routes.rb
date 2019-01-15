@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  #devise_for :users
+
+  devise_for :users, controllers: {
+        sessions: 'users/sessions'
+      }
+
+
   get 'gruas/revisar_mantenciones', to: 'gruas#revisar_mantenciones',
    as: :revisar_mantenciones
   post 'gruas/analisis', to: 'gruas#analisis', as: :analisis
