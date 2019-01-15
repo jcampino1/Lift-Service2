@@ -32,6 +32,21 @@
 <% else %>
   <div class="jumbotron">
     <center><h2 class="text-success">Mantenciones al día</h2></center>
+
+    <table class="table">
+      <thead>
+        <th>Secuencia</th>
+        <th>Proxima mantencion</th>
+      </thead>
+      <tbody>
+        <% @grua.dicc_mantenciones.each do |secuencia, veces| %>
+          <tr>
+            <td>Cada <%= secuencia %> horas</td>
+            <td><%= secuencia.to_f*(veces.to_f + 1) %></td>
+          </tr>
+        <% end %>        
+      </tbody>
+    </table>
   </div>
 <% end %>
 
