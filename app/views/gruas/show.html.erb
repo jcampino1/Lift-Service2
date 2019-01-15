@@ -32,7 +32,7 @@
 <% else %>
   <div class="jumbotron">
     <center><h2 class="text-success">Mantenciones al día</h2></center>
-
+    <br>
     <table class="table">
       <thead>
         <th>Secuencia</th>
@@ -42,7 +42,7 @@
         <% @grua.dicc_mantenciones.each do |secuencia, veces| %>
           <tr>
             <td>Cada <%= secuencia %> horas</td>
-            <td><%= secuencia.to_f*(veces.to_f + 1) %></td>
+            <td><%= number_with_delimiter((secuencia.to_f*(veces.to_f + 1)).to_i, delimiter: ".") %></td>
           </tr>
         <% end %>        
       </tbody>
