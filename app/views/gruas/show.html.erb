@@ -1,8 +1,6 @@
 <center><h1>Grúa Num <%=@grua.numero_serie%></h1></center>
 <center><h2>Horometro: <%= number_with_delimiter(@grua.horometro.to_i, delimiter: ".") %></h2></center>
 
-
-
 <% if @grua.necesita %>
   <div class="jumbotron">
     <center><h2 class="text-danger">Necesita mantención </h2></center>
@@ -36,13 +34,13 @@
     <table class="table">
       <thead>
         <th>Secuencia</th>
-        <th>Proxima mantencion</th>
+        <th>Próxima mantención</th>
       </thead>
       <tbody>
         <% @grua.dicc_mantenciones.each do |secuencia, veces| %>
           <tr>
             <td>Cada <%= secuencia %> horas</td>
-            <td><%= number_with_delimiter((secuencia.to_f*(veces.to_f + 1)).to_i, delimiter: ".") %></td>
+            <td><%= number_with_delimiter((secuencia.to_f*(veces.to_f + 1)).to_i + @grua.horometro_inicial.to_i, delimiter: ".") %></td>
           </tr>
         <% end %>        
       </tbody>
@@ -229,6 +227,11 @@
           <tr>
             <td><strong>Observaciones:</strong></td>
             <td><%= @grua.observaciones %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Horometro inicial:</strong></td>
+            <td><%= number_with_delimiter(@grua.horometro_inicial.to_i, delimiter: ".") %></td>
           </tr>
         </ul>
       </tbody>

@@ -40,6 +40,15 @@ class Grua < ApplicationRecord
       end
  	end
 
+ 	def self.importar_horometros_iniciales(file)
+ 		CSV.foreach(file.path, headers: false) do |row|
+ 			grua = Grua.find(row[0].to_i)
+ 			grua.horometro_inicial = row[1].to_f
+ 			grua.dicc_mantenciones = grua.set_dicc_mantenciones(grua.tipo, grua.horometro - row[1].to_f)
+ 			grua.save
+ 		end
+ 	end
+
  	def set_dicc_mantenciones(tipo, horometro)
  		dicc_default_gas = {350 => 0, 700 => 0, 1400 => 0, 2800 => 0}
  		dicc_default_electrica = {250 => 0, 1000 => 0, 2000 => 0, 6000 => 0}
@@ -73,12 +82,17 @@ class Grua < ApplicationRecord
  	def establecer_dicc(horometro, lista_keys)
  		dicc = {}
  		lista_keys.each do |key|
- 			dicc[key] = ((horometro - horometro%key)/key).to_i
+ 			valor = ((horometro - horometro%key)/key).to_i
+ 			if valor > 0
+ 				dicc[key] = valor
+ 			else
+ 				dicc[key] = 0
+ 			end
  		end
  		return dicc 
  	end
 
- 	def evaluar_mantenciones(horometro, dicc_mantenciones, lista_mantenciones)
+ 	def evaluar_mantenciones(horometro, dicc_mantenciones, lista_mantenciones, hor_inicial)
  		"""
  		Devuelve siesque la grua necesita alguna mantencion y un diccionario con el valor
  		de la secuencia que se necesita mas una lista que contiene [cuanto le falta, 
@@ -91,7 +105,7 @@ class Grua < ApplicationRecord
  		lista_mantenciones.each do |secuencia|
  			valor = dicc_mantenciones[secuencia.to_i]
  			# En la linea ste hacer cambios
- 			horas_para_mantencion = secuencia.to_i - (horometro - secuencia.to_i*valor)
+ 			horas_para_mantencion = secuencia.to_i - ((horometro - hor_inicial) - secuencia.to_i*valor)
  			if horas_para_mantencion < 100
  				necesita_mantencion = true
  				dicc_a_realizar[secuencia] = [horas_para_mantencion, (horometro + horas_para_mantencion)]

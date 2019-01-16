@@ -80,12 +80,19 @@
   <% end %>
 </div>
 
-<div>
+<div class="jumbotron">
   <h3>Actualizar valor hora hombre</h3>
   <%= form_tag actualizar_hora_hombre_path, multipart: true do %>
     <%= number_field_tag :nuevo_valor, class: "btn" %>
     <%= submit_tag "Actualizar", class: "btn btn-lg btn-primary", id:"link-b" %>
   <% end %>
   <h5>Valor actual: <%= number_to_currency(Otro.find(1).valor, delimiter: ".", precision: 0) %></h5>
+</div>
+
+<div class="jumbotron">
+  <%= form_tag horometros_iniciales_path, multipart: true do %>
+    <%= file_field_tag :file, class: "btn" %>
+    <%= submit_tag "Ingresar horometros iniciales", class: "btn btn-lg btn-primary", id:"link-b" %>
+  <% end %>
 </div>
 <br><br><br><br>

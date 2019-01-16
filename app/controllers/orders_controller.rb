@@ -80,7 +80,7 @@ class OrdersController < ApplicationController
         # Actualizar horometro y ver mantenciones
         @grua.horometro = horometro
         @necesita, @dicc = @grua.evaluar_mantenciones(horometro, @grua.dicc_mantenciones, 
-          @grua.mantenciones)
+          @grua.mantenciones, @grua.horometro_inicial)
         @grua.necesita = @necesita
         if @grua.necesita
           @grua.secuencia = @dicc.keys()[0]
