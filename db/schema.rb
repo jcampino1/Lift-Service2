@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190115162614) do
+ActiveRecord::Schema.define(version: 20190116222057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20190115162614) do
     t.float "mastil"
     t.text "observaciones"
     t.boolean "necesita", default: false
+    t.float "horometro_inicial", default: 0.0
   end
 
   create_table "ingresos", force: :cascade do |t|

@@ -106,7 +106,7 @@ class GruasController < ApplicationController
 
     if @hor > @horometro_antiguo
       @necesita, @dicc = @grua.evaluar_mantenciones(@hor, @grua.dicc_mantenciones, 
-        @grua.mantenciones)
+        @grua.mantenciones, @grua.horometro_inicial)
       @grua.necesita = @necesita
       if @grua.necesita
         @grua.secuencia = @dicc.keys()[0]
@@ -166,7 +166,7 @@ class GruasController < ApplicationController
         @grua.dicc_mantenciones[key] += 1
       end
     end
-    necesita, dicc = @grua.evaluar_mantenciones(@grua.horometro, @grua.dicc_mantenciones, @grua.mantenciones)
+    necesita, dicc = @grua.evaluar_mantenciones(@grua.horometro, @grua.dicc_mantenciones, @grua.mantenciones, @grua.horometro_inicial)
     @grua.necesita = necesita
     #@grua.dicc_a_realizar = dicc
     if @grua.necesita
@@ -197,6 +197,11 @@ class GruasController < ApplicationController
     hh.valor = nuevo_valor
     hh.save
     redirect_to root_url
+  end
+
+  def horometros_iniciales
+    Grua.importar_horometros_iniciales(params[:file])
+    redirect_to root_url, notice: "Horometros iniciales seteados"
   end
 
   private
