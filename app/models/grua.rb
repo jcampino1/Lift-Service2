@@ -90,6 +90,7 @@ class Grua < ApplicationRecord
  		#dicc_mantenciones.each do |secuencia, valor|
  		lista_mantenciones.each do |secuencia|
  			valor = dicc_mantenciones[secuencia.to_i]
+ 			# En la linea ste hacer cambios
  			horas_para_mantencion = secuencia.to_i - (horometro - secuencia.to_i*valor)
  			if horas_para_mantencion < 100
  				necesita_mantencion = true
