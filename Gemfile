@@ -70,5 +70,5 @@ gem 'js-xlsx-rails'
 gem 'devise'
 
 # Alertas
-gem "activejob", ">= 5.1.6.1"
+#gem "activejob", ">= 5.1.6.1"
 
