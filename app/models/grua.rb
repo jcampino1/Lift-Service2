@@ -44,6 +44,7 @@ class Grua < ApplicationRecord
  		CSV.foreach(file.path, headers: false) do |row|
  			grua = Grua.find(row[0].to_i)
  			grua.horometro_inicial = row[1].to_f
+ 			grua.horometro = row[1].to_f
  			grua.dicc_mantenciones = grua.set_dicc_mantenciones(grua.tipo, grua.horometro - row[1].to_f)
  			grua.save
  		end
