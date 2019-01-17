@@ -46,6 +46,12 @@ class Grua < ApplicationRecord
  			grua.horometro_inicial = row[1].to_f
  			grua.horometro = row[1].to_f
  			grua.dicc_mantenciones = grua.set_dicc_mantenciones(grua.tipo, grua.horometro - row[1].to_f)
+ 			grua.necesita, dicc = grua.evaluar_mantenciones(grua.horometro, grua.dicc_mantenciones, grua.mantenciones, grua.horometro_inicial)
+		    if grua.necesita
+		      grua.secuencia = dicc.keys()[0]
+		      grua.horas_faltantes = dicc.values()[0][0]
+		      grua.horas_teoricas = dicc.values()[0][1]
+		    end
  			grua.save
  		end
  	end
