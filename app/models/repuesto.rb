@@ -78,6 +78,8 @@ class Repuesto < ApplicationRecord
 				r.movil1 -= tupla[1].to_f
 			elsif equipo == "Móvil 2"
 				r.movil2 -= tupla[1].to_f
+			elsif equipo == "Taller"
+				r.taller -= tupla[1].to_f
 			else
 				r.panol -= tupla[1].to_f
 			end
@@ -99,6 +101,8 @@ class Repuesto < ApplicationRecord
 				r.movil1 -= tupla[1].to_f
 			elsif equipo == "Móvil 2"
 				r.movil2 -= tupla[1].to_f
+			elsif equipo == "Taller"
+				r.taller -= tupla[1].to_f
 			else
 				r.panol -= tupla[1].to_f
 			end
@@ -113,6 +117,8 @@ class Repuesto < ApplicationRecord
 				r.movil1 += tupla[1].to_f
 			elsif equipo == "Móvil 2"
 				r.movil2 += tupla[1].to_f
+			elsif equipo == "Taller"
+				r.taller += tupla[1].to_f
 			else
 				r.panol += tupla[1].to_f
 			end
@@ -136,6 +142,8 @@ class Repuesto < ApplicationRecord
 				r.movil1 += tupla[1].to_f
 			elsif equipo == "Móvil 2"
 				r.movil2 += tupla[1].to_f
+			elsif equipo == "Taller"
+				r.taller += tupla[1].to_f
 			else
 				r.panol += tupla[1].to_f
 			end
