@@ -2,11 +2,11 @@
   <%= bootstrap_form_with(model: traspaso, local: true) do |form| %>
 
     <div class="field">
-      <%= form.select :desde, ["", "Móvil 1", "Móvil 2", "Central"], label: "Desde" %>
+      <%= form.select :desde, ["", "Móvil 1", "Móvil 2", "Pañol", "Taller"], label: "Desde" %>
     </div>
 
     <div class="field">
-      <%= form.select :hacia, ["", "Móvil 1", "Móvil 2", "Central"], label: "Hacia" %>
+      <%= form.select :hacia, ["", "Móvil 1", "Móvil 2", "Pañol", "Taller"], label: "Hacia" %>
     </div>
 
     <div class="field">

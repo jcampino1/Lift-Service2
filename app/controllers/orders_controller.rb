@@ -67,7 +67,11 @@ class OrdersController < ApplicationController
         end
 
         # Guardar este total
-        total_repuestos = Repuesto.rebajar(lista_repuestos, @order.equipo)
+        if @order.equipo == "Central"
+          total_repuestos = Repuesto.rebajar(lista_repuestos, "Taller")
+        else
+          total_repuestos = Repuesto.rebajar(lista_repuestos, @order.equipo)
+        end
         @order.total_repuestos = total_repuestos
 
         # Guardar el total por mano de obra

@@ -97,7 +97,7 @@ class RepuestosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def repuesto_params
-      params.require(:repuesto).permit(:codigo, :articulo, :familia, :panol, :movil1,
+      params.require(:repuesto).permit(:codigo, :articulo, :familia, :panol, :taller, :movil1,
        :movil2, :stock, :stock_minimo, :valor)
     end
 end

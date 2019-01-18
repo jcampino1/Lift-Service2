@@ -5,6 +5,7 @@
 	<thead>
 		<th><center>Fecha</center></th>
 		<th><center>Razon</center></th>
+		<th><center>Unidad</center></th>
 		<th><center>Sube/Baja</center></th>
 		<th><center>Tipos de repuestos</center></th>
 	</thead>
@@ -13,6 +14,7 @@
 			<tr>
 				<td><center><%= ajuste.fecha %></center></td>
 				<td><center><%= ajuste.razon %></center></td>
+				<td><center><%= ajuste.equipo %></center></td>
 				<td><center><%= ajuste.sentido %></center></td>
 				<td><center><%= ajuste.repuestos.length %></center></td>
 				<td><center><%= link_to "Ver detalles", ajuste %></center></td>
