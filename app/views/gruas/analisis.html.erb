@@ -55,6 +55,7 @@
 		<thead>
 			<th>Número</th>
 			<th>Tipo</th>
+			<th>Cliente</th>
 			<th>Horas trabajadas</th>
 			<th>Costo por repuestos</th>
 			<th>Costo por viajes</th>
@@ -87,6 +88,7 @@
 				<tr>
 					<td><%= grua.numero_serie %></td>
 					<td><%= grua.tipo %></td>
+					<td><%= grua.cliente %></td>
 					<td><%= horas_recorridas %></td>
 					<td><%= number_to_currency(total_repuestos,  delimiter: ".", precision: 0) %></td>
 					<td><%= number_to_currency(total_viajes,  delimiter: ".", precision: 0) %></td>

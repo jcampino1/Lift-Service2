@@ -89,6 +89,24 @@ class Repuesto < ApplicationRecord
 		return total
 	end
 
+	def self.reponer(lista_repuestos, equipo)
+		lista_repuestos.each do |tupla|
+			r = Repuesto.find_by(codigo: tupla[0])
+			r.stock += tupla[1].to_f
+			if equipo == "Móvil 1"
+				r.movil1 += tupla[1].to_f
+			elsif equipo == "Móvil 2"
+				r.movil2 += tupla[1].to_f
+			elsif equipo == "Taller"
+				r.taller += tupla[1].to_f
+			else
+				r.panol += tupla[1].to_f
+			end
+			r.save
+		end
+	end
+
+
 	def self.traspasar(lista_repuestos, desde, hacia)
 		self.bajar(lista_repuestos, desde)
 		self.subir(lista_repuestos, hacia)

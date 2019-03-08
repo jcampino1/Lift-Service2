@@ -142,8 +142,9 @@ class OrdersController < ApplicationController
   # DELETE /orders/1.json
 
   def destroy
+    Repuesto.reponer(@order.repuestos_usados, @order.equipo)
     @order = @grua.orders.find(params[:id]).destroy
-    redirect_to grua_orders_url
+    redirect_to @grua
   end
 
   private
