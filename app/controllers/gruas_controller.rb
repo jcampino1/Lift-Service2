@@ -104,7 +104,7 @@ class GruasController < ApplicationController
     @hor = params[:nuevo_horometro].to_f
     @grua.horometro = @hor
 
-    if @hor > @horometro_antiguo
+    if @hor >= @horometro_antiguo
       @necesita, @dicc = @grua.evaluar_mantenciones(@hor, @grua.dicc_mantenciones, 
         @grua.mantenciones, @grua.horometro_inicial)
       @grua.necesita = @necesita
