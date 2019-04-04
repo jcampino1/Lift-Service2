@@ -187,7 +187,7 @@ class GruasController < ApplicationController
     @fecha_final = Date.new(params[:fecha_final].values[0].to_i,
                          params[:fecha_final].values[1].to_i,
                          params[:fecha_final].values[2].to_i)
-    @repuestos, @total = Grua.calcular_repuestos_totales
+    @repuestos, @total = Grua.calcular_repuestos_totales(@fecha_inicial, @fecha_final)
 
   end
 
