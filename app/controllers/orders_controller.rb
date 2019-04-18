@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all.order('fecha ASC')
+    @orders = @grua.orders.order('fecha ASC')
 
     respond_to do |format|
       format.html
