@@ -1,8 +1,13 @@
 <center><h1>Análisis de la Grua <%= @grua.numero_serie %></h1></center>
 <br>
 
+
+<button class="btn btn-primary" onclick="exportTableToExcel('tabla-inicial', 'tabla-repuestos', 'tabla-ordenes', 'tabla-resumen', 'analisis grua ' + <%= @grua.numero_serie.to_s %>)">Pasar todo a Excel</button>
+
+<br><br>
+
 <div class="jumbotron">
-	<table class="table">
+	<table class="table" id="tabla-inicial">
 		<tbody>
 			<tr>
 				<td>Fecha inicial:</td>
@@ -38,7 +43,7 @@
 	<% total_repuestos = 0 %>
 	<center><h2 class="text-primary">Repuestos usados</h2></center>
 	<br>
-	<table class="table">
+	<table class="table" id="tabla-repuestos">
 		<thead>
 			<th>Repuesto</th>
 			<th>Cantidad</th>
@@ -74,7 +79,7 @@
 
 	<center><h2 class="text-primary">Ordenes de Trabajo</h2></center>
 	<br>
-	<table class="table">
+	<table class="table" id="tabla-ordenes">
 		<thead>
 			<th><center>Fecha</center></th>
 			<th><center>Numero de OT</center></th>
@@ -113,7 +118,7 @@
 <div class="jumbotron">
 	<center><h2 class="text-primary">Resumen</h2></center>
 	<br>
-	<table class="table">
+	<table class="table" id="tabla-resumen">
 		<tbody>
 			<tr>
 				<td><h3>Total por repuestos</h3></td>
@@ -152,3 +157,43 @@
 
 <%= link_to "Volver", @grua, class: "btn btn-lg btn-primary" %>
 <br><br>
+
+<script type="text/javascript">
+	function exportTableToExcel(tablaInicial, tablaRepuestos, tablaOrdenes, tablaResumen, filename = ''){
+	    var downloadLink;
+	    var dataType = 'application/vnd.ms-excel';
+	    var table1 = document.getElementById(tablaInicial);
+	    var tableHTML1 = table1.outerHTML.replace(/ /g, '%20');
+	    var table2 = document.getElementById(tablaRepuestos);
+	    var tableHTML2 = table2.outerHTML.replace(/ /g, '%20');
+	    var table3 = document.getElementById(tablaOrdenes);
+	    var tableHTML3 = table3.outerHTML.replace(/ /g, '%20');
+	    var table4 = document.getElementById(tablaResumen);
+	    var tableHTML4 = table4.outerHTML.replace(/ /g, '%20');
+	    
+	    // Specify file name
+	    filename = filename?filename+'.xls':'excel_data.xls';
+	    
+	    // Create download link element
+	    downloadLink = document.createElement("a");
+	    
+	    document.body.appendChild(downloadLink);
+	    
+	    if(navigator.msSaveOrOpenBlob){
+	        var blob = new Blob(['\ufeff', tableHTML1], {
+	            type: dataType
+	        });
+	        navigator.msSaveOrOpenBlob( blob, filename);
+	    }else{
+	    	console.log('Holaaaasaa');
+	        // Create a link to the file
+	        downloadLink.href = 'data:' + dataType + ', ' + tableHTML1 + ', ' + tableHTML2 + ', ' + tableHTML3 + ', ' + tableHTML4;
+	    
+	        // Setting the file name
+	        downloadLink.download = filename;
+	        
+	        //triggering the function
+	        downloadLink.click();
+	    }
+	}
+</script>
