@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
 
   # GET /orders
   # GET /orders.json
+  
   def index
     @orders = @grua.orders.order('fecha ASC')
 

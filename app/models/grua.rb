@@ -114,6 +114,17 @@ class Grua < ApplicationRecord
  			# En la linea ste hacer cambios
  			horas_para_mantencion = secuencia.to_i - ((horometro - hor_inicial) - secuencia.to_i*valor)
  			if horas_para_mantencion < 100
+ 				# Aca podriamos agregar la funcionalidad
+ 				###########################################
+ 				if secuencia.to_i == 350
+ 					# Solo puede ser en la secuencia 350. Si lo que llevamos actualmente es
+ 					# multiplo de 700, entonces el siguiente es 1050!
+ 					if (secuencia.to_i*valor) % 700 == 0
+ 						# Este es el caso
+ 						dicc_a_realizar[1050] = [horas_para_mantencion, (horometro + horas_para_mantencion)]
+ 						return true, dicc_a_realizar
+ 					end
+ 				end
  				necesita_mantencion = true
  				dicc_a_realizar[secuencia] = [horas_para_mantencion, (horometro + horas_para_mantencion)]
  				return true, dicc_a_realizar
