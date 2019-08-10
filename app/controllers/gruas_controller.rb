@@ -24,6 +24,7 @@ class GruasController < ApplicationController
     end
   end
 
+
   # GET /gruas/1
   # GET /gruas/1.json
   def show
@@ -145,6 +146,12 @@ class GruasController < ApplicationController
       @hor_final = @ordenes[-1].horometro
       @delta_hor = @hor_final - @hor_inicial
     end
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @orders.to_csv }
+      format.xls { send_data @orders.to_csv(col_sep: "\t") }
+    end
   end
 
   def revisar_mantenciones
@@ -161,9 +168,14 @@ class GruasController < ApplicationController
     @grua = Grua.find(params[:grua_id])
     secuencia = params[:secuencia].to_i
     #@grua.dicc_mantenciones[secuencia] += 1
-    @grua.dicc_mantenciones.keys.each do |key|
-      if key <= secuencia
-        @grua.dicc_mantenciones[key] += 1
+    # Vemos el caso de que la secuencia sea 1050:
+    if secuencia == 1050
+      @grua.dicc_mantenciones[350] += 1
+    else
+      @grua.dicc_mantenciones.keys.each do |key|
+        if key <= secuencia
+          @grua.dicc_mantenciones[key] += 1
+        end
       end
     end
     necesita, dicc = @grua.evaluar_mantenciones(@grua.horometro, @grua.dicc_mantenciones, @grua.mantenciones, @grua.horometro_inicial)
