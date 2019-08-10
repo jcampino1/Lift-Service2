@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         sessions: 'users/sessions'
       }
 
+  get 'actualizar_valor_hh', to: 'orders#arreglar_valor_hh'
 
   get 'gruas/revisar_mantenciones', to: 'gruas#revisar_mantenciones',
    as: :revisar_mantenciones

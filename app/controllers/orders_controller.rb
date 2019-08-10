@@ -148,6 +148,18 @@ class OrdersController < ApplicationController
     redirect_to @grua
   end
 
+  def arreglar_valor_hh
+    valor_actual = Otro.find(1).valor
+    Order.all.each do |order|
+      # Aqui actualizamos los valores de mano de obra para cada orden de compra
+      order.mano_obra = order.horas_hombre*valor_actual
+      # Total de la OT con el nuevo valor de la HH
+      order.total = order.costo + order.total_repuestos + order.mano_obra
+      order.save
+    end
+    redirect_to root_url, alert: "HH actualizada"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
