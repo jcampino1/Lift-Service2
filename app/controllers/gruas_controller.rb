@@ -147,11 +147,6 @@ class GruasController < ApplicationController
       @delta_hor = @hor_final - @hor_inicial
     end
 
-    respond_to do |format|
-      format.html
-      format.csv { send_data @orders.to_csv }
-      format.xls { send_data @orders.to_csv(col_sep: "\t") }
-    end
   end
 
   def revisar_mantenciones
@@ -200,7 +195,6 @@ class GruasController < ApplicationController
                          params[:fecha_final].values[1].to_i,
                          params[:fecha_final].values[2].to_i)
     @repuestos, @total = Grua.calcular_repuestos_totales(@fecha_inicial, @fecha_final)
-
   end
 
   def actualizar_hora_hombre
