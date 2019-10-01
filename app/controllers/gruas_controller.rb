@@ -28,6 +28,14 @@ class GruasController < ApplicationController
   # GET /gruas/1
   # GET /gruas/1.json
   def show
+
+    # Agregamos mostrar la mantencion de 1050 sin considerar horometro inicial
+    if @grua.tipo == 'Gas'
+      mantenciones_350 = @grua.dicc_mantenciones[350]
+      mantenciones_1050 = (mantenciones_350 / 3).to_i
+      @grua.dicc_mantenciones[1050] = mantenciones_1050
+      @grua.dicc_mantenciones = @grua.dicc_mantenciones.sort.to_h
+    end
     @orders = @grua.orders.order('fecha DESC')
     @lista_clientes = []
     Cliente.all.each do |cliente|
@@ -162,10 +170,16 @@ class GruasController < ApplicationController
   def mantencion_realizada
     @grua = Grua.find(params[:grua_id])
     secuencia = params[:secuencia].to_i
-    #@grua.dicc_mantenciones[secuencia] += 1
+
     # Vemos el caso de que la secuencia sea 1050:
     if secuencia == 1050
+      # Aumentamos en 1 a las 350
       @grua.dicc_mantenciones[350] += 1
+      # Si el nuevo valor es par entonces interfiere con una mantencion de 700 tambien
+      if @grua.dicc_mantenciones[350] % 2 == 0
+        @grua.dicc_mantenciones[700] += 1
+      end 
+    
     else
       @grua.dicc_mantenciones.keys.each do |key|
         if key <= secuencia
