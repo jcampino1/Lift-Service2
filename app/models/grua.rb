@@ -105,32 +105,33 @@ class Grua < ApplicationRecord
  		de la secuencia que se necesita mas una lista que contiene [cuanto le falta, 
  			horas teoricas a las que se le debe hacer]
  		"""
- 		necesita_mantencion = false
  		dicc_a_realizar = {}
-
- 		#dicc_mantenciones.each do |secuencia, valor|
+ 		# Para el caso de la grua a Gas esta lista seria = [2800, 1400, 700, 350]
+ 		# El caso de la 1050 podria ocurrir antes de 700
  		lista_mantenciones.each do |secuencia|
+
+ 			if secuencia.to_i == 700
+ 				# Vemos si es de 1050. Solo nos preocupamos de ver si es de 1050
+ 				# Si interfiere con una de 700 da lo mismo porque al apretar mantencion
+ 				# realizada esto se hara automatico
+ 				valor = (dicc_mantenciones[350] / 3).to_i
+ 				horas_para_mantencion = 1050 - ((horometro - horometro_inicial) - 1050*valor)
+ 				if horas_para_mantencion < 100
+	 				dicc_a_realizar[1050] = [horas_para_mantencion, (horometro + horas_para_mantencion)]
+	 				return true, dicc_a_realizar
+	 			end
+ 			end
+
  			valor = dicc_mantenciones[secuencia.to_i]
- 			# En la linea ste hacer cambios
  			horas_para_mantencion = secuencia.to_i - ((horometro - hor_inicial) - secuencia.to_i*valor)
+ 			
  			if horas_para_mantencion < 100
- 				# Aca podriamos agregar la funcionalidad
- 				###########################################
- 				if secuencia.to_i == 350
- 					# Solo puede ser en la secuencia 350. Si lo que llevamos actualmente es
- 					# multiplo de 700, entonces el siguiente es 1050!
- 					if (secuencia.to_i*valor) % 700 == 0
- 						# Este es el caso
- 						dicc_a_realizar[1050] = [horas_para_mantencion, (horometro + horas_para_mantencion)]
- 						return true, dicc_a_realizar
- 					end
- 				end
- 				necesita_mantencion = true
  				dicc_a_realizar[secuencia] = [horas_para_mantencion, (horometro + horas_para_mantencion)]
  				return true, dicc_a_realizar
  			end
  		end
- 		return necesita_mantencion, dicc_a_realizar
+
+ 		return false, {}
  	end
 
  	def calcular_repuestos(fecha_inicial, fecha_final)

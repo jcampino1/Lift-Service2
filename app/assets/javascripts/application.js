@@ -16,6 +16,6 @@
 
 //= require jquery
 //= require bootstrap-sprockets
-//= require bootstrap-table
+//= require bootstrap-table/bootstrap-table
 //= require dataTables/jquery.dataTables
 //= require xlsx

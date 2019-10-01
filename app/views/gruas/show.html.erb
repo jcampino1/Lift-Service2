@@ -42,7 +42,7 @@
             <td>Cada <%= secuencia %> horas</td>
             <td><%= number_with_delimiter((secuencia.to_f*(veces.to_f + 1)).to_i + @grua.horometro_inicial.to_i, delimiter: ".") %></td>
           </tr>
-        <% end %>        
+        <% end %>
       </tbody>
     </table>
   </div>
