@@ -90,6 +90,9 @@ class Repuesto < ApplicationRecord
 	end
 
 	def self.reponer(lista_repuestos, equipo)
+		"""
+		Reponemos los repuestos en el caso de que OT sea eliminada
+		"""
 		lista_repuestos.each do |tupla|
 			r = Repuesto.find_by(codigo: tupla[0])
 			r.stock += tupla[1].to_f
@@ -97,7 +100,7 @@ class Repuesto < ApplicationRecord
 				r.movil1 += tupla[1].to_f
 			elsif equipo == "Móvil 2"
 				r.movil2 += tupla[1].to_f
-			elsif equipo == "Taller"
+			elsif equipo == "Central"
 				r.taller += tupla[1].to_f
 			else
 				r.panol += tupla[1].to_f
@@ -105,7 +108,6 @@ class Repuesto < ApplicationRecord
 			r.save
 		end
 	end
-
 
 	def self.traspasar(lista_repuestos, desde, hacia)
 		self.bajar(lista_repuestos, desde)
