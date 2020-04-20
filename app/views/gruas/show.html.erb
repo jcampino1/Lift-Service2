@@ -1,6 +1,5 @@
 <center><h1>Grúa Num <%=@grua.numero_serie%></h1></center>
 <center><h2>Horometro: <%= number_with_delimiter(@grua.horometro.to_i, delimiter: ".") %></h2></center>
-
 <% if @grua.necesita %>
   <div class="jumbotron">
     <center><h2 class="text-danger">Necesita mantención </h2></center>
