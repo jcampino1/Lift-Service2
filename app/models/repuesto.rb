@@ -94,8 +94,6 @@ class Repuesto < ApplicationRecord
 		Reponemos los repuestos en el caso de que OT sea eliminada
 		"""
 		lista_repuestos.each do |tupla|
-			puts lista_repuestos
-			puts equipo
 			r = Repuesto.find_by(codigo: tupla[0])
 			r.stock += tupla[1].to_f
 			if equipo == "Móvil 1"
