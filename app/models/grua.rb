@@ -134,6 +134,63 @@ class Grua < ApplicationRecord
  		return false, {}
  	end
 
+ 	def evaluar_mantenciones2(horometro, hor_inicial, mantenciones_elementales, tipo)
+ 		necesita = false
+ 		dicc_a_realizar = {}
+ 		if tipo == "Gas"
+ 			siguiente = 350*(mantenciones_elementales + 1) + hor_inicial
+ 			lista_secuencias = [2100, 1400, 1050, 350]
+ 		elsif tipo == "Apilador"
+ 			siguiente = 500*(mantenciones_elementales + 1) + hor_inicial
+ 			lista_secuencias = [2000, 1000, 500]
+ 		else
+ 			siguiente = 250*(mantenciones_elementales + 1) + hor_inicial
+ 			lista_secuencias = [6000, 2000, 1000, 250]
+ 		end
+
+		faltante = siguiente - horometro
+		if faltante <= 100
+			lista_secuencias.each do |secuencia|
+				if (siguiente - hor_inicial)%secuencia == 0
+					necesita = true
+					dicc_a_realizar[secuencia] = [faltante, siguiente]
+				end
+			end
+		end 		
+ 		return necesita, dicc_a_realizar
+ 	end
+
+ 	def mantenciones_a_mostrar(tipo, hor_inicial, mantenciones_elementales)
+ 		x = mantenciones_elementales
+ 		if tipo == 'Gas'
+	        n = hor_inicial + 350*x
+	        prox_350 = n + 350
+	        prox_1050 = n + 1050 - ((x%3)*350)
+	        prox_1400 = n + 1400 - ((x%4)*350)
+	        prox_2100 = n + 2100 - ((x%6)*350)
+	        mantenciones_a_realizar = {350 => prox_350.to_i, 1050 => prox_1050.to_i, 
+	          1400 => prox_1400.to_i, 2100 => prox_2100.to_i}
+
+	    elsif tipo == "Apilador"
+	    	n = hor_inicial + 500*x
+	    	prox_500 = n + 500
+	    	prox_1000 = n + 1000 - ((x%2)*500)
+	    	prox_2000 = n + 2000 - ((x%4)*500)
+	    	mantenciones_a_realizar = {500 => prox_500.to_i, 1000 => prox_1000.to_i, 
+	    		2000 => prox_2000.to_i}
+
+	    else
+	        n = hor_inicial + 250*x
+	        prox_250 = n + 250
+	        prox_1000 = n + 1000 - ((x%4)*250)
+	        prox_2000 = n + 2000 - ((x%8)*250)
+	        prox_6000 = n + 6000 - ((x%24)*250)
+	        mantenciones_a_realizar = {250 => prox_250.to_i, 1000 => prox_1000.to_i, 
+	          2000 => prox_2000.to_i, 6000 => prox_6000.to_i}
+	    end
+	    return mantenciones_a_realizar
+	end
+
  	def calcular_repuestos(fecha_inicial, fecha_final)
  		ordenes = self.orders.where(:fecha => fecha_inicial..fecha_final).order('fecha ASC')
  		total = 0

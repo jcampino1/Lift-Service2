@@ -26,21 +26,21 @@ class GruasController < ApplicationController
 
 
   # GET /gruas/1
-  # GET /gruas/1.json
   def show
+    if @grua.tipo == "Gas"
+      elementales = @grua.dicc_mantenciones[350]
+    elsif @grua.tipo == "Apilador"
+      elementales = @grua.dicc_mantenciones[500]
+    else
+      elementales = @grua.dicc_mantenciones[250]
+    end
 
-    # Agregamos mostrar la mantencion de 1050 sin considerar horometro inicial
-    if @grua.tipo == 'Gas'
-      mantenciones_350 = @grua.dicc_mantenciones[350]
-      mantenciones_1050 = (mantenciones_350 / 3).to_i
-      @grua.dicc_mantenciones[1050] = mantenciones_1050
-      @grua.dicc_mantenciones = @grua.dicc_mantenciones.sort.to_h
-    end
+    @necesita, @dicc = @grua.evaluar_mantenciones2(@grua.horometro, @grua.horometro_inicial,
+     elementales, @grua.tipo)
+
+    @mantenciones_a_realizar = @grua.mantenciones_a_mostrar(@grua.tipo, @grua.horometro_inicial,
+     elementales)
     @orders = @grua.orders.order('fecha DESC')
-    @lista_clientes = []
-    Cliente.all.each do |cliente|
-      @lista_clientes.push(cliente.nombre)
-    end
   end
 
   # GET /gruas/new
@@ -113,9 +113,17 @@ class GruasController < ApplicationController
     @hor = params[:nuevo_horometro].to_f
     @grua.horometro = @hor
 
+    if @grua.tipo == "Gas"
+      elementales = @grua.dicc_mantenciones[350]
+    elsif @grua.tipo == "Apilador"
+      elementales = @grua.dicc_mantenciones[500]
+    else
+      elementales = @grua.dicc_mantenciones[250]
+    end
+
     if @hor >= @horometro_antiguo
-      @necesita, @dicc = @grua.evaluar_mantenciones(@hor, @grua.dicc_mantenciones, 
-        @grua.mantenciones, @grua.horometro_inicial)
+      @necesita, @dicc = @grua.evaluar_mantenciones2(@hor, @grua.horometro_inicial, elementales,
+        @grua.tipo)
       @grua.necesita = @necesita
       if @grua.necesita
         @grua.secuencia = @dicc.keys()[0]
@@ -124,7 +132,6 @@ class GruasController < ApplicationController
       end
     end
     @grua.save
-
   end
 
   def actualizar_cliente
@@ -169,27 +176,22 @@ class GruasController < ApplicationController
 
   def mantencion_realizada
     @grua = Grua.find(params[:grua_id])
-    secuencia = params[:secuencia].to_i
-
-    # Vemos el caso de que la secuencia sea 1050:
-    if secuencia == 1050
-      # Aumentamos en 1 a las 350
-      @grua.dicc_mantenciones[350] += 1
-      # Si el nuevo valor es par entonces interfiere con una mantencion de 700 tambien
-      if @grua.dicc_mantenciones[350] % 2 == 0
-        @grua.dicc_mantenciones[700] += 1
-      end 
+    hor = @grua.horometro_inicial
     
+    if @grua.tipo == "Gas"
+      @grua.dicc_mantenciones[350] += 1
+      elementales = @grua.dicc_mantenciones[350]
+    elsif @grua.tipo == "Apilador"
+      @grua.dicc_mantenciones[500] += 1
+      elementales = @grua.dicc_mantenciones[500]
     else
-      @grua.dicc_mantenciones.keys.each do |key|
-        if key <= secuencia
-          @grua.dicc_mantenciones[key] += 1
-        end
-      end
+      @grua.dicc_mantenciones[250] +=1
+      elementales = @grua.dicc_mantenciones[250]
     end
-    necesita, dicc = @grua.evaluar_mantenciones(@grua.horometro, @grua.dicc_mantenciones, @grua.mantenciones, @grua.horometro_inicial)
+
+    necesita, dicc = @grua.evaluar_mantenciones2(hor, @grua.horometro_inicial, elementales,
+        @grua.tipo)
     @grua.necesita = necesita
-    #@grua.dicc_a_realizar = dicc
     if @grua.necesita
       @grua.secuencia = dicc.keys()[0]
       @grua.horas_faltantes = dicc.values()[0][0]
